@@ -1,0 +1,12 @@
+/home/coelho/telemedicina/dicom/trunk/src/storage/hdf5Storage/dicomIndex/CLuceneIndex.cpp
+/home/coelho/telemedicina/dicom/trunk/src/storage/hdf5Storage/dicomIndex/#CLuceneIndex.cpp#
+/home/coelho/telemedicina/dicom/trunk/src/third_party/clucene-core-0.9.21/src/CLucene/search/WildcardQuery.h
+/home/coelho/telemedicina/dicom/trunk/src/third_party/clucene-core-0.9.21/src/CLucene/search/#WildcardQuery.h#
+/home/coelho/telemedicina/dicom/trunk/src/third_party/clucene-core-0.9.21/src/CLucene/index/Term.h
+/home/coelho/telemedicina/dicom/trunk/src/third_party/clucene-core-0.9.21/src/CLucene/index/#Term.h#
+/home/coelho/telemedicina/dicom/trunk/src/third_party/clucene-core-0.9.21/src/CLucene/document/Field.h
+/home/coelho/telemedicina/dicom/trunk/src/third_party/clucene-core-0.9.21/src/CLucene/document/#Field.h#
+/home/coelho/telemedicina/dicom/trunk/src/third_party/clucene-core-0.9.21/src/CLucene/queryParser/QueryParser.h
+/home/coelho/telemedicina/dicom/trunk/src/third_party/clucene-core-0.9.21/src/CLucene/queryParser/#QueryParser.h#
+/home/coelho/telemedicina/dicom/trunk/src/third_party/clucene-core-0.9.21/src/CLucene/search/WildcardTermEnum.cpp
+/home/coelho/telemedicina/dicom/trunk/src/third_party/clucene-core-0.9.21/src/CLucene/search/#WildcardTermEnum.cpp#

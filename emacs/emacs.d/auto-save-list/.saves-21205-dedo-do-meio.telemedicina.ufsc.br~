@@ -1,0 +1,8 @@
+/home/coelho/telemedicina/dicom/trunk/src/storage/hdf5Storage/dicomIndex/CLuceneIndex.cpp
+/home/coelho/telemedicina/dicom/trunk/src/storage/hdf5Storage/dicomIndex/#CLuceneIndex.cpp#
+/home/coelho/telemedicina/dicom/trunk/src/third_party/clucene-core-0.9.21/src/CLucene/index/IndexReader.cpp
+/home/coelho/telemedicina/dicom/trunk/src/third_party/clucene-core-0.9.21/src/CLucene/index/#IndexReader.cpp#
+/home/coelho/telemedicina/dicom/trunk/src/third_party/clucene-core-0.9.21/src/CLucene/index/SegmentReader.cpp
+/home/coelho/telemedicina/dicom/trunk/src/third_party/clucene-core-0.9.21/src/CLucene/index/#SegmentReader.cpp#
+/home/coelho/telemedicina/dicom/trunk/src/third_party/clucene-core-0.9.21/src/CLucene/index/SegmentTermDocs.cpp
+/home/coelho/telemedicina/dicom/trunk/src/third_party/clucene-core-0.9.21/src/CLucene/index/#SegmentTermDocs.cpp#
