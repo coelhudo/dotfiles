@@ -1,0 +1,14 @@
+Configurations files!
+
+XMonad / xmobar:
+   Some key binds to call firefox, skype, emacs, etc.
+
+emacs:
+   cmake-mode
+   switch between header and source file (C / C++)
+   iswitch-mode enabled
+   And some
+
+acpid (for my eee pc 1000ha):
+   sound (mute/unmute and increase and decrease volume)
+   lock screen (xlock)

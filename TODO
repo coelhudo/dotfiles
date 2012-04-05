@@ -1,0 +1,7 @@
+emacs / XMonad:
+  Change absolut path to relative
+
+acpid:
+  Enable switch screen - through xrandr
+  Enable hibernation - I have no idea how this works
+  Enable/disable touchpad

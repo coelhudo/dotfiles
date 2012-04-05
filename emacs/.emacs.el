@@ -162,7 +162,7 @@
 
 (global-set-key (kbd "C-x C-o") 'ff-find-other-file)
 
-(load "~/Downloads/src/haskell/haskellmode-emacs/haskell-site-file")
+;;(load "~/Downloads/src/haskell/haskellmode-emacs/haskell-site-file")
 
 (autoload 'color-theme "~/.emacs.d/color-theme.el" t)
 (setq color-theme-is-global t)

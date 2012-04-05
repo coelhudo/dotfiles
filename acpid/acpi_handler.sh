@@ -33,6 +33,14 @@ case "$1" in
 		 amixer set Master mute
 	     fi	   
 	   ;;
+	   00000014) logger "Decrease volume by 2%"
+		 amixer set Master unmute
+	     	 amixer set Master 2%-
+	   ;;
+      	   00000015) logger "Increase volume by 2%"
+		 amixer set Master unmute
+		 amixer set Master 2%+
+	   ;;
            *) logger "ACPI hot key $3 not defined"
            ;;
          esac
