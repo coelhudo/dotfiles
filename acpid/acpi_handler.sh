@@ -22,6 +22,17 @@ case "$1" in
 	 case "$3" in
            000000[16][1a]) /usr/bin/xlock
            ;;
+	   00000013)
+	     let isOdd="0x$4 % 2"
+	     if [ $isOdd -eq 0 ]
+	     then
+		 logger Unmute
+		 amixer set Master unmute
+	     else
+		 logger Mute
+		 amixer set Master mute
+	     fi	   
+	   ;;
            *) logger "ACPI hot key $3 not defined"
            ;;
          esac
