@@ -30,6 +30,7 @@
 (iswitchb-mode 1)
 (put 'narrow-to-region 'disabled nil)
 (winner-mode t)
+(ido-mode t)
 
 
 					; Add cmake listfile names to the mode list.
@@ -58,67 +59,7 @@
 
 (add-hook 'cmake-mode-hook (function cmake-rename-buffer))
 
-
-;;enable linum
 (global-linum-mode 1)
-
-;; Load CEDET.
-;; See cedet/common/cedet.info for configuration details.
-;; (load-file "/usr/src/cedet-1.0pre6/common/cedet.el")
-
-
-;; Enable EDE (Project Management) features
-;; (global-ede-mode 1)
-
-;; Enable EDE for a pre-existing C++ project
-;; (ede-cpp-root-project "NAME" :file "~/myproject/Makefile")
-
-
-;; Enabling Semantic (code-parsing, smart completion) features
-;; Select one of the following:
-
-;; * This enables the database and idle reparse engines
-;; (semantic-load-enable-minimum-features)
-
-;; * This enables some tools useful for coding, such as summary mode
-;;   imenu support, and the semantic navigator
-;; (semantic-load-enable-code-helpers)
-
-;; * This enables even more coding tools such as intellisense mode
-;;   decoration mode, and stickyfunc mode (plus regular code helpers)
-;; (semantic-load-enable-gaudy-code-helpers)
-
-;; * This enables the use of Exuberent ctags if you have it installed.
-;;   If you use C++ templates or boost, you should NOT enable it.
-;; (semantic-load-enable-all-exuberent-ctags-support)
-
-;; Enable SRecode (Template management) minor-mode.
-;; (global-srecode-minor-mode 1)
-
-;; (add-to-list 'load-path
-;; 	     "/usr/src/ecb-2.40")
-
-;; (require 'ecb-autoloads)
-
-;;(global-set-key (kbd "M-/") 'hippie-expand)
-
-;; (defun h-file-create ()
-;;   "Create a new h file.  Insert a infdef/define/endif block"
-;;   (interactive)
-;;   (if (or (equal (substring (buffer-name (current-buffer)) -2 ) ".h")
-;; 	  (substring (buffer-name (current-buffer)) -4 ) ".hpp"))
-;;   (if (equal "" (buffer-string))
-;;       (insert "#ifndef "(upcase (substring (buffer-name (current-buffer)) 0 -2)) "_H\n#define "
-;;       (upcase (substring (buffer-name (current-buffer)) 0 -2)) "_H\n\n#endif"))))
-
-;; (defun c-file-enter ()
-;;   "Expands all member functions in the corresponding .h file"
-;;   (interactive)
-;;   (let ((c-file (buffer-name))
-;;         (h-file (concat (substring (buffer-name (current-buffer)) 0 -3 ) "h")))
-;;     (if (equal (substring (buffer-name (current-buffer)) -4 ) ".cpp")
-;;         (if (file-exists-p h-file)
-;;	    (expand-member-functions h-file c-file)))))
 
 (setq c-mode-hook
       (function (lambda ()
@@ -148,18 +89,6 @@
        '((".ipp\\'" . c++-mode))
        auto-mode-alist))
 
-;; (shell "*shell5*")
-;; (with-current-buffer "*shell5*"
-;; (goto-char (point-max))
-;; (insert "audacious")
-;; (comint-send-input nil t))
-
-;;(let ((default-directory "/usr/src/"))
-;;  (shell "*shell1*"))
-
-;; (load-file "/home/coelho/.emacs.d/column-marker.el")
-;; (require 'column-marker)
-
 (global-set-key (kbd "C-x C-o") 'ff-find-other-file)
 
 ;;(load "~/Downloads/src/haskell/haskellmode-emacs/haskell-site-file")
@@ -169,10 +98,3 @@
 (setq color-theme-robin-hood t)
 
 (prefer-coding-system 'utf-8)
-
-;; (add-hook 'haskell-mode-hook 'turn-on-haskell-doc-mode)
-;; (add-hook 'haskell-mode-hook 'turn-on-haskell-indentation)
-;;(add-hook 'haskell-mode-hook 'turn-on-haskell-indent)
-;;(add-hook 'haskell-mode-hook 'turn-on-haskell-simple-indent)
-
-;;(add-hook 'c-mode-common-hook 'google-set-c-style)
