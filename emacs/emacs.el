@@ -22,18 +22,49 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(default ((t (:inherit nil :stipple nil :background "white" :foreground "black" :inverse-video nil :box nil :strike-through nil :overline nil :underline nil :slant normal :weight normal :height 90 :width normal :foundry "unknown" :family "DejaVu Sans Mono"))))
+ '(default ((t (:inherit nil :stipple nil :background "white" :foreground "black" :inverse-video nil :box nil :strike-through nil :overline nil :underline nil :slant normal :weight normal :height 110 :width normal :foundry "unknown" :family "DejaVu Sans Mono"))))
  '(comint-highlight-prompt ((t (:foreground "black")))))
+
+; activate all the packages (in particular autoloads)
+(require 'package)
+(setq package-archives '(("elpa" . "http://tromey.com/elpa/")
+                         ("gnu" . "http://elpa.gnu.org/packages/")
+                         ("marmalade" . "http://marmalade-repo.org/packages/")))
+(package-initialize)
+
+(setq package-list '(haskell-mode)) ;;ghc-mode too
+
+; fetch the list of packages available 
+(unless package-archive-contents
+  (package-refresh-contents))
+
+; install the missing packages
+(dolist (package package-list)
+  (unless (package-installed-p package)
+    (package-install package)))
 
 (global-set-key (kbd "C-x t") 'goto-line) ; Ctrl + x  t
 
-(iswitchb-mode 1)
+(icomplete-mode t)
 (put 'narrow-to-region 'disabled nil)
 (winner-mode t)
 (ido-mode t)
 
+(setq auto-mode-alist
+      (append
+       '(("CMakeLists\\.md\\'" . markdown-mode))
+       '(("\\.text\\'" . markdown-mode))
+       '(("\\.markdown\\'" . markdown-mode))
+       auto-mode-alist))
 
-					; Add cmake listfile names to the mode list.
+(autoload 'markdown-mode "~/.emacs.d/markdown-mode.el" t)
+
+(add-hook 'haskell-mode-hook 'turn-on-haskell-indentation)
+(autoload 'ghc-init "ghc" nil t)
+(autoload 'ghc-debug "ghc" nil t)
+(add-hook 'haskell-mode-hook (lambda () (ghc-init)))
+
+; Add cmake listfile names to the mode list.
 (setq auto-mode-alist
       (append
        '(("CMakeLists\\.txt\\'" . cmake-mode))
@@ -71,6 +102,11 @@
 		  (setq indent-tabs-mode nil)
 		  (setq c-basic-offset 4))))
 
+(add-hook 'java-mode-hook (lambda ()
+			    (setq c-basic-offset 2
+				  tab-width 2
+				  indent-tabs-mode nil)))
+
 (c-set-offset 'substatement-open 0)
 
 (require 'whitespace)
@@ -90,8 +126,6 @@
        auto-mode-alist))
 
 (global-set-key (kbd "C-x C-o") 'ff-find-other-file)
-
-;;(load "~/Downloads/src/haskell/haskellmode-emacs/haskell-site-file")
 
 (autoload 'color-theme "~/.emacs.d/color-theme.el" t)
 (setq color-theme-is-global t)
