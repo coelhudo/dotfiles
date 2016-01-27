@@ -4,6 +4,7 @@ import XMonad.Hooks.ManageDocks
 import XMonad.Hooks.ManageHelpers
 import XMonad.Hooks.EwmhDesktops
 import XMonad.Util.Run(spawnPipe)
+import XMonad.Util.Cursor
 import XMonad.Util.EZConfig(additionalKeys)
 import XMonad.Actions.GridSelect
 import qualified XMonad.StackSet as W
@@ -39,9 +40,10 @@ myKeys = [
        ]
 
 main = do
-    xmproc <- spawnPipe "/usr/bin/xmobar /home/coelho/.xmobarrc"
+    xmproc <- spawnPipe "/usr/bin/xmobar $HOME/.xmobarrc"
     xmonad $ ewmh defaultConfig
-        { workspaces = ["1:web","2:im","3:dev","4","5","6","7","8","9","0","-","="]
+        { startupHook = setDefaultCursor xC_left_ptr
+        , workspaces = ["1","2","3","4","5","6","7","8","9","0","-","="]
         , manageHook = manageDocks <+> myManageHook -- make sure to include myManageHook definition from above
                         <+> manageHook defaultConfig
         , layoutHook = avoidStruts  $  layoutHook defaultConfig
@@ -50,6 +52,6 @@ main = do
                         , ppTitle = xmobarColor "green" "" . shorten 50
                         }
         , modMask = mod4Mask     -- Rebind Mod to the Windows key
-        , terminal = "konsole"
+        , terminal = "urxvt -ls"
         } `additionalKeys`
         myKeys
