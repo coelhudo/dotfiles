@@ -11,4 +11,7 @@
 	     :init
 	     (global-flycheck-mode t))
 
+(require 'pytest)
+
+
 (provide 'my-python)
