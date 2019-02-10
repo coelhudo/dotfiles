@@ -1,0 +1,7 @@
+* emacs / XMonad:
+** TODO Change absolut path to relative
+
+* acpid:
+** TODO Enable switch screen - through xrandr
+** TODO Enable hibernation - pm-suspend / pm-hibernate
+** TODO Enable/disable touchpad

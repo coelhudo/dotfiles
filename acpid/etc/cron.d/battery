@@ -1,0 +1,21 @@
+#!/bin/sh
+
+battery_status=$(/usr/bin/upower -i /org/freedesktop/UPower/devices/battery_BAT0 | awk '/percentage/ { print $2 }' | tr -d %)
+battery_state=$(/usr/bin/upower -i /org/freedesktop/UPower/devices/battery_BAT0 | awk '/state/ { print $2 }' | tr -d %)
+
+if [ "$battery_state" = "charging" ]
+then
+    exit 0
+fi
+
+if [ $battery_status -le 60 ] && [ $battery_status -gt 15 ]
+then
+     /usr/bin/notify-send "Battery at $battery_status%" -t 5000 -i /usr/share/icons/Adwaita/64x64/status/battery-good-symbolic.symbolic.png 
+elif [ $battery_status -le 15 ] && [ $battery_status -gt 5 ]
+then
+    /usr/bin/notify-send "Battery at $battery_status%" -t 5000 -i /usr/share/icons/Adwaita/64x64/status/battery-low-symbolic.symbolic.png 
+elif [ $battery_status -le 5 ]
+then
+    /usr/bin/notify-send "Battery at $battery_status%" -t 5000 -i /usr/share/icons/Adwaita/64x64/status/battery-empty-symbolic.symbolic.png -u critical
+fi
+
