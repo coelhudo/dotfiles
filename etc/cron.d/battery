@@ -3,19 +3,60 @@
 battery_status=$(/usr/bin/upower -i /org/freedesktop/UPower/devices/battery_BAT0 | awk '/percentage/ { print $2 }' | tr -d %)
 battery_state=$(/usr/bin/upower -i /org/freedesktop/UPower/devices/battery_BAT0 | awk '/state/ { print $2 }' | tr -d %)
 
-if [ "$battery_state" = "charging" ]
+battery_file_dir=/tmp
+
+logger "battery status $battery_status"
+logger "battery state $battery_state"
+if [ "$battery_state" = "charging" ] || [ "$battery_state" = "fully-charged" ]
 then
+    rm -rf "$battery_file_dir/*_battery"
+    logger "removing battery_status file: rm -rf $battery_file_dir/*_battery"
     exit 0
 fi
 
-if [ $battery_status -le 60 ] && [ $battery_status -gt 15 ]
+icon_package=/usr/share/icons/Oranchelo/status/
+icon_empty=$icon_package/battery-empty.svg
+icon_critical=$icon_package/battery-caution.svg
+icon_low=$icon_package/battery-low.svg
+icon_medium=$icon_package/battery-good.svg
+icon_full=$icon_package/battery-full.svg
+
+
+
+if [ $battery_status -le 5 ]
 then
-     /usr/bin/notify-send "Battery at $battery_status%" -t 5000 -i /usr/share/icons/Adwaita/64x64/status/battery-good-symbolic.symbolic.png 
-elif [ $battery_status -le 15 ] && [ $battery_status -gt 5 ]
+    /usr/bin/notify-send "Battery at $battery_status%" -t 5000 -i "$icon_empty" -u critical
+
+elif [ $battery_status -le 10 ]
 then
-    /usr/bin/notify-send "Battery at $battery_status%" -t 5000 -i /usr/share/icons/Adwaita/64x64/status/battery-low-symbolic.symbolic.png 
-elif [ $battery_status -le 5 ]
+    /usr/bin/notify-send "Battery at $battery_status%" -t 5000 -i "$icon_critical" -u critical
+
+elif [ $battery_status -le 25 ]
 then
-    /usr/bin/notify-send "Battery at $battery_status%" -t 5000 -i /usr/share/icons/Adwaita/64x64/status/battery-empty-symbolic.symbolic.png -u critical
+    if [ -f "$battery_file_dir/low_battery" ]
+    then
+	exit 0
+    fi
+
+    touch "$battery_file_dir/low_battery"
+    /usr/bin/notify-send "Battery at $battery_status%" -t 5000 -i "$icon_low"
+
+elif [ $battery_status -le 50 ]
+then
+    if [ -f "$battery_file_dir/good_battery" ]
+    then
+	exit 0
+    fi
+    
+    touch "$battery_file_dir/good_battery"
+    /usr/bin/notify-send "Battery at $battery_status%" -t 5000 -i "$icon_medium"
+else
+    if [ -f "$battery_file_dir/full_battery" ]
+    then
+	exit 0
+    fi
+    
+    touch "$battery_file_dir/full_battery"
+    /usr/bin/notify-send "Battery at $battery_status%" -t 5000 -i "$icon_full"
 fi
 

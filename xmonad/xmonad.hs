@@ -24,19 +24,20 @@ myManageHook = composeAll
 myKeys = [
        ((mod4Mask .|. shiftMask, xK_z), spawn "xscreensaver-command -lock")
         , ((controlMask, xK_Print), spawn "sleep 0.2; scrot -s")
-        , ((0, xK_Print), spawn "scrot")
-        , ((mod4Mask, xK_a), spawn "audacious")
+        , ((mod4Mask, xK_a), spawn "showdate.sh")
+        , ((mod4Mask, xK_b), spawn "showtime.sh")
         , ((mod4Mask, xK_e), spawn "emacs")
         , ((mod4Mask, xK_f), spawn "firefox")
+        , ((mod4Mask, xK_o), spawn "okular")
+        , ((mod4Mask, xK_s), spawn "skype")
+        , ((mod4Mask, xK_t), spawn "Telegram")
+        , ((mod4Mask, xK_z), spawn "xlock")
         , ((mod4Mask, xK_g), goToSelected defaultGSConfig)
         , ((mod4Mask, xK_h), sendMessage Shrink)
         , ((mod4Mask, xK_l), sendMessage Expand)
-        , ((mod4Mask, xK_o), spawn "okular")
-        , ((mod4Mask, xK_s), spawn "skype")
-        , ((mod4Mask,               xK_t     ), withFocused $ windows . W.sink)
-        , ((mod4Mask, xK_z), spawn "xlock")
-        , ((mod4Mask              , xK_comma ), sendMessage (IncMasterN 1))
-        , ((mod4Mask              , xK_period), sendMessage (IncMasterN (-1)))
+        , ((mod4Mask, xK_t     ), withFocused $ windows . W.sink)
+        , ((mod4Mask, xK_comma ), sendMessage (IncMasterN 1))
+        , ((mod4Mask, xK_period), sendMessage (IncMasterN (-1)))
        ]
 
 main = do
@@ -52,6 +53,6 @@ main = do
                         , ppTitle = xmobarColor "green" "" . shorten 50
                         }
         , modMask = mod4Mask     -- Rebind Mod to the Windows key
-        , terminal = "urxvt -ls"
+        , terminal = "st"
         } `additionalKeys`
         myKeys
