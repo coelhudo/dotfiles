@@ -1,18 +1,31 @@
 #!/bin/sh
 
+#example: crontab for every minute:
+#* * * * * DISPLAY=:0.0 /etc/cron.d/battery 1> /dev/null
+
 battery_status=$(/usr/bin/upower -i /org/freedesktop/UPower/devices/battery_BAT0 | awk '/percentage/ { print $2 }' | tr -d %)
 battery_state=$(/usr/bin/upower -i /org/freedesktop/UPower/devices/battery_BAT0 | awk '/state/ { print $2 }' | tr -d %)
 
 battery_file_dir=/tmp
 
+remove_battery_lock_file(){
+    rm -rf "$battery_file_dir"/*_battery
+    status=$?
+    logger "removing battery_status file: rm -rf $battery_file_dir/*_battery. Status $status"
+}
+
 logger "battery status $battery_status"
 logger "battery state $battery_state"
 if [ "$battery_state" = "charging" ] || [ "$battery_state" = "fully-charged" ]
 then
-    rm -rf "$battery_file_dir/*_battery"
-    logger "removing battery_status file: rm -rf $battery_file_dir/*_battery"
+    remove_battery_lock_file
     exit 0
 fi
+
+empty_threshold=5
+critical_threshold=10
+low_threshold=25
+medium_threshold=98
 
 icon_package=/usr/share/icons/Oranchelo/status/
 icon_empty=$icon_package/battery-empty.svg
@@ -21,42 +34,45 @@ icon_low=$icon_package/battery-low.svg
 icon_medium=$icon_package/battery-good.svg
 icon_full=$icon_package/battery-full.svg
 
-
-
-if [ $battery_status -le 5 ]
+if [ $battery_status -le $empty_threshold ]
 then
     /usr/bin/notify-send "Battery at $battery_status%" -t 5000 -i "$icon_empty" -u critical
 
-elif [ $battery_status -le 10 ]
+elif [ $battery_status -le $critical_threshold ]
 then
     /usr/bin/notify-send "Battery at $battery_status%" -t 5000 -i "$icon_critical" -u critical
 
-elif [ $battery_status -le 25 ]
+elif [ $battery_status -le $low_threshold ]
 then
     if [ -f "$battery_file_dir/low_battery" ]
     then
 	exit 0
     fi
 
+    remove_battery_lock_file
     touch "$battery_file_dir/low_battery"
-    /usr/bin/notify-send "Battery at $battery_status%" -t 5000 -i "$icon_low"
+    /usr/bin/notify-send "Battery at $battery_status%" -t 5000 -i "$icon_low" -u critical
+    logger "low battery. Created $battery_file_dir/low_battery"
 
-elif [ $battery_status -le 50 ]
+elif [ $battery_status -le $medium_threshold ]
 then
     if [ -f "$battery_file_dir/good_battery" ]
     then
 	exit 0
     fi
-    
+
+    remove_battery_lock_file
     touch "$battery_file_dir/good_battery"
-    /usr/bin/notify-send "Battery at $battery_status%" -t 5000 -i "$icon_medium"
+    /usr/bin/notify-send "Battery at $battery_status%" -t 5000 -i "$icon_medium" -u critical
+    logger "good battery. Created $battery_file_dir/good_battery"
 else
     if [ -f "$battery_file_dir/full_battery" ]
     then
 	exit 0
     fi
-    
-    touch "$battery_file_dir/full_battery"
-    /usr/bin/notify-send "Battery at $battery_status%" -t 5000 -i "$icon_full"
-fi
 
+    remove_battery_lock_file
+    touch "$battery_file_dir/full_battery"
+    /usr/bin/notify-send "Battery at $battery_status%" -t 5000 -i "$icon_full" -u critical
+    logger "battery full. Created $battery_file_dir/full_battery"
+fi
