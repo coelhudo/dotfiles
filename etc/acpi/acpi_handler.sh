@@ -1,8 +1,26 @@
 #!/bin/sh
-n# Default acpi script that takes an entry for all actions
+# Default acpi script that takes an entry for all actions
 
 IFS=${IFS}/
 set $@
+
+PID=`pgrep startx`
+if [[ -n $PID ]];
+then
+	# found startx
+	USER=`ps -o user --no-headers $PID `
+	# USERHOME=`getent passwd $USER | cut -d: -f6`
+	# export XAUTHORITY="$USERHOME/.Xauthority"
+	# for x in /tmp/.X11-unix/*; do
+	#     displaynum=`echo $x | sed s#/tmp/.X11-unix/X##`
+	#     if [ x"$XAUTHORITY" != x"" ]; then
+	#	export DISPLAY=":$displaynum"
+	#     fi
+	# done
+else
+	# TODO: detect correct console user
+	USER=root
+fi
 
 icon_package=/usr/share/icons/Adwaita/64x64/status/
 volume_low="$icon_package/audio-volume-low-symbolic.symbolic.png"
@@ -17,29 +35,36 @@ notify_volume() {
     if [ $volume -lt 30 ]
     then
 	/usr/bin/notify-send "Volume $volume" -t 400 -i "$volume_low"
+	logger "/usr/bin/notify-send \"Volume $volume\" -t 400 -i \"$volume_low\""
     elif [ $volume -lt 60 ]
     then
 	/usr/bin/notify-send "Volume $volume" -t 400 -i "$volume_medium"
+	logger "/usr/bin/notify-send \"Volume $volume\" -t 400 -i \"$volume_medium\""
     else
 	/usr/bin/notify-send "Volume $volume" -t 400 -i "$volume_high"
+	logger "/usr/bin/notify-send \"Volume $volume\" -t 400 -i \"$volume_high\""
     fi
 };
+
+current_volume_state() {
+    return $(su $USER -c "amixer get Master" | awk '/Left: Playback/ { print $5 }' | tr -d %\[\])
+}
 
 case "$1" in
   button)
     case "$2" in
       power) /sbin/init 0
 	 ;;
-      volumedown) /usr/bin/amixer set Master 10%-
-		  volume=$(amixer get Master | awk '/Left: Playback/ { print $5 }' | tr -d %\[\])
-		  notify_volume "$volume"
+      volumedown) su $USER -c "/usr/bin/amixer set Master 5%-"
+		  current_volume_state
+		  notify_volume "$?"
 		  ;;
-      volumeup) /usr/bin/amixer set Master 10%+
-		volume=$(amixer get Master | awk '/Left: Playback/ { print $5 }' | tr -d %\[\])
-		notify_volume "$volume"
+      volumeup) su $USER -c "/usr/bin/amixer set Master 5%+"
+		current_volume_state
+		notify_volume "$?"
 		;;
-      mute) /usr/bin/amixer sset Master toggle
-	    volume=$(amixer get Master | awk '/Left: Playback/ { print $6 }' | tr -d \[\])
+      mute) su $USER -c "/usr/bin/amixer sset Master toggle"
+	    volume=$(su $USER -c "amixer get Master" | awk '/Left: Playback/ { print $6 }' | tr -d \[\])
 	    if [ "$volume" = "on" ]
 	    then
 		/usr/bin/notify-send "Unmuted" -i "$icon_package/audio-volume-high-symbolic.symbolic.png" -t 1000
@@ -47,7 +72,7 @@ case "$1" in
 		/usr/bin/notify-send "Muted" -i "$icon_package/audio-volume-muted-symbolic.symbolic.png" -t 1000
 	    fi
 	    ;;
-      f20) /usr/bin/amixer sset Capture toggle
+      f20) su $USER -c "/usr/bin/amixer sset Capture toggle"
 	    ;;
       lid) logger "lid $4"
 	   case "$4" in
