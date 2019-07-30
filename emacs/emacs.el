@@ -22,7 +22,7 @@
      ("melpa" . "http://melpa.org/packages/"))))
  '(package-selected-packages
    (quote
-    (crontab-mode org-alert org-pomodoro git-timemachine elpy csv-mode multiple-cursors magit haskell-mode jedi pytest pyvenv android-mode yaml-mode yasnippet use-package flycheck json-mode markdown-mode+ zenburn-theme)))
+    (org-re-reveal-ref org-ref crontab-mode org-alert org-pomodoro git-timemachine elpy csv-mode multiple-cursors magit haskell-mode jedi pytest pyvenv android-mode yaml-mode yasnippet use-package flycheck json-mode markdown-mode+ zenburn-theme)))
  '(python-environment-virtualenv (quote ("python" "-m" "venv" "--system-site-packages")))
  '(python-shell-virtualenv-root "/home/coelho/dev/dcpoc/.venv/")
  '(pyvenv-virtualenvwrapper-python "/usr/bin/python")
@@ -30,7 +30,7 @@
  '(show-paren-mode t)
  '(tls-checktrust t)
  '(tool-bar-mode nil)
- '(tramp-default-method "ssh" nil (tramp)))
+ '(tramp-default-method "ssh"))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
