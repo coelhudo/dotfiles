@@ -7,6 +7,8 @@ import XMonad.Util.Run(spawnPipe)
 import XMonad.Util.Cursor
 import XMonad.Util.EZConfig(additionalKeys)
 import XMonad.Actions.GridSelect
+import XMonad.Prompt
+import XMonad.Prompt.Shell
 import qualified XMonad.StackSet as W
 import System.IO
 
@@ -24,18 +26,20 @@ myManageHook = composeAll
 myKeys = [
        ((mod4Mask .|. shiftMask, xK_z), spawn "xscreensaver-command -lock")
         , ((controlMask, xK_Print), spawn "sleep 0.2; scrot -s")
-        , ((mod4Mask, xK_a), spawn "showdate.sh")
-        , ((mod4Mask, xK_b), spawn "showtime.sh")
+        , ((mod4Mask, xK_d), spawn "show_date.sh")
+        , ((mod4Mask, xK_c), spawn "show_time.sh")
+        , ((mod4Mask, xK_b), spawn "show_battery.sh")
         , ((mod4Mask, xK_e), spawn "emacs")
         , ((mod4Mask, xK_f), spawn "firefox")
         , ((mod4Mask, xK_o), spawn "okular")
         , ((mod4Mask, xK_s), spawn "skype")
-        , ((mod4Mask, xK_t), spawn "Telegram")
+        , ((mod4Mask, xK_w), spawn "Telegram")
         , ((mod4Mask, xK_z), spawn "xlock")
         , ((mod4Mask, xK_g), goToSelected defaultGSConfig)
         , ((mod4Mask, xK_h), sendMessage Shrink)
         , ((mod4Mask, xK_l), sendMessage Expand)
         , ((mod4Mask, xK_t     ), withFocused $ windows . W.sink)
+        , ((mod4Mask .|. controlMask, xK_x), shellPrompt def)
         , ((mod4Mask, xK_comma ), sendMessage (IncMasterN 1))
         , ((mod4Mask, xK_period), sendMessage (IncMasterN (-1)))
        ]
@@ -53,6 +57,6 @@ main = do
                         , ppTitle = xmobarColor "green" "" . shorten 50
                         }
         , modMask = mod4Mask     -- Rebind Mod to the Windows key
-        , terminal = "st"
+        , terminal = "st -e zsh -ls"
         } `additionalKeys`
         myKeys

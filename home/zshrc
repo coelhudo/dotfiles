@@ -1,3 +1,5 @@
+export ZSH_CUSTOM=~/.local/zsh/
+
 # Lines configured by zsh-newuser-install
 HISTFILE=~/.histfile
 HISTSIZE=1000
@@ -13,7 +15,27 @@ autoload -Uz compinit
 compinit
 # End of lines added by compinstall
 
-export PATH=$PATH:~/.opam/default/bin
+eval $(dircolors $ZSH_CUSTOM/dircolors/dircolors)
+
+plugins=(git zsh-autosuggestions zsh-completions zsh-syntax-highlighting)
+
+for plugin in $plugins;
+do
+  if [ -e $ZSH_CUSTOM/plugins/ ] && [ -e $ZSH_CUSTOM/plugins/$plugin ];
+  then
+     source $ZSH_CUSTOM/plugins/$plugin/$plugin.zsh
+  fi
+done
+
+autoload -Uz promptinit
+promptinit
+
+# autoload -U colors
+# colors
+
+#source $ZSH_CUSTOM/themes/smt.zsh-theme
+
+export PATH=$PATH:~/.opam/default/bin:~/.local/bin
 
 if [ ! -S ~/.ssh/ssh_auth_sock ]; then
   eval `ssh-agent`
