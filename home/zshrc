@@ -15,6 +15,9 @@ autoload -Uz compinit
 compinit
 # End of lines added by compinstall
 
+autoload -U select-word-style
+select-word-style bash
+
 eval $(dircolors $ZSH_CUSTOM/dircolors/dircolors)
 
 plugins=(git zsh-autosuggestions zsh-completions zsh-syntax-highlighting)
@@ -43,3 +46,5 @@ if [ ! -S ~/.ssh/ssh_auth_sock ]; then
 fi
 export SSH_AUTH_SOCK=~/.ssh/ssh_auth_sock
 ssh-add -l > /dev/null || ssh-add
+
+export LESS='-R'

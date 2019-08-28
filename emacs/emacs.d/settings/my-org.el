@@ -8,5 +8,6 @@
 (add-to-list 'alert-user-configuration '(((:category . "org-pomodoro")) libnotify nil))
 
 (setq org-pomodoro-play-sounds nil)
+(global-set-key (kbd "M-p") 'org-pomodoro)
 
 (provide 'my-org)

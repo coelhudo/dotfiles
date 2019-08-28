@@ -11,6 +11,9 @@
 	     :init
 	     (global-flycheck-mode t))
 
+(use-package elpy
+  :bind (("C-c C-o" . elpy-occur-definitions)))
+
 (require 'pytest)
 
 
