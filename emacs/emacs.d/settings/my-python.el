@@ -1,6 +1,9 @@
 ;;; package --- provides my python configuration
 
-(add-hook 'python-mode-hook 'jedi:setup)
+(defun my-python-mode-hooks ()
+  (jedi:setup)
+  (electric-pair-mode))
+(add-hook 'python-mode-hook 'my-python-mode-hooks)
 (setq jedi:complete-on-dot t)                 ;;; optional
 
 (when (executable-find "ipython")
