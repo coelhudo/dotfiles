@@ -33,6 +33,9 @@ done
 autoload -Uz promptinit
 promptinit
 
+autoload bashcompinit
+bashcompinit
+
 # autoload -U colors
 # colors
 

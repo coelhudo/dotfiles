@@ -61,4 +61,7 @@
     (interactive)
     (with-editor-async-shell-command "crontab -e"))
 
+(ivy-mode 1)
+(setq ivy-use-virtual-buffers t)
+(setq enable-recursive-minibuffers t)
 ;;; .emacs.el ends here

@@ -17,7 +17,10 @@
 (use-package elpy
   :bind (("C-c C-o" . elpy-occur-definitions)))
 
-(require 'pytest)
+(use-package pytest
+  :init
+  (setq pytest-cmd-flags "-o \"addopts=-x -s\""))
+
 
 
 (provide 'my-python)
