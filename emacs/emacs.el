@@ -51,7 +51,7 @@
 (require 'my-python)
 (require 'my-markdown)
 
-(load-theme 'zenburn t)
+(load-theme 'monokai t)
 (global-set-key (kbd "C-x c") 'mc/edit-lines)
 (global-set-key (kbd "C-x C-b") 'ibuffer)
 (add-hook 'before-save-hook 'whitespace-cleanup)

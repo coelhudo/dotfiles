@@ -12,7 +12,9 @@
 (use-package flycheck
 	     :ensure t
 	     :init
-	     (global-flycheck-mode t))
+	     (progn
+	       (global-flycheck-mode t)
+	       (set-face-attribute 'flycheck-warning nil :foreground nil)))
 
 (use-package elpy
   :bind (("C-c C-o" . elpy-occur-definitions)))
