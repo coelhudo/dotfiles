@@ -2,7 +2,7 @@ Config { font = "-misc-fixed-*-*-*-*-12-*-*-*-*-*-*-*"
        , bgColor = "black"
        , fgColor = "grey"
        , position = TopW L 95
-       , lowerOnStart = True
+       , lowerOnStart = False
 --       , position = Top
        , commands = [ Run Network "wlan0" ["-L","0","-H","32","--normal","green","--high","red"] 10
 		    , Run Cpu ["-L","3","-H","50","--normal","green","--high","red"] 10

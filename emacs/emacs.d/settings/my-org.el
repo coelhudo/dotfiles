@@ -4,6 +4,7 @@
 (require 'org)
 (require 'alert)
 (require 'org-ref)
+(require 'helm-org-rifle)
 
 ;;; Code:
 (org-babel-do-load-languages 'org-babel-load-languages '((latex . t)))

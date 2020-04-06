@@ -1,27 +1,40 @@
 ;;; package --- provides my python configuration
 
-(defun my-python-mode-hooks ()
-  (jedi:setup)
-  (electric-pair-mode))
-(add-hook 'python-mode-hook 'my-python-mode-hooks)
-(setq jedi:complete-on-dot t)                 ;;; optional
+
+(use-package jedi
+  :ensure t
+  :init
+  (add-hook 'python-mode-hook 'jedi:setup)
+  (add-hook 'python-mode-hook 'jedi:ac-setup)
+  (setq jedi:complete-on-dot t))
+
+
 
 (when (executable-find "ipython")
   (setq python-shell-interpreter "ipython"))
 
 (use-package flycheck
-	     :ensure t
-	     :init
-	     (progn
-	       (global-flycheck-mode t)
-	       (set-face-attribute 'flycheck-warning nil :foreground nil)))
+  :ensure t
+  :init
+  (progn
+    (global-flycheck-mode t)
+    (set-face-attribute 'flycheck-warning nil :foreground nil)
+    (set-face-attribute 'flycheck-error nil :background nil)))
 
 (use-package elpy
-  :bind (("C-c C-o" . elpy-occur-definitions)))
-
-(use-package pytest
+  :ensure t
   :init
-  (setq pytest-cmd-flags "-o \"addopts=-x -s\""))
+  (advice-add 'python-mode :before 'elpy-enable)
+  :bind (("C-c C-o" . elpy-occur-definitions))
+  :config
+  (setq elpy-modules (delq 'elpy-module-flymake elpy-modules)))
+
+(use-package python-pytest
+  :after python)
+
+;; (use-package pytest
+;;   :init
+;;   (setq pytest-cmd-flags "-o \"addopts=-x -s\""))
 
 
 

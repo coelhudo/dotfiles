@@ -8,21 +8,26 @@
  '(current-language-environment "UTF-8")
  '(custom-safe-themes
    (quote
-    ("4e753673a37c71b07e3026be75dc6af3efbac5ce335f3707b7d6a110ecb636a3" default)))
+    ("6731049cee8f7cbd542d7b3e1c551f3fab716a92119bd7c77f0bd1ef20849fb8" "85d1dbf2fc0e5d30f236712b831fb24faf6052f3114964fdeadede8e1b329832" "fa2af0c40576f3bde32290d7f4e7aa865eb6bf7ebe31eb9e37c32aa6f4ae8d10" "fa2b58bb98b62c3b8cf3b6f02f058ef7827a8e497125de0254f56e373abee088" "bffa9739ce0752a37d9b1eee78fc00ba159748f50dc328af4be661484848e476" "a2cde79e4cc8dc9a03e7d9a42fabf8928720d420034b66aecc5b665bbf05d4e9" "2642a1b7f53b9bb34c7f1e032d2098c852811ec2881eec2dc8cc07be004e45a0" "51ec7bfa54adf5fff5d466248ea6431097f5a18224788d0bd7eb1257a4f7b773" "13a8eaddb003fd0d561096e11e1a91b029d3c9d64554f8e897b2513dbf14b277" "830877f4aab227556548dc0a28bf395d0abe0e3a0ab95455731c9ea5ab5fe4e1" "7f1d414afda803f3244c6fb4c2c64bea44dac040ed3731ec9d75275b9e831fe5" "2809bcb77ad21312897b541134981282dc455ccd7c14d74cc333b6e549b824f3" "947190b4f17f78c39b0ab1ea95b1e6097cc9202d55c73a702395fc817f899393" "cdb4ffdecc682978da78700a461cdc77456c3a6df1c1803ae2dd55c59fa703e3" "4e753673a37c71b07e3026be75dc6af3efbac5ce335f3707b7d6a110ecb636a3" default)))
  '(dired-dwim-target t)
+ '(ein:output-area-inlined-images t)
+ '(electric-indent-mode nil)
+ '(electric-pair-mode t)
  '(explicit-bash-args (quote ("--noediting" "--login" "-i")))
  '(flycheck-emacs-lisp-load-path nil)
  '(global-linum-mode t)
  '(inhibit-startup-screen t)
  '(jedi:environment-root "jedi")
  '(jedi:environment-virtualenv (quote ("python" "-m" "venv")))
+ '(json-reformat:indent-width 2)
  '(package-archives
    (quote
     (("gnu" . "http://elpa.gnu.org/packages/")
      ("melpa" . "http://melpa.org/packages/"))))
  '(package-selected-packages
    (quote
-    (org-cal org-gcal fill-column-indicator org-re-reveal-ref org-ref crontab-mode org-alert org-pomodoro git-timemachine elpy csv-mode multiple-cursors magit haskell-mode jedi pytest pyvenv android-mode yaml-mode yasnippet use-package flycheck json-mode markdown-mode+ zenburn-theme)))
+    (helm-projectile helm-org-rifle which-key skewer-mode charmap web-mode tern-auto-complete company-tern indium js2-refactor xref-js2 moz dispwatch ein jsx-mode react-snippets js-react-redux-yasnippets tide tss typescript-mode python-pytest monokai-theme atom-dark-theme solarized-theme company-lsp lsp-mode swiper helm-gitlab gitlab org-analyzer org-cal fill-column-indicator org-re-reveal-ref org-ref crontab-mode org-alert org-pomodoro git-timemachine elpy csv-mode multiple-cursors magit haskell-mode jedi pytest pyvenv yaml-mode yasnippet use-package flycheck json-mode markdown-mode+ zenburn-theme)))
+ '(pytest-cmd-flags "-o \"addopts=-s -x\"")
  '(python-environment-virtualenv (quote ("python" "-m" "venv" "--system-site-packages")))
  '(python-shell-virtualenv-root "/home/coelho/dev/dcpoc/.venv/")
  '(pyvenv-virtualenvwrapper-python "/usr/bin/python")
@@ -30,16 +35,22 @@
  '(show-paren-mode t)
  '(tls-checktrust t)
  '(tool-bar-mode nil)
- '(tramp-default-method "ssh"))
+ '(tramp-default-method "ssh")
+ '(web-mode-enable-auto-expanding t))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- )
+ '(flycheck-error ((t (:underline "#F92672" :weight bold))))
+ '(flycheck-warning ((t (:underline "#FD971F" :weight bold))))
+ '(org-level-1 ((t (:inherit default :foreground "#FD971F" :height 1.1))))
+ '(org-level-2 ((t (:inherit default :foreground "#A6E22E" :height 1.1))))
+ '(org-level-3 ((t (:inherit default :foreground "#66D9EF" :height 1.1))))
+ '(org-level-4 ((t (:inherit default :foreground "#E6DB74" :height 1.1)))))
 
 (add-to-list 'default-frame-alist
-	     '(font . "DejaVu Sans Mono-14"))
+	     '(font . "DejaVu Sans Mono-11"))
 
 (package-initialize)
 (package-install-selected-packages)
@@ -50,6 +61,8 @@
 (require 'my-org)
 (require 'my-python)
 (require 'my-markdown)
+(require 'my-js)
+(require 'my-web)
 
 (load-theme 'monokai t)
 (global-set-key (kbd "C-x c") 'mc/edit-lines)
@@ -57,11 +70,94 @@
 (add-hook 'before-save-hook 'whitespace-cleanup)
 
 (defun crontab-e ()
-    "Run `crontab -e' in a emacs buffer."
-    (interactive)
-    (with-editor-async-shell-command "crontab -e"))
+  "Run `crontab -e' in a emacs buffer."
+  (interactive)
+  (with-editor-async-shell-command "crontab -e"))
 
 (ivy-mode 1)
 (setq ivy-use-virtual-buffers t)
 (setq enable-recursive-minibuffers t)
+(eval-after-load 'tramp '(setenv "SHELL" "/bin/bash"))
+
+(defun move-text-internal (arg)
+  (cond
+   ((and mark-active transient-mark-mode)
+    (if (> (point) (mark))
+	(exchange-point-and-mark))
+    (let ((column (current-column))
+	  (text (delete-and-extract-region (point) (mark))))
+      (forward-line arg)
+      (move-to-column column t)
+      (set-mark (point))
+      (insert text)
+      (exchange-point-and-mark)
+      (setq deactivate-mark nil)))
+   (t
+    (beginning-of-line)
+    (when (or (> arg 0) (not (bobp)))
+      (forward-line)
+      (when (or (< arg 0) (not (eobp)))
+	(transpose-lines arg))
+      (forward-line -1)))))
+
+(defun move-text-down (arg)
+  "Move region (transient-mark-mode active) or current line arg lines down."
+  (interactive "*p")
+  (move-text-internal arg))
+
+(defun move-text-up (arg)
+  "Move region (transient-mark-mode active) or current line arg lines up."
+  (interactive "*p")
+  (move-text-internal (- arg)))
+
+(global-set-key [\M-\S-up] 'move-text-up)
+(global-set-key [\M-\S-down] 'move-text-down)
+
+
+(use-package projectile
+  :ensure t
+  :config
+  (define-key projectile-mode-map (kbd "C-x p") 'projectile-command-map)
+  (projectile-mode +1))
+
+(use-package helm-projectile
+  :ensure t
+  :config (helm-projectile-on))
+
+(use-package which-key
+  :ensure t
+  :config (which-key-mode 1))
+
+(use-package auto-complete
+  :ensure t
+  :init
+  (progn
+    (ac-config-default)
+    (global-auto-complete-mode t)
+    ))
+
+(setq search-default-mode #'char-fold-to-regexp)
+(global-set-key (kbd "C-s") 'swiper)
+(global-set-key (kbd "C-r") 'swiper-backward)
+
+;; (defun setup-tide-mode ()
+;;   (interactive)
+;;   (tide-setup)
+;;   (flycheck-mode +1)
+;;   (setq flycheck-check-syntax-automatically '(save mode-enabled))
+;;   (eldoc-mode +1)
+;;   (tide-hl-identifier-mode +1)
+;;   ;; company is an optional dependency. You have to
+;;   ;; install it separately via package-install
+;;   ;; `M-x package-install [ret] company`
+;;   (company-mode +1))
+
+;; aligns annotation to the right hand side
+;;(setq company-tooltip-align-annotations t)
+
+;; formats the buffer before saving
+;; (add-hook 'before-save-hook 'tide-format-before-save)
+
+;; (add-hook 'typescript-mode-hook #'setup-tide-mode)
+
 ;;; .emacs.el ends here

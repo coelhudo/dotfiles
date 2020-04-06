@@ -7,7 +7,6 @@ import XMonad.Util.Run(spawnPipe)
 import XMonad.Util.Cursor
 import XMonad.Util.EZConfig(additionalKeys)
 import XMonad.Actions.GridSelect
-import XMonad.Prompt
 import XMonad.Prompt.Shell
 import qualified XMonad.StackSet as W
 import System.IO
@@ -45,12 +44,13 @@ myKeys = [
        ]
 
 main = do
-    xmproc <- spawnPipe "/usr/bin/xmobar $HOME/.xmobarrc"
+    xmproc <- spawnPipe "~/.cabal/bin/xmobar $HOME/.xmobarrc"
     xmonad $ ewmh defaultConfig
         { startupHook = setDefaultCursor xC_left_ptr
         , workspaces = ["1","2","3","4","5","6","7","8","9","0","-","="]
         , manageHook = manageDocks <+> myManageHook -- make sure to include myManageHook definition from above
                         <+> manageHook defaultConfig
+        , handleEventHook = handleEventHook defaultConfig <+> fullscreenEventHook
         , layoutHook = avoidStruts  $  layoutHook defaultConfig
         , logHook = dynamicLogWithPP xmobarPP
                         { ppOutput = hPutStrLn xmproc
