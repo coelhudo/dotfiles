@@ -1,13 +1,16 @@
 ;;; package --- provides my python configuration
 
 
-(use-package jedi
-  :ensure t
-  :init
-  (add-hook 'python-mode-hook 'jedi:setup)
-  (add-hook 'python-mode-hook 'jedi:ac-setup)
-  (setq jedi:complete-on-dot t))
+;; (use-package company-jedi
+;;   :ensure t
+;;   :init
+;;   (add-hook 'python-mode-hook 'jedi:setup)
+;;   ;; (add-hook 'python-mode-hook 'jedi:ac-setup)
+;;   (setq jedi:complete-on-dot t))
 
+;; (use-package ein:notebook
+;;   :init
+;;   (setq linum-mode nil))
 
 
 (when (executable-find "ipython")
@@ -25,7 +28,8 @@
   :ensure t
   :init
   (advice-add 'python-mode :before 'elpy-enable)
-  :bind (("C-c C-o" . elpy-occur-definitions))
+  :bind (("C-c C-o" . elpy-occur-definitions)
+	 ("C-c ." . elpy-goto-definition))
   :config
   (setq elpy-modules (delq 'elpy-module-flymake elpy-modules)))
 

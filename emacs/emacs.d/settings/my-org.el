@@ -13,6 +13,8 @@
 (add-to-list 'alert-user-configuration '(((:category . "org-pomodoro")) libnotify nil))
 
 (use-package org-mode
+  :init
+  (add-hook 'org-mode-hook 'turn-on-auto-fill)
   :bind (("C-c l" . org-store-link)
 	 ("C-c a" . org-agenda)
 	 ("C-c c" . org-capture)
@@ -20,19 +22,23 @@
 
 (setq org-agenda-files (list "~/Dropbox/TODO/"))
 (setq org-capture-templates
-      '(("a" "Appointment" entry (file "~/Dropbox/TODO/gcal.org")
-	 "\n* %?\n:PROPERTIES:\n:calendar-id: coelhudo@gmail.com\n:END:\n:org-gcal:\n%^T\n:END:\n")
-	("t" "Todo" entry (file+headline "~/Dropbox/TODO/TODO.org" "Backlog")
+      '(("t" "Todo" entry (file+headline "~/Dropbox/TODO/TODO.org" "Backlog")
 	 "** TODO %?\n" :prepend t)
 	("n" "Notes" entry (file "~/Dropbox/TODO/notes.org")
 	 "* %?\n%u" :prepend t)))
 
 (setq org-todo-keywords
-  '((sequence "TODO(t)" "CURRENT(c)" "WAITING(w)" "|" "DONE(d)")))
+  '((sequence "TODO(t)" "CURRENT(c)" "WAITING(w)" "NEXT(n)" "|" "DONE(d)" "CANCELLED(a)")))
 (setq org-todo-keyword-faces
-      '(("TODO" . "indian red") ("CURRENT" . "yellow")
-	("WAITING" . "#C0C0C0")
-	("DONE" . "medium spring green")))
+      '(("TODO" . "indian red")
+	("CURRENT" . "yellow")
+	("WAITING" . "#a020f0")
+	("NEXT" . "#00ced1")
+	("DONE" . "#228b22")
+	("CANCELLED" . "#a9a9a9")))
+
+(fset 'create-bibsection
+   [?* ?* ?  ?T return ?  ?  ?  ?- ?  ?\\ ?t ?e ?x ?t ?t ?t ?\{ ?\C-f return tab ?< ?s tab ?b ?i ?b ?t ?e ?x ?\C-n ?\C-n return return ?* ?* ?* ?  ?J ?u ?s ?t ?i ?f ?i ?c ?a ?t ?i ?o ?n return return ?* ?* ?* ?  ?M ?e ?t ?h ?o ?d return return ?* ?* ?* ?  ?E ?v ?a ?l ?u ?a ?t ?i ?o ?n ?  ?a ?n ?d ?  ?C ?o ?n ?c ?l ?u ?s ?i ?o ?n])
 
 
 

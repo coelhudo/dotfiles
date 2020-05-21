@@ -35,10 +35,8 @@ myKeys = [
         , ((mod4Mask .|. shiftMask, xK_w), spawn "Telegram")
         , ((mod4Mask, xK_z), spawn "xlock")
         , ((mod4Mask, xK_g), goToSelected defaultGSConfig)
-        , ((mod4Mask, xK_h), sendMessage Shrink)
-        , ((mod4Mask, xK_l), sendMessage Expand)
         , ((mod4Mask, xK_t     ), withFocused $ windows . W.sink)
-        , ((mod4Mask .|. controlMask, xK_x), shellPrompt def)
+        -- , ((mod4Mask .|. controlMask, xK_x), shellPrompt def)
         , ((mod4Mask, xK_comma ), sendMessage (IncMasterN 1))
         , ((mod4Mask, xK_period), sendMessage (IncMasterN (-1)))
        ]
@@ -47,7 +45,7 @@ main = do
     xmproc <- spawnPipe "~/.cabal/bin/xmobar $HOME/.xmobarrc"
     xmonad $ ewmh defaultConfig
         { startupHook = setDefaultCursor xC_left_ptr
-        , workspaces = ["1","2","3","4","5","6","7","8","9","0","-","="]
+        , workspaces = ["1","2","3","4","5","6","7","8","9"]
         , manageHook = manageDocks <+> myManageHook -- make sure to include myManageHook definition from above
                         <+> manageHook defaultConfig
         , handleEventHook = handleEventHook defaultConfig <+> fullscreenEventHook
