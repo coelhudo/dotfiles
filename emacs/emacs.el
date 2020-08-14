@@ -27,10 +27,8 @@
      ("melpa" . "http://melpa.org/packages/"))))
  '(package-selected-packages
    (quote
-    (lsp-ui flycheck-clang-analyzer cmake-mode company-jedi mw-thesaurus flycheck-mypy nov ansi package-build shut-up epl git commander f dash s helm-projectile helm-org-rifle which-key skewer-mode charmap web-mode tern-auto-complete company-tern js2-refactor xref-js2 moz dispwatch ein jsx-mode react-snippets js-react-redux-yasnippets tide tss typescript-mode python-pytest monokai-theme atom-dark-theme solarized-theme company-lsp lsp-mode swiper helm-gitlab gitlab org-analyzer org-cal fill-column-indicator org-re-reveal-ref org-ref crontab-mode org-alert org-pomodoro git-timemachine elpy csv-mode multiple-cursors magit haskell-mode jedi pytest pyvenv yaml-mode yasnippet use-package flycheck json-mode markdown-mode+ zenburn-theme)))
- '(pytest-cmd-flags "-o \"addopts=-s -x\"")
+    (projectile-direnv direnv smartparens expand-region lsp-ui flycheck-clang-analyzer cmake-mode company-jedi mw-thesaurus flycheck-mypy nov ansi package-build shut-up epl git commander f dash s helm-projectile helm-org-rifle which-key skewer-mode charmap web-mode tern-auto-complete company-tern js2-refactor xref-js2 moz dispwatch ein jsx-mode react-snippets js-react-redux-yasnippets tide tss typescript-mode python-pytest monokai-theme atom-dark-theme solarized-theme company-lsp lsp-mode swiper helm-gitlab gitlab org-analyzer org-cal fill-column-indicator org-re-reveal-ref org-ref crontab-mode org-alert org-pomodoro git-timemachine elpy csv-mode multiple-cursors magit haskell-mode jedi pytest pyvenv yaml-mode yasnippet use-package flycheck json-mode markdown-mode+ zenburn-theme)))
  '(python-environment-virtualenv (quote ("python" "-m" "venv" "--system-site-packages")))
- '(python-shell-virtualenv-root "/home/coelho/dev/dcpoc/.venv/")
  '(pyvenv-virtualenvwrapper-python "/usr/bin/python")
  '(shell-file-name "/bin/zsh")
  '(show-paren-mode t)
@@ -70,6 +68,7 @@
 (load-theme 'monokai t)
 (global-set-key (kbd "C-x c") 'mc/edit-lines)
 (global-set-key (kbd "C-x C-b") 'ibuffer)
+(global-set-key (kbd "C-=") 'er/expand-region)
 (add-hook 'before-save-hook 'whitespace-cleanup)
 
 (defun crontab-e ()
@@ -168,7 +167,10 @@
 (use-package lsp-ui
   :after lsp-mode
   :diminish
-  :commands lsp-ui-mode)
+  :commands lsp-ui-mode
+  :config
+  (setq lsp-ui-doc-delay 1)
+  (setq lsp-ui-doc-include-signature t))
 
 (use-package tex-mode
   :init

@@ -56,6 +56,15 @@ fi
 export SSH_AUTH_SOCK=~/.ssh/ssh_auth_sock
 ssh-add -l > /dev/null || ssh-add
 
+if [ ! -S ~/.gnupg/gnupg_auth_sock ]; then
+  eval $( gpg-agent --daemon --options ~/.gnupg/gpg-agent.conf )
+  ln -sf "$SSH_AUTH_SOCK" ~/.gnupg/gnupg_auth_sock
+fi
+export SSH_AUTH_SOCK=~/.gnupg/gnupg_auth_sock
+
+GPG_TTY=$(tty)
+export GPG_TTY
+
 export LESS='-R'
 
 function git_prompt_info() {

@@ -1,4 +1,5 @@
 (setq c-mode-hook
+
       (function (lambda ()
 		  (setq indent-tabs-mode nil)
 		  (setq c-basic-offset 4))))
@@ -34,5 +35,7 @@
   )
 
 (add-hook 'cmake-mode-hook (function cmake-rename-buffer))
+
+(global-set-key (kbd "C-x C-o") 'ff-find-other-file)
 
 (provide 'my-c_cpp)

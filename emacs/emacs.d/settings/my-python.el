@@ -36,9 +36,9 @@
 (use-package python-pytest
   :after python)
 
-;; (use-package pytest
-;;   :init
-;;   (setq pytest-cmd-flags "-o \"addopts=-x -s\""))
+(use-package pytest
+  :init
+  (setq pytest-cmd-flags "-o \"addopts=-x -s\""))
 
 
 

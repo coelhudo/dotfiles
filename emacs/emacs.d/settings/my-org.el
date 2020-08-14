@@ -7,7 +7,8 @@
 (require 'helm-org-rifle)
 
 ;;; Code:
-(org-babel-do-load-languages 'org-babel-load-languages '((latex . t)))
+(org-babel-do-load-languages 'org-babel-load-languages '((latex . t)
+							 (python . t)))
 (setq org-latex-pdf-process (list "latexmk -pdf -f %f -output-directory=%o"))
 
 (add-to-list 'alert-user-configuration '(((:category . "org-pomodoro")) libnotify nil))
