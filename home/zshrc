@@ -39,15 +39,11 @@ promptinit
 autoload bashcompinit
 bashcompinit
 
-#autoload -U colors
-#colors
-
-#source $ZSH_CUSTOM/themes/awesomepanda.zsh-theme
-
-export FOAM_INST_DIR=~/.local/opt/openfoam/OpenFOAM-v1906
-alias ofoam="source ${FOAM_INST_DIR}/OpenFOAM-5.0/etc/bashrc"
+#export FOAM_INST_DIR=~/.local/opt/openfoam/OpenFOAM-v1906
+#alias ofoam="source ${FOAM_INST_DIR}/OpenFOAM-5.0/etc/bashrc"
 
 export PATH=$PATH:~/.opam/default/bin:~/.local/bin:~/.cabal/bin
+export MANPATH=$HOME/.local/man:$HOME/.local/share/man:$MANPATH
 export EDITOR=emacs
 
 if [ ! -S ~/.ssh/ssh_auth_sock ]; then

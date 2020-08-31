@@ -49,7 +49,9 @@
  '(org-level-4 ((t (:inherit default :foreground "#E6DB74" :height 1.1)))))
 
 (add-to-list 'default-frame-alist
-	     '(font . "DejaVu Sans Mono-11"))
+	     '(font . "Cascadia Mono-11"))
+(when (member "Symbola" (font-family-list))
+  (set-fontset-font t 'unicode "Symbola" nil 'prepend))
 
 (package-initialize)
 (package-install-selected-packages)
@@ -115,6 +117,10 @@
 (global-set-key [\M-\S-up] 'move-text-up)
 (global-set-key [\M-\S-down] 'move-text-down)
 
+(use-package unicode-fonts
+   :ensure t
+   :config
+    (unicode-fonts-setup))
 
 (use-package projectile
   :ensure t
