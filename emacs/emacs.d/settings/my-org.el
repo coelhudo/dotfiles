@@ -13,9 +13,12 @@
 
 (add-to-list 'alert-user-configuration '(((:category . "org-pomodoro")) libnotify nil))
 
+(add-to-list 'load-path "~/dev/ikiwiki-org-plugin/lisp")
+
 (use-package org-mode
   :init
   (add-hook 'org-mode-hook 'turn-on-auto-fill)
+  (add-hook 'org-mode-hook 'flyspell-mode)
   :bind (("C-c l" . org-store-link)
 	 ("C-c a" . org-agenda)
 	 ("C-c c" . org-capture)

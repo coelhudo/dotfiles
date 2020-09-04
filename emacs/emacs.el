@@ -3,32 +3,29 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(alert-default-style (quote message))
+ '(alert-default-style 'message)
  '(column-number-mode t)
  '(current-language-environment "UTF-8")
  '(custom-safe-themes
-   (quote
-    ("6731049cee8f7cbd542d7b3e1c551f3fab716a92119bd7c77f0bd1ef20849fb8" "85d1dbf2fc0e5d30f236712b831fb24faf6052f3114964fdeadede8e1b329832" "fa2af0c40576f3bde32290d7f4e7aa865eb6bf7ebe31eb9e37c32aa6f4ae8d10" "fa2b58bb98b62c3b8cf3b6f02f058ef7827a8e497125de0254f56e373abee088" "bffa9739ce0752a37d9b1eee78fc00ba159748f50dc328af4be661484848e476" "a2cde79e4cc8dc9a03e7d9a42fabf8928720d420034b66aecc5b665bbf05d4e9" "2642a1b7f53b9bb34c7f1e032d2098c852811ec2881eec2dc8cc07be004e45a0" "51ec7bfa54adf5fff5d466248ea6431097f5a18224788d0bd7eb1257a4f7b773" "13a8eaddb003fd0d561096e11e1a91b029d3c9d64554f8e897b2513dbf14b277" "830877f4aab227556548dc0a28bf395d0abe0e3a0ab95455731c9ea5ab5fe4e1" "7f1d414afda803f3244c6fb4c2c64bea44dac040ed3731ec9d75275b9e831fe5" "2809bcb77ad21312897b541134981282dc455ccd7c14d74cc333b6e549b824f3" "947190b4f17f78c39b0ab1ea95b1e6097cc9202d55c73a702395fc817f899393" "cdb4ffdecc682978da78700a461cdc77456c3a6df1c1803ae2dd55c59fa703e3" "4e753673a37c71b07e3026be75dc6af3efbac5ce335f3707b7d6a110ecb636a3" default)))
+   '("6731049cee8f7cbd542d7b3e1c551f3fab716a92119bd7c77f0bd1ef20849fb8" "85d1dbf2fc0e5d30f236712b831fb24faf6052f3114964fdeadede8e1b329832" "fa2af0c40576f3bde32290d7f4e7aa865eb6bf7ebe31eb9e37c32aa6f4ae8d10" "fa2b58bb98b62c3b8cf3b6f02f058ef7827a8e497125de0254f56e373abee088" "bffa9739ce0752a37d9b1eee78fc00ba159748f50dc328af4be661484848e476" "a2cde79e4cc8dc9a03e7d9a42fabf8928720d420034b66aecc5b665bbf05d4e9" "2642a1b7f53b9bb34c7f1e032d2098c852811ec2881eec2dc8cc07be004e45a0" "51ec7bfa54adf5fff5d466248ea6431097f5a18224788d0bd7eb1257a4f7b773" "13a8eaddb003fd0d561096e11e1a91b029d3c9d64554f8e897b2513dbf14b277" "830877f4aab227556548dc0a28bf395d0abe0e3a0ab95455731c9ea5ab5fe4e1" "7f1d414afda803f3244c6fb4c2c64bea44dac040ed3731ec9d75275b9e831fe5" "2809bcb77ad21312897b541134981282dc455ccd7c14d74cc333b6e549b824f3" "947190b4f17f78c39b0ab1ea95b1e6097cc9202d55c73a702395fc817f899393" "cdb4ffdecc682978da78700a461cdc77456c3a6df1c1803ae2dd55c59fa703e3" "4e753673a37c71b07e3026be75dc6af3efbac5ce335f3707b7d6a110ecb636a3" default))
  '(dired-dwim-target t)
  '(display-line-numbers-mode t t)
  '(ein:output-area-inlined-images t)
  '(electric-indent-mode nil)
  '(electric-pair-mode t)
- '(elpy-company-post-completion-function (quote ignore))
- '(explicit-bash-args (quote ("--noediting" "--login" "-i")))
+ '(elpy-company-post-completion-function 'ignore)
+ '(explicit-bash-args '("--noediting" "--login" "-i"))
  '(flycheck-emacs-lisp-load-path nil)
  '(inhibit-startup-screen t)
  '(jedi:environment-root "jedi")
- '(jedi:environment-virtualenv (quote ("python" "-m" "venv")))
+ '(jedi:environment-virtualenv '("python" "-m" "venv"))
  '(json-reformat:indent-width 2)
  '(package-archives
-   (quote
-    (("gnu" . "http://elpa.gnu.org/packages/")
-     ("melpa" . "http://melpa.org/packages/"))))
+   '(("gnu" . "http://elpa.gnu.org/packages/")
+     ("melpa" . "http://melpa.org/packages/")))
  '(package-selected-packages
-   (quote
-    (projectile-direnv direnv smartparens expand-region lsp-ui flycheck-clang-analyzer cmake-mode company-jedi mw-thesaurus flycheck-mypy nov ansi package-build shut-up epl git commander f dash s helm-projectile helm-org-rifle which-key skewer-mode charmap web-mode tern-auto-complete company-tern js2-refactor xref-js2 moz dispwatch ein jsx-mode react-snippets js-react-redux-yasnippets tide tss typescript-mode python-pytest monokai-theme atom-dark-theme solarized-theme company-lsp lsp-mode swiper helm-gitlab gitlab org-analyzer org-cal fill-column-indicator org-re-reveal-ref org-ref crontab-mode org-alert org-pomodoro git-timemachine elpy csv-mode multiple-cursors magit haskell-mode jedi pytest pyvenv yaml-mode yasnippet use-package flycheck json-mode markdown-mode+ zenburn-theme)))
- '(python-environment-virtualenv (quote ("python" "-m" "venv" "--system-site-packages")))
+   '(unicode-fonts projectile-direnv direnv smartparens expand-region lsp-ui flycheck-clang-analyzer cmake-mode company-jedi mw-thesaurus flycheck-mypy nov ansi package-build shut-up epl git commander f dash s helm-projectile helm-org-rifle which-key skewer-mode charmap web-mode tern-auto-complete company-tern js2-refactor xref-js2 moz dispwatch ein jsx-mode react-snippets js-react-redux-yasnippets tide tss typescript-mode python-pytest monokai-theme atom-dark-theme solarized-theme company-lsp lsp-mode swiper helm-gitlab gitlab org-analyzer org-cal fill-column-indicator org-re-reveal-ref org-ref crontab-mode org-alert org-pomodoro git-timemachine elpy csv-mode multiple-cursors magit haskell-mode jedi pytest pyvenv yaml-mode yasnippet use-package flycheck json-mode markdown-mode+ zenburn-theme))
+ '(python-environment-virtualenv '("python" "-m" "venv" "--system-site-packages"))
  '(pyvenv-virtualenvwrapper-python "/usr/bin/python")
  '(shell-file-name "/bin/zsh")
  '(show-paren-mode t)
