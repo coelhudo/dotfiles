@@ -11,6 +11,11 @@
 							 (python . t)))
 (setq org-latex-pdf-process (list "latexmk -pdf -f %f -output-directory=%o"))
 
+(use-package ob-python
+  :after org
+  :init
+  (setq org-babel-python-command "python3"))
+
 (add-to-list 'alert-user-configuration '(((:category . "org-pomodoro")) libnotify nil))
 
 (add-to-list 'load-path "~/dev/ikiwiki-org-plugin/lisp")
@@ -19,6 +24,7 @@
   :init
   (add-hook 'org-mode-hook 'turn-on-auto-fill)
   (add-hook 'org-mode-hook 'flyspell-mode)
+  (add-hook 'org-mode-hook '(lambda ()(setq fill-column 90)))
   :bind (("C-c l" . org-store-link)
 	 ("C-c a" . org-agenda)
 	 ("C-c c" . org-capture)
