@@ -24,7 +24,7 @@
    '(("gnu" . "http://elpa.gnu.org/packages/")
      ("melpa" . "http://melpa.org/packages/")))
  '(package-selected-packages
-   '(unicode-fonts projectile-direnv direnv smartparens expand-region lsp-ui flycheck-clang-analyzer cmake-mode company-jedi mw-thesaurus flycheck-mypy nov ansi package-build shut-up epl git commander f dash s helm-projectile helm-org-rifle which-key skewer-mode charmap web-mode tern-auto-complete company-tern js2-refactor xref-js2 moz dispwatch ein jsx-mode react-snippets js-react-redux-yasnippets tide tss typescript-mode python-pytest monokai-theme atom-dark-theme solarized-theme company-lsp lsp-mode swiper helm-gitlab gitlab org-analyzer org-cal fill-column-indicator org-re-reveal-ref org-ref crontab-mode org-alert org-pomodoro git-timemachine elpy csv-mode multiple-cursors magit haskell-mode jedi pytest pyvenv yaml-mode yasnippet use-package flycheck json-mode markdown-mode+ zenburn-theme))
+   '(chess unicode-fonts projectile-direnv direnv smartparens expand-region lsp-ui flycheck-clang-analyzer cmake-mode company-jedi mw-thesaurus flycheck-mypy nov ansi package-build shut-up epl git commander f dash s helm-projectile helm-org-rifle which-key skewer-mode charmap web-mode tern-auto-complete company-tern js2-refactor xref-js2 moz dispwatch ein jsx-mode react-snippets js-react-redux-yasnippets tide tss typescript-mode python-pytest monokai-theme atom-dark-theme solarized-theme lsp-mode swiper helm-gitlab gitlab org-analyzer org-cal fill-column-indicator org-re-reveal-ref org-ref crontab-mode org-alert org-pomodoro git-timemachine elpy csv-mode multiple-cursors magit haskell-mode jedi pytest pyvenv yaml-mode yasnippet use-package flycheck json-mode markdown-mode+ zenburn-theme))
  '(python-environment-virtualenv '("python" "-m" "venv" "--system-site-packages"))
  '(pyvenv-virtualenvwrapper-python "/usr/bin/python")
  '(shell-file-name "/bin/zsh")
@@ -155,10 +155,6 @@
   (global-company-mode t))
 
 
-(use-package company-lsp
-  :ensure t
-  :config
-  (push 'company-lsp company-backends))
 
 (use-package lsp-mode
   :ensure t
