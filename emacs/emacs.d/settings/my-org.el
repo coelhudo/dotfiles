@@ -30,15 +30,42 @@
 	 ("C-c c" . org-capture)
 	 ("C-c b" . org-switchb)))
 
-(setq org-agenda-files (list "~/Dropbox/TODO/"))
+;;; GTD configuration from here:
+;;; https://emacs.cafe/emacs/orgmode/gtd/2017/06/30/orgmode-gtd.html
+(setq org-agenda-files '("~/Dropbox/TODO/TODO.org"
+			 "~/Dropbox/TODO/inbox.org"
+			 "~/Dropbox/TODO/gtd.org"
+			 "~/Dropbox/TODO/tickler.org"))
+
+(setq org-tag-alist '((:startgrouptag)
+		      ("@phd" . ?p)
+		      (:grouptags)
+		      ("writing" . ?w) ("arps" . ?a) ("dcpoc" . ?d) ("ta" . ?t)
+		      (:endgrouptag)
+		      ("@life" . ?l)
+		      ))
+
+(setq org-agenda-custom-commands
+      '(
+	("p" "PhD tasks" tags-todo "@phd"
+	 ((org-agenda-overriding-header "PhD")))
+	("l" "Life related tasks" tags-todo "@life"
+	 ((org-agenda-overriding-header "Life")))
+	))
+
+(setq org-refile-targets '(("~/Dropbox/TODO/gtd.org" :maxlevel . 3)
+			   ("~/Dropbox/TODO/someday.org" :level . 1)
+			   ("~/Dropbox/TODO/tickler.org" :maxlevel . 2)))
+
 (setq org-capture-templates
-      '(("t" "Todo" entry (file+headline "~/Dropbox/TODO/TODO.org" "Backlog")
-	 "** TODO %?\n" :prepend t)
-	("n" "Notes" entry (file "~/Dropbox/TODO/notes.org")
-	 "* %?\n%u" :prepend t)))
+      '(("t" "Todo" entry (file+headline "~/Dropbox/TODO/inbox.org" "Tasks")
+	 "* TODO %?\n" :prepend t)
+	("T" "Tickler" entry "~/Dropbox/TODO/tickler.org"
+	 "* %i% \n %U")))
 
 (setq org-todo-keywords
   '((sequence "TODO(t)" "CURRENT(c)" "WAITING(w)" "NEXT(n)" "|" "DONE(d)" "CANCELLED(a)")))
+
 (setq org-todo-keyword-faces
       '(("TODO" . "indian red")
 	("CURRENT" . "yellow")
