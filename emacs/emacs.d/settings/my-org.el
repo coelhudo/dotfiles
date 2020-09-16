@@ -42,7 +42,12 @@
 		      (:grouptags)
 		      ("writing" . ?w) ("arps" . ?a) ("dcpoc" . ?d) ("ta" . ?t)
 		      (:endgrouptag)
+		      (:startgrouptag)
 		      ("@life" . ?l)
+		      (:grouptags)
+		      ("opensource" . ?o) ("study" . ?s) ("bills" . ?b)
+		      ("errands". ?e) ("tech_issues" . ?i)
+		      (:endgrouptag)
 		      ))
 
 (setq org-agenda-custom-commands
