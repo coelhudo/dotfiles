@@ -45,7 +45,7 @@
 		      (:startgrouptag)
 		      ("@life" . ?l)
 		      (:grouptags)
-		      ("opensource" . ?o) ("study" . ?s) ("bills" . ?b)
+		      ("opensource" . ?o) ("study" . ?s) ("financial" . ?f)
 		      ("errands". ?e) ("tech_issues" . ?i)
 		      (:endgrouptag)
 		      ))
@@ -63,7 +63,7 @@
 			   ("~/Dropbox/TODO/tickler.org" :maxlevel . 2)))
 
 (setq org-capture-templates
-      '(("t" "Todo" entry (file+headline "~/Dropbox/TODO/inbox.org" "Tasks")
+      '(("t" "Todo" entry (file+headline "~/Dropbox/TODO/inbox.org" "Inbox")
 	 "* TODO %?\n" :prepend t)
 	("T" "Tickler" entry "~/Dropbox/TODO/tickler.org"
 	 "* %i% \n %U")))
