@@ -40,6 +40,7 @@
   :init
   (setq pytest-cmd-flags "-o \"addopts=-x -s\""))
 
+(global-set-key (kbd "C-x 5 k") 'ein:worksheet-kill-cell-km)
 
 
 (provide 'my-python)

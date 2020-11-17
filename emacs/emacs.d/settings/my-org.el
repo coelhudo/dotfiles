@@ -65,8 +65,7 @@
 (setq org-capture-templates
       '(("t" "Todo" entry (file+headline "~/Dropbox/TODO/inbox.org" "Inbox")
 	 "* TODO %?\n" :prepend t)
-	("T" "Tickler" entry "~/Dropbox/TODO/tickler.org"
-	 "* %i% \n %U")))
+	("T" "Tickler" entry (file "~/Dropbox/TODO/tickler.org") "** %? \n" )));;; insert deadline keyword here
 
 (setq org-todo-keywords
   '((sequence "TODO(t)" "CURRENT(c)" "WAITING(w)" "NEXT(n)" "|" "DONE(d)" "CANCELLED(a)")))
@@ -79,6 +78,7 @@
 	("DONE" . "#228b22")
 	("CANCELLED" . "#a9a9a9")))
 
+;;TODO: make a proper function using elisp.
 (fset 'create-bibsection
    [?* ?* ?  ?T return ?  ?  ?  ?- ?  ?\\ ?t ?e ?x ?t ?t ?t ?\{ ?\C-f return tab ?< ?s tab ?b ?i ?b ?t ?e ?x ?\C-n ?\C-n return return ?* ?* ?* ?  ?J ?u ?s ?t ?i ?f ?i ?c ?a ?t ?i ?o ?n return return ?* ?* ?* ?  ?M ?e ?t ?h ?o ?d return return ?* ?* ?* ?  ?E ?v ?a ?l ?u ?a ?t ?i ?o ?n ?  ?a ?n ?d ?  ?C ?o ?n ?c ?l ?u ?s ?i ?o ?n])
 
