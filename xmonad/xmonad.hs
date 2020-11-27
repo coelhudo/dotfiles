@@ -25,7 +25,7 @@ myManageHook = composeAll
 
 myKeys = [
        ((mod4Mask .|. shiftMask, xK_z), spawn "xscreensaver-command -lock")
-        , ((controlMask, xK_Print), spawn "sleep 0.2; scrot -s")
+        , ((controlMask, xK_Print), spawn "sleep 0.2; maim -s | xclip -selection clipboard -t image/png")
         , ((mod4Mask, xK_d), spawn "show_date.sh")
         , ((mod4Mask, xK_c), spawn "show_time.sh")
         , ((mod4Mask, xK_b), spawn "show_battery.sh")
@@ -35,10 +35,10 @@ myKeys = [
         , ((mod4Mask, xK_s), spawn "skype")
         , ((0, xF86XK_MonBrightnessUp), spawn "/usr/bin/xbacklight -inc 10 & /usr/bin/notify-send \"Volume $(/usr/bin/xbacklight -get)\" -t 400")
         , ((0, xF86XK_MonBrightnessDown), spawn "/usr/bin/xbacklight -dec 10 & /usr/bin/notify-send \"Volume $(/usr/bin/xbacklight -get)\" -t 400")
-        , ((0, xF86XK_AudioRaiseVolume), spawn "/usr/bin/pamixer --sink 0 -i 5 & /usr/bin/notify-send \"Volume $(/usr/bin/pamixer --sink 0 --get-volume-human)\" -t 400")
-        , ((0, xF86XK_AudioLowerVolume), spawn "/usr/bin/pamixer --sink 0 -d 5 & /usr/bin/notify-send \"Volume $(/usr/bin/pamixer --sink 0 --get-volume-human)\" -t 400")
+        , ((0, xF86XK_AudioRaiseVolume), spawn "/usr/bin/pamixer --sink $(/usr/bin/pamixer --list-sinks | sed -n '2p' | awk '{print $1}') -i 5 & /usr/bin/notify-send \"Volume $(/usr/bin/pamixer --sink $(/usr/bin/pamixer --list-sinks | sed -n '2p' | awk '{print $1}') --get-volume-human)\" -t 400")
+        , ((0, xF86XK_AudioLowerVolume), spawn "/usr/bin/pamixer --sink $(/usr/bin/pamixer --list-sinks | sed -n '2p' | awk '{print $1}') -d 5 & /usr/bin/notify-send \"Volume $(/usr/bin/pamixer --sink $(/usr/bin/pamixer --list-sinks | sed -n '2p' | awk '{print $1}') --get-volume-human)\" -t 400")
         , ((0, xF86XK_AudioMicMute), spawn "/usr/bin/pactl set-source-mute 1 toggle & /usr/bin/notify-send \"Mic Toggle\" -t 400")
-        , ((0, xF86XK_AudioMute), spawn "/usr/bin/pamixer --sink 0 -t & /usr/bin/notify-send \"Mute $(/usr/bin/pamixer --sink 0 --get-mute)\" -t 400")
+        , ((0, xF86XK_AudioMute), spawn "/usr/bin/pamixer --sink $(/usr/bin/pamixer --list-sinks | sed -n '2p' | awk '{print $1}') -t & /usr/bin/notify-send \"Mute $(/usr/bin/pamixer --sink $(/usr/bin/pamixer --list-sinks | sed -n '2p' | awk '{print $1}') --get-mute)\" -t 400")
         , ((mod4Mask .|. shiftMask, xK_w), spawn "Telegram")
         , ((mod4Mask, xK_z), spawn "xlock")
         , ((mod4Mask, xK_g), goToSelected defaultGSConfig)
