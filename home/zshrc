@@ -45,6 +45,7 @@ bashcompinit
 
 #export FOAM_INST_DIR=~/.local/opt/openfoam/OpenFOAM-v1906
 #alias ofoam="source ${FOAM_INST_DIR}/OpenFOAM-5.0/etc/bashrc"
+alias ls="ls --color"
 
 export PATH=$PATH:~/.opam/default/bin:~/.local/bin:~/.cabal/bin
 export MANPATH=$HOME/.local/man:$HOME/.local/share/man:$MANPATH

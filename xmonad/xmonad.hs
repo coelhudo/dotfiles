@@ -28,6 +28,7 @@ myKeys = [
         , ((controlMask, xK_Print), spawn "sleep 0.2; maim -s | xclip -selection clipboard -t image/png")
         , ((mod4Mask, xK_d), spawn "show_date.sh")
         , ((mod4Mask, xK_c), spawn "show_time.sh")
+        , ((mod4Mask, xK_p), spawn "rofi -show run")
         , ((mod4Mask, xK_b), spawn "show_battery.sh")
         , ((mod4Mask .|. shiftMask, xK_e), spawn "emacs")
         , ((mod4Mask, xK_f), spawn "firefox")
@@ -62,6 +63,6 @@ main = do
                         , ppTitle = xmobarColor "green" "" . shorten 50
                         }
         , modMask = mod4Mask     -- Rebind Mod to the Windows key
-        , terminal = "st -e zsh -ls"
+        , terminal = "urxvt"
         } `additionalKeys`
         myKeys
