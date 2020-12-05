@@ -56,7 +56,8 @@ URxvt.boldFont: xft:Cascadia Mono:style=Bold:size=14
 URxvt.italicFont: xft:Cascadia Mono:style=Italic:size=14
 URxvt.boldItalicFont: xft:Cascadia Mono:style=Bold Italic:size=14
 
-URxvt.perl-ext-common: default,clipboard,url-select,keyboard-select
+URxvt.perl-ext-common: default,clipboard,url-select,keyboard-select, font-size
+
 URxvt.copyCommand: xclip -i -selection clipboard
 URxvt.pasteCommand: xclip -o -selection clipboard
 URxvt.keysym.M-c: perl:clipboard:copy
@@ -65,3 +66,12 @@ URxvt.keysym.M-C-v: perl:clipboard:paste_escaped
 URxvt.keysym.M-Escape: perl:keyboard-select:activate
 URxvt.keysym.M-s: perl:keyboard-select:search
 URxvt.keysym.M-u: perl:url-select:select_next
+
+URxvt.keysym.C-Up:     font-size:increase
+URxvt.keysym.C-Down:   font-size:decrease
+URxvt.keysym.C-S-Up:   font-size:incglobal
+URxvt.keysym.C-S-Down: font-size:decglobal
+URxvt.keysym.C-equal:  font-size:reset
+URxvt.keysym.C-slash:  font-size:show
+
+rofi.font: Cascadia Mono 10
