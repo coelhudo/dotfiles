@@ -12,14 +12,15 @@
 
 (use-package lsp-mode
   :hook ((js2-mode
-	  jsx-mode)
-	 . lsp-deferred))
+          jsx-mode
+          rjsx-mode)
+         . lsp-deferred))
 
 (add-hook 'js2-mode-hook 'js2-imenu-extras-mode)
 (add-hook 'js2-mode-hook 'electric-pair-mode)
 (add-hook 'js2-mode-hook 'js2-refactor-mode)
 (add-hook 'js2-mode-hook (lambda ()
-			   (add-hook 'xref-backend-functions #'xref-js2-xref-backend nil t)))
+                           (add-hook 'xref-backend-functions #'xref-js2-xref-backend nil t)))
 (add-hook 'js2-mode-hook 'skewer-mode)
 
 (js2r-add-keybindings-with-prefix "C-c C-r")
