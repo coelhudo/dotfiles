@@ -7,11 +7,7 @@
 ;;   (add-hook 'python-mode-hook 'jedi:setup)
 ;;   ;; (add-hook 'python-mode-hook 'jedi:ac-setup)
 ;;   (setq jedi:complete-on-dot t))
-
-;; (use-package ein:notebook
-;;   :init
-;;   (setq linum-mode nil))
-
+(setq python-indent-guess-indent-offset nil)
 
 (when (executable-find "ipython")
   (setq python-shell-interpreter "ipython"))
@@ -29,9 +25,10 @@
   :init
   (advice-add 'python-mode :before 'elpy-enable)
   :bind (("C-c C-o" . elpy-occur-definitions)
-	 ("C-c ." . elpy-goto-definition))
+         ("C-c ." . elpy-goto-definition))
   :config
-  (setq elpy-modules (delq 'elpy-module-flymake elpy-modules)))
+  (setq elpy-modules (delq 'elpy-module-flymake elpy-modules))
+  (setq elpy-company-post-completion-function 'ignore))
 
 (use-package python-pytest
   :after python)
@@ -40,8 +37,14 @@
   :init
   (setq pytest-cmd-flags "-o \"addopts=-x -s\""))
 
-(global-set-key (kbd "C-x 5 k") 'ein:worksheet-kill-cell-km)
-
+(use-package ein
+  :init
+  (setq linum-mode nil)
+  (setq ein:output-area-inlined-images t)
+  (setq ein:worksheet-enable-undo t)
+  (setq company-mode nil)
+  (setq global-company-mode nil)
+  :bind (("C-x 5 k" . ein:worksheet-kill-cell-km)))
 
 (provide 'my-python)
 ;;; my-python.el ends here

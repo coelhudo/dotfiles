@@ -7,20 +7,17 @@ import XMonad.Util.Run(spawnPipe)
 import XMonad.Util.Cursor
 import XMonad.Util.EZConfig(additionalKeys)
 import XMonad.Actions.GridSelect
-import XMonad.Prompt.Shell
+import XMonad.Layout.NoBorders
 import qualified XMonad.StackSet as W
 import System.IO
 import Graphics.X11.ExtraTypes.XF86
 
 myManageHook = composeAll
     [ className =? "Gimp"      --> doFloat
-    , className =? "Vncviewer" --> doFloat
     , className =? "XCalc"           --> doCenterFloat
     , resource  =? "desktop_window" --> doIgnore
     , resource  =? "kdesktop"       --> doIgnore
     , isDialog --> doCenterFloat
-    , className =? "skype"    --> doShift "2:im"
-    , className =? "audacious"    --> doShift "2:im"
     , isFullscreen --> doFullFloat ]
 
 myKeys = [
@@ -57,8 +54,9 @@ main = do
         , manageHook = manageDocks <+> myManageHook -- make sure to include myManageHook definition from above
                         <+> manageHook defaultConfig
         , handleEventHook = handleEventHook defaultConfig <+> fullscreenEventHook
-        , layoutHook = avoidStruts  $  layoutHook defaultConfig
-        , logHook = dynamicLogWithPP xmobarPP
+        , layoutHook = smartBorders . avoidStruts  $  layoutHook defaultConfig
+        , borderWidth = 1
+        , logHook = dynamicLogWithPP $ xmobarPP
                         { ppOutput = hPutStrLn xmproc
                         , ppTitle = xmobarColor "green" "" . shorten 50
                         }

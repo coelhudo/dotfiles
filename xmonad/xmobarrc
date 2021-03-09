@@ -1,25 +1,49 @@
-Config { font = "-misc-fixed-*-*-*-*-12-*-*-*-*-*-*-*"
-       , bgColor = "black"
+Config { font = "xft:Cascadia Mono:style=Regular:size=11"
+       , bgColor = "#141c21"
        , fgColor = "grey"
        , position = TopW L 95
-       , lowerOnStart = True
+       , lowerOnStart = False
+       , allDesktops = True
        , commands = [ Run Network "wlan0" ["-L","0","-H","32","--low","green","--normal","orange","--high","red"] 10
-		    , Run Cpu ["-L","3","-H","50","--normal","green","--high","red"] 10
-		    , Run Memory ["-t","Mem: <usedratio>%"] 10
-		    , Run Com "uname" ["-s","-r"] "" 36000
-		    , Run Date "%a %b %_d %Y %H:%M:%S" "date" 10
-		    , Run Battery ["-L","50","-H","75","--high","green","--normal","yellow", "--low", "red"] 10
-		    , Run StdinReader
-		    , Run CoreTemp       [ "--template" , "Temp: <core0>°C"
-			     , "--Low"      , "70"        -- units: °C
-			     , "--High"     , "80"        -- units: °C
-			     , "--low"      , "green"
-			     , "--normal"   , "orange"
-			     , "--high"     , "red"
-			     ] 50
-		    ]
+                    , Run MultiCpu [ "--template" , "Cpu: <total0>% <total1>%"
+                                   , "--Low"      , "50"         -- units: %
+                                   , "--High"     , "85"         -- units: %
+                                   , "--low"      , "green"
+                                   , "--normal"   , "orange"
+                                   , "--high"     , "red"
+                                   ] 10
+
+                    , Run Memory ["-t","Mem: <usedratio>%"] 10
+                    , Run Com "uname" ["-s","-r"] "" 36000
+                    , Run Date "%a %b %d " "date" 10
+                    , Run Battery        [ "--template" , "Batt: <acstatus>"
+                             , "--Low"      , "10"        -- units: %
+                             , "--High"     , "80"        -- units: %
+                             , "--low"      , "green"
+                             , "--normal"   , "organ"
+                             , "--high"     , "red"
+
+                             , "--" -- battery specific options
+                                       -- discharging status
+                                       , "-o"	, "<left>% (<timeleft>)"
+                                       -- AC "on" status
+                                       , "-O"	, "<fc=yellow>Charging</fc>"
+                                       -- charged status
+                                       , "-i"	, "<fc=green>Charged</fc>"
+                             ] 50
+                    , Run StdinReader
+                    , Run CoreTemp       [ "--template" , "Temp: <core0>°C"
+                             , "--Low"      , "70"        -- units: °C
+                             , "--High"     , "80"        -- units: °C
+                             , "--low"      , "green"
+                             , "--normal"   , "orange"
+                             , "--high"     , "red"
+                             ] 50
+                    , Run Volume "default" "Master" ["--template", "Vol: <volume>%"] 10
+                    ]
        , sepChar = "%"
        , alignSep = "}{"
---       , template = "%StdinReader% }{ %cpu% | %memory% | %wlan0% }{ <fc=#ee9a00>%date%</fc>| %battery% | %uname% "
-       , template = "%StdinReader% }{ %cpu% | %coretemp% | %memory% | %wlan0% | %battery% | %uname% "
+       , template = "%StdinReader% }{ %multicpu% | %memory% | %wlan0% | %default:Master% | %battery% | %uname% "
+--       , template = "%StdinReader% }{ %cpu% | %coretemp% | %memory% | %wlan0% | %battery% | %uname% "
+--       , template = "%StdinReader% }{ %cpu% | %coretemp% | %memory% | %wlan0% | %battery% | <fc=#ee9a00>%date%</fc>| %uname% "
        }

@@ -7,12 +7,11 @@
   :mode "\\.js\\'"
   :interpreter "node")
 
-(use-package jsx-mode
+(use-package rjsx-mode
   :mode ("\\.tsx\\'" "\\.jsx\\'"))
 
 (use-package lsp-mode
   :hook ((js2-mode
-          jsx-mode
           rjsx-mode)
          . lsp-deferred))
 
