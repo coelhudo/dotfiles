@@ -1,10 +1,12 @@
 -- -*- mode: haskell -*-
 
-Config { font = "xft:Cascadia Mono:style=Regular:size=11"
+Config { font = "xft:Cascadia Mono:style=Regular:size=10"
+        , additionalFonts = ["xft:FontAwesome-10", "xft:Symbola"]
        , bgColor = "#141c21"
        , fgColor = "grey"
        , position = TopW L 100
-       , lowerOnStart = False
+       , lowerOnStart = True
+       , hideOnStart = False
        , allDesktops = True
        , commands = [ Run Network "wlan0" ["-L","0","-H","32","--low","green","--normal","orange","--high","red"] 10
                     , Run MultiCpu [ "--template" , "Cpu: <total0>% <total1>%"
@@ -41,7 +43,7 @@ Config { font = "xft:Cascadia Mono:style=Regular:size=11"
                              , "--normal"   , "orange"
                              , "--high"     , "red"
                              ] 50
-                    , Run Volume "default" "Master" ["--template", "Vol: <volume>%"] 10
+                    , Run Volume "default" "Master" ["--template", "Vol: <volume>% <status>"] 10
                     ]
        , sepChar = "%"
        , alignSep = "}{"

@@ -14,6 +14,7 @@ import Graphics.X11.ExtraTypes.XF86
 
 myManageHook = composeAll
     [ className =? "Gimp"      --> doFloat
+    , className =? "firefox"      --> doFloat
     , className =? "XCalc"           --> doCenterFloat
     , resource  =? "desktop_window" --> doIgnore
     , resource  =? "kdesktop"       --> doIgnore
@@ -31,6 +32,7 @@ myKeys = [
         , ((mod4Mask, xK_f), spawn "firefox")
         , ((mod4Mask, xK_o), spawn "okular")
         , ((mod4Mask, xK_s), spawn "skype")
+        , ((mod4Mask .|. shiftMask, xK_b), sendMessage ToggleStruts)
         , ((0, xF86XK_MonBrightnessUp), spawn "/usr/bin/xbacklight -inc 10 & /usr/bin/notify-send \"$(/usr/bin/xbacklight -get)\" -t 400")
         , ((0, xF86XK_MonBrightnessDown), spawn "/usr/bin/xbacklight -dec 10 & /usr/bin/notify-send \"$(/usr/bin/xbacklight -get)\" -t 400")
         , ((0, xF86XK_AudioRaiseVolume), spawn "/usr/bin/pamixer --sink $(/usr/bin/pamixer --list-sinks | sed -n '2p' | awk '{print $1}') -i 5 & /usr/bin/notify-send \"Volume $(/usr/bin/pamixer --sink $(/usr/bin/pamixer --list-sinks | sed -n '2p' | awk '{print $1}') --get-volume-human)\" -t 400")
@@ -48,7 +50,7 @@ myKeys = [
 
 main = do
     xmproc <- spawnPipe "~/.cabal/bin/xmobar $HOME/.xmobarrc"
-    xmonad $ ewmh defaultConfig
+    xmonad $ ewmh $ docks defaultConfig
         { startupHook = setDefaultCursor xC_left_ptr
         , workspaces = ["1","2","3","4","5","6","7","8","9"]
         , manageHook = manageDocks <+> myManageHook -- make sure to include myManageHook definition from above
