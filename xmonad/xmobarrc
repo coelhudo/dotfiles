@@ -1,7 +1,9 @@
+-- -*- mode: haskell -*-
+
 Config { font = "xft:Cascadia Mono:style=Regular:size=11"
        , bgColor = "#141c21"
        , fgColor = "grey"
-       , position = TopW L 95
+       , position = TopW L 100
        , lowerOnStart = False
        , allDesktops = True
        , commands = [ Run Network "wlan0" ["-L","0","-H","32","--low","green","--normal","orange","--high","red"] 10
@@ -19,9 +21,9 @@ Config { font = "xft:Cascadia Mono:style=Regular:size=11"
                     , Run Battery        [ "--template" , "Batt: <acstatus>"
                              , "--Low"      , "10"        -- units: %
                              , "--High"     , "80"        -- units: %
-                             , "--low"      , "green"
-                             , "--normal"   , "organ"
-                             , "--high"     , "red"
+                             , "--low"      , "red"
+                             , "--normal"   , "orange"
+                             , "--high"     , "green"
 
                              , "--" -- battery specific options
                                        -- discharging status
