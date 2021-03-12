@@ -35,10 +35,10 @@ myKeys = [
         , ((mod4Mask .|. shiftMask, xK_b), sendMessage ToggleStruts)
         , ((0, xF86XK_MonBrightnessUp), spawn "/usr/bin/xbacklight -inc 10 & /usr/bin/notify-send \"$(/usr/bin/xbacklight -get)\" -t 400")
         , ((0, xF86XK_MonBrightnessDown), spawn "/usr/bin/xbacklight -dec 10 & /usr/bin/notify-send \"$(/usr/bin/xbacklight -get)\" -t 400")
-        , ((0, xF86XK_AudioRaiseVolume), spawn "/usr/bin/pamixer --sink $(/usr/bin/pamixer --list-sinks | sed -n '2p' | awk '{print $1}') -i 5 & /usr/bin/notify-send \"Volume $(/usr/bin/pamixer --sink $(/usr/bin/pamixer --list-sinks | sed -n '2p' | awk '{print $1}') --get-volume-human)\" -t 400")
-        , ((0, xF86XK_AudioLowerVolume), spawn "/usr/bin/pamixer --sink $(/usr/bin/pamixer --list-sinks | sed -n '2p' | awk '{print $1}') -d 5 & /usr/bin/notify-send \"Volume $(/usr/bin/pamixer --sink $(/usr/bin/pamixer --list-sinks | sed -n '2p' | awk '{print $1}') --get-volume-human)\" -t 400")
+        , ((0, xF86XK_AudioRaiseVolume), spawn "/usr/bin/pamixer --sink $(/usr/bin/pamixer --list-sinks | grep analog | awk '{print $1}') -i 5 & /usr/bin/notify-send \"Volume $(/usr/bin/pamixer --sink $(/usr/bin/pamixer --list-sinks | grep analog | awk '{print $1}') --get-volume-human)\" -t 400")
+        , ((0, xF86XK_AudioLowerVolume), spawn "/usr/bin/pamixer --sink $(/usr/bin/pamixer --list-sinks | grep analog | awk '{print $1}') -d 5 & /usr/bin/notify-send \"Volume $(/usr/bin/pamixer --sink $(/usr/bin/pamixer --list-sinks | grep analog | awk '{print $1}') --get-volume-human)\" -t 400")
         , ((0, xF86XK_AudioMicMute), spawn "/usr/bin/pactl set-source-mute 1 toggle & /usr/bin/notify-send \"Mic Toggle\" -t 400")
-        , ((0, xF86XK_AudioMute), spawn "/usr/bin/pamixer --sink $(/usr/bin/pamixer --list-sinks | sed -n '2p' | awk '{print $1}') -t & /usr/bin/notify-send \"Mute $(/usr/bin/pamixer --sink $(/usr/bin/pamixer --list-sinks | sed -n '2p' | awk '{print $1}') --get-mute)\" -t 400")
+        , ((0, xF86XK_AudioMute), spawn "/usr/bin/pamixer --sink $(/usr/bin/pamixer --list-sinks | grep analog | awk '{print $1}') -t & /usr/bin/notify-send \"Mute $(/usr/bin/pamixer --sink $(/usr/bin/pamixer --list-sinks | grep analog | awk '{print $1}') --get-mute)\" -t 400")
         , ((mod4Mask .|. shiftMask, xK_w), spawn "Telegram")
         , ((mod4Mask, xK_z), spawn "xlock")
         , ((mod4Mask, xK_g), goToSelected defaultGSConfig)
@@ -52,7 +52,15 @@ main = do
     xmproc <- spawnPipe "~/.cabal/bin/xmobar $HOME/.xmobarrc"
     xmonad $ ewmh $ docks defaultConfig
         { startupHook = setDefaultCursor xC_left_ptr
-        , workspaces = ["1","2","3","4","5","6","7","8","9"]
+        , workspaces = ["1:<fn=3>\xe007</fn>",
+                        "2:<fn=3>\xf2c6</fn>",
+                        "3:<fn=2>\xf1c9</fn>",
+                        "4:<fn=2>\xf120</fn>",
+                        "5",
+                        "6",
+                        "7",
+                        "8",
+                        "9"]
         , manageHook = manageDocks <+> myManageHook -- make sure to include myManageHook definition from above
                         <+> manageHook defaultConfig
         , handleEventHook = handleEventHook defaultConfig <+> fullscreenEventHook

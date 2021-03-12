@@ -1,15 +1,16 @@
 -- -*- mode: haskell -*-
+-- Requires FontAwesome5
 
 Config { font = "xft:Cascadia Mono:style=Regular:size=10"
-        , additionalFonts = ["xft:FontAwesome-10", "xft:Symbola"]
+        , additionalFonts = ["xft:FontAwesome:size=13", "xft:Font Awesome 5 Free Solid:size=13", "xft:Font Awesome 5 Brands:size=13", "xft:Symbola"]
        , bgColor = "#141c21"
        , fgColor = "grey"
        , position = TopW L 100
        , lowerOnStart = True
        , hideOnStart = False
        , allDesktops = True
-       , commands = [ Run Network "wlan0" ["-L","0","-H","32","--low","green","--normal","orange","--high","red"] 10
-                    , Run MultiCpu [ "--template" , "Cpu: <total0>% <total1>%"
+       , commands = [ Run Network "wlan0" ["-t", "<fn=2>\xf1eb</fn> <dev> in:<rx>kB/s out:<tx>kB/s", "-L","0","-H","32","--low","green","--normal","orange","--high","red"] 10
+                    , Run MultiCpu [ "--template" , "<fn=2>\xf2db</fn> <total0>% <total1>%"
                                    , "--Low"      , "50"         -- units: %
                                    , "--High"     , "85"         -- units: %
                                    , "--low"      , "green"
@@ -17,10 +18,10 @@ Config { font = "xft:Cascadia Mono:style=Regular:size=10"
                                    , "--high"     , "red"
                                    ] 10
 
-                    , Run Memory ["-t","Mem: <usedratio>%"] 10
+                    , Run Memory ["-t","<fn=2>\xf538</fn> <usedratio>%"] 10
                     , Run Com "uname" ["-s","-r"] "" 36000
-                    , Run Date "%a %b %d " "date" 10
-                    , Run Battery        [ "--template" , "Batt: <acstatus>"
+                    , Run Date "<fn=2>\xf073</fn> %a %b %d " "date" 10
+                    , Run Battery        [ "--template" , "<acstatus>"
                              , "--Low"      , "10"        -- units: %
                              , "--High"     , "80"        -- units: %
                              , "--low"      , "red"
@@ -29,25 +30,25 @@ Config { font = "xft:Cascadia Mono:style=Regular:size=10"
 
                              , "--" -- battery specific options
                                        -- discharging status
-                                       , "-o"	, "<left>% (<timeleft>)"
+                                       , "-o"	, "<fn=2>\xf242</fn> <left>% (<timeleft>)"
                                        -- AC "on" status
-                                       , "-O"	, "<fc=yellow>Charging</fc>"
+                                       , "-O"	, "<fc=yellow><fn=2>\xf242</fn> Charging</fc>"
                                        -- charged status
-                                       , "-i"	, "<fc=green>Charged</fc>"
+                                       , "-i"	, "<fc=green><fn=2>\xf240</fn> Charged</fc>"
                              ] 50
                     , Run StdinReader
-                    , Run CoreTemp       [ "--template" , "Temp: <core0>°C"
+                    , Run CoreTemp       [ "--template" , "<fn=2>\xf769</fn> <core0>°C"
                              , "--Low"      , "70"        -- units: °C
                              , "--High"     , "80"        -- units: °C
                              , "--low"      , "green"
                              , "--normal"   , "orange"
                              , "--high"     , "red"
                              ] 50
-                    , Run Volume "default" "Master" ["--template", "Vol: <volume>% <status>"] 10
+                    , Run Volume "default" "Master" ["--template", "<status> <volume>%", "--", "-o", "<fn=2>\xf026</fn>", "-O", "<fn=2>\xf028</fn>"] 10
                     ]
        , sepChar = "%"
        , alignSep = "}{"
-       , template = "%StdinReader% }{ %multicpu% | %memory% | %wlan0% | %default:Master% | %battery% | %uname% "
+       , template = "%StdinReader% } <fc=#ee9a00>%date%</fc> { %multicpu% | %coretemp% | %memory% | %wlan0% | %default:Master% | %battery% | %uname% "
 --       , template = "%StdinReader% }{ %cpu% | %coretemp% | %memory% | %wlan0% | %battery% | %uname% "
 --       , template = "%StdinReader% }{ %cpu% | %coretemp% | %memory% | %wlan0% | %battery% | <fc=#ee9a00>%date%</fc>| %uname% "
        }
