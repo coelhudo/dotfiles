@@ -12,6 +12,7 @@ import qualified XMonad.StackSet as W
 import System.IO
 import Graphics.X11.ExtraTypes.XF86
 
+
 myManageHook = composeAll
     [ className =? "Gimp"      --> doFloat
     , className =? "firefox"      --> doFloat
@@ -48,6 +49,8 @@ myKeys = [
         , ((mod4Mask, xK_period), sendMessage (IncMasterN (-1)))
        ]
 
+
+main :: IO()
 main = do
     xmproc <- spawnPipe "~/.cabal/bin/xmobar $HOME/.xmobarrc"
     xmonad $ ewmh $ docks defaultConfig
@@ -56,7 +59,7 @@ main = do
                         "2:<fn=3>\xf2c6</fn>",
                         "3:<fn=2>\xf1c9</fn>",
                         "4:<fn=2>\xf120</fn>",
-                        "5",
+                        "5:<fn=3>\xf1bc</fn>",
                         "6",
                         "7",
                         "8",

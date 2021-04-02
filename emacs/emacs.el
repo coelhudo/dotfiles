@@ -16,6 +16,7 @@
  '(elpy-company-post-completion-function 'ignore)
  '(explicit-bash-args '("--noediting" "--login" "-i"))
  '(flycheck-emacs-lisp-load-path nil)
+ '(indent-tabs-mode nil)
  '(inhibit-startup-screen t)
  '(ispell-dictionary "en_CA")
  '(jedi:environment-root "jedi")
@@ -25,10 +26,11 @@
  '(lsp-ui-doc-position 'top)
  '(magit-diff-use-overlays nil)
  '(package-archives
-   '(("gnu" . "http://elpa.gnu.org/packages/")
+   '(("elpa" . "https://elpa.gnu.org/packages/")
+     ("org" . "https://orgmode.org/elpa/")
      ("melpa" . "http://melpa.org/packages/")))
  '(package-selected-packages
-   '(rjsx-mode lsp-java yasnippet-snippets gdscript-mode bufler chess unicode-fonts projectile-direnv direnv smartparens expand-region lsp-ui flycheck-clang-analyzer cmake-mode company-jedi mw-thesaurus flycheck-mypy nov ansi package-build shut-up epl git commander f dash s helm-projectile helm-org-rifle which-key skewer-mode charmap web-mode tern-auto-complete company-tern js2-refactor xref-js2 moz dispwatch ein jsx-mode react-snippets js-react-redux-yasnippets tide tss typescript-mode python-pytest monokai-theme atom-dark-theme solarized-theme lsp-mode swiper helm-gitlab gitlab org-analyzer org-cal fill-column-indicator org-re-reveal-ref org-ref crontab-mode org-alert org-pomodoro git-timemachine elpy csv-mode multiple-cursors magit haskell-mode jedi pytest pyvenv yaml-mode yasnippet use-package flycheck json-mode markdown-mode+ zenburn-theme))
+   '(doom-modeline diminish command-log-mode editorconfig undo-tree restclient threes 2048-game rjsx-mode lsp-java yasnippet-snippets gdscript-mode bufler chess unicode-fonts projectile-direnv direnv smartparens expand-region lsp-ui flycheck-clang-analyzer cmake-mode company-jedi mw-thesaurus flycheck-mypy nov ansi package-build shut-up epl git commander f dash s helm-projectile helm-org-rifle which-key skewer-mode charmap web-mode tern-auto-complete company-tern js2-refactor xref-js2 moz dispwatch ein react-snippets js-react-redux-yasnippets tide tss typescript-mode python-pytest monokai-theme atom-dark-theme solarized-theme lsp-mode swiper helm-gitlab gitlab org-analyzer org-cal fill-column-indicator org-re-reveal-ref org-ref crontab-mode org-alert org-pomodoro git-timemachine elpy csv-mode multiple-cursors magit haskell-mode jedi pytest pyvenv yaml-mode yasnippet use-package flycheck json-mode markdown-mode+ zenburn-theme))
  '(python-environment-virtualenv '("python" "-m" "venv" "--system-site-packages"))
  '(pyvenv-virtualenvwrapper-python "/usr/bin/python")
  '(shell-file-name "/bin/zsh")
@@ -74,14 +76,24 @@
 (global-set-key (kbd "C-=") 'er/expand-region)
 (add-hook 'before-save-hook 'whitespace-cleanup)
 
+(setq undo-tree-visualizer-diff t)
+
 (defun crontab-e ()
   "Run `crontab -e' in a emacs buffer."
   (interactive)
   (with-editor-async-shell-command "crontab -e"))
 
-(ivy-mode 1)
-(setq ivy-use-virtual-buffers t)
-(setq enable-recursive-minibuffers t)
+(use-package ivy
+  :diminish
+  :custom
+  ((ivy-use-virtual-buffers t)
+   ( enable-recursive-minibuffers t))
+  :config
+  (ivy-mode 1))
+
+(use-package autorevert
+  :diminish auto-revert-mode)
+
 (eval-after-load 'tramp '(setenv "SHELL" "/bin/bash"))
 
 (defun move-text-internal (arg)
@@ -118,6 +130,8 @@
 (global-set-key [\M-\S-up] 'move-text-up)
 (global-set-key [\M-\S-down] 'move-text-down)
 
+(use-package command-log-mode)
+
 (use-package unicode-fonts
    :ensure t
    :config
@@ -134,6 +148,7 @@
   :config (helm-projectile-on))
 
 (use-package which-key
+  :diminish
   :ensure t
   :config (which-key-mode 1))
 
@@ -152,11 +167,11 @@
 
 (use-package company
   :ensure t
+  :custom
+  ((company-idle-delay 0)
+   (company-minimum-prefix-length 3))
   :config
-  (setq company-idle-delay 0)
-  (setq company-minimum-prefix-length 3)
-
-  (global-company-mode t))
+  (global-company-mode nil))
 
 (use-package lsp-mode
   :ensure t
@@ -169,10 +184,10 @@
   :after lsp-mode
   :diminish
   :commands lsp-ui-mode
-  :config
-  (setq lsp-ui-doc-delay 1)
-  (setq lsp-ui-doc-include-signature t)
-  (setq lsp-ui-doc-position 'top))
+  :custom
+  ((lsp-ui-doc-delay 1)
+   (lsp-ui-doc-include-signature t)
+   (lsp-ui-doc-position 'top)))
 
 (use-package tex-mode
   :init
@@ -194,6 +209,16 @@
    (if (eq (cadr (cadr (frame-monitor-attributes))) 1920) 9 13)))
 
 (run-with-idle-timer 5 1 'my/check-monitor)
+
+(setq ediff-window-setup-function 'ediff-setup-windows-plain)
+
+;; need to execute all-the-icons-install-fonts
+(use-package doom-modeline
+  :ensure t
+  :init (doom-modeline-mode 1)
+  :custom
+  ((find-file-visit-truename t)
+   (doom-modeline-height 10)))
 
 ;; (defun setup-tide-mode ()
 ;;   (interactive)

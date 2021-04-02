@@ -8,7 +8,7 @@
 
 ;;; Code:
 (org-babel-do-load-languages 'org-babel-load-languages '((latex . t)
-							 (python . t)))
+                                                         (python . t)))
 (setq org-latex-pdf-process (list "latexmk -pdf -f %f -output-directory=%o"))
 
 (use-package ob-python
@@ -26,57 +26,61 @@
   (add-hook 'org-mode-hook 'flyspell-mode)
   (add-hook 'org-mode-hook '(lambda ()(setq fill-column 90)))
   :bind (("C-c l" . org-store-link)
-	 ("C-c a" . org-agenda)
-	 ("C-c c" . org-capture)
-	 ("C-c b" . org-switchb)))
+         ("C-c a" . org-agenda)
+         ("C-c c" . org-capture)
+         ("C-c b" . org-switchb)))
 
 ;;; GTD configuration from here:
 ;;; https://emacs.cafe/emacs/orgmode/gtd/2017/06/30/orgmode-gtd.html
 (setq org-agenda-files '("~/Dropbox/TODO/TODO.org"
-			 "~/Dropbox/TODO/inbox.org"
-			 "~/Dropbox/TODO/gtd.org"
-			 "~/Dropbox/TODO/tickler.org"))
+                         "~/Dropbox/TODO/inbox.org"
+                         "~/Dropbox/TODO/gtd.org"
+                         "~/Dropbox/TODO/tickler.org"))
 
 (setq org-tag-alist '((:startgrouptag)
-		      ("@phd" . ?p)
-		      (:grouptags)
-		      ("writing" . ?w) ("arps" . ?a) ("dcpoc" . ?d) ("ta" . ?t)
-		      (:endgrouptag)
-		      (:startgrouptag)
-		      ("@life" . ?l)
-		      (:grouptags)
-		      ("opensource" . ?o) ("study" . ?s) ("financial" . ?f)
-		      ("errands". ?e) ("tech_issues" . ?i)
-		      (:endgrouptag)
-		      ))
+                      ("@phd" . ?p)
+                      (:grouptags)
+                      ("writing" . ?r) ("arps" . ?a) ("dcpoc" . ?d) ("ta" . ?t)
+                      (:endgrouptag)
+                      (:startgrouptag)
+                      ("@life" . ?l)
+                      (:grouptags)
+                      ("opensource" . ?o) ("study" . ?s) ("financial" . ?f)
+                      ("errands". ?e) ("tech_issues" . ?i)
+                      (:startgrouptag)
+                      ("@work" . ?w)
+                      (:grouptags)
+                      ("study". ?y)
+                      (:endgrouptag)
+                      ))
 
 (setq org-agenda-custom-commands
       '(
-	("p" "PhD tasks" tags-todo "@phd"
-	 ((org-agenda-overriding-header "PhD")))
-	("l" "Life related tasks" tags-todo "@life"
-	 ((org-agenda-overriding-header "Life")))
-	))
+        ("p" "PhD tasks" tags-todo "@phd"
+         ((org-agenda-overriding-header "PhD")))
+        ("l" "Life related tasks" tags-todo "@life"
+         ((org-agenda-overriding-header "Life")))
+        ))
 
 (setq org-refile-targets '(("~/Dropbox/TODO/gtd.org" :maxlevel . 3)
-			   ("~/Dropbox/TODO/someday.org" :level . 1)
-			   ("~/Dropbox/TODO/tickler.org" :maxlevel . 2)))
+                           ("~/Dropbox/TODO/someday.org" :level . 1)
+                           ("~/Dropbox/TODO/tickler.org" :maxlevel . 2)))
 
 (setq org-capture-templates
       '(("t" "Todo" entry (file+headline "~/Dropbox/TODO/inbox.org" "Inbox")
-	 "* TODO %?\n" :prepend t)
-	("T" "Tickler" entry (file "~/Dropbox/TODO/tickler.org") "** %? \n" )));;; insert deadline keyword here
+         "* TODO %?\n" :prepend t)
+        ("T" "Tickler" entry (file "~/Dropbox/TODO/tickler.org") "** %? \n" )));;; insert deadline keyword here
 
 (setq org-todo-keywords
   '((sequence "TODO(t)" "CURRENT(c)" "WAITING(w)" "NEXT(n)" "|" "DONE(d)" "CANCELLED(a)")))
 
 (setq org-todo-keyword-faces
       '(("TODO" . "indian red")
-	("CURRENT" . "yellow")
-	("WAITING" . "#a020f0")
-	("NEXT" . "#00ced1")
-	("DONE" . "#228b22")
-	("CANCELLED" . "#a9a9a9")))
+        ("CURRENT" . "yellow")
+        ("WAITING" . "#a020f0")
+        ("NEXT" . "#00ced1")
+        ("DONE" . "#228b22")
+        ("CANCELLED" . "#a9a9a9")))
 
 ;;TODO: make a proper function using elisp.
 (fset 'create-bibsection
