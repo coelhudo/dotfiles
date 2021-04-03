@@ -25,7 +25,12 @@ autoload -z edit-command-line
 zle -N edit-command-line
 bindkey "^X^E" edit-command-line
 
-eval $(dircolors $ZSH_CUSTOM/dircolors/dircolors)
+if whence dircolors > /dev/null; then
+    eval $(dircolors $ZSH_CUSTOM/dircolors/dircolors)
+    alias ls="ls --color"
+elif whence gdircolors > /dev/null; then
+    export CLICOLOR=YES
+fi
 
 plugins=(git zsh-autosuggestions zsh-completions zsh-syntax-highlighting)
 
@@ -45,7 +50,6 @@ bashcompinit
 
 #export FOAM_INST_DIR=~/.local/opt/openfoam/OpenFOAM-v1906
 #alias ofoam="source ${FOAM_INST_DIR}/OpenFOAM-5.0/etc/bashrc"
-alias ls="ls --color"
 
 export PATH=$PATH:~/.opam/default/bin:~/.local/bin:~/.cabal/bin
 export MANPATH=$HOME/.local/man:$HOME/.local/share/man:$MANPATH
@@ -62,50 +66,58 @@ if [ ! -S ~/.gnupg/gnupg_auth_sock ]; then
   eval $( gpg-agent --daemon --options ~/.gnupg/gpg-agent.conf )
   ln -sf "$SSH_AUTH_SOCK" ~/.gnupg/gnupg_auth_sock
 fi
-export SSH_AUTH_SOCK=~/.gnupg/gnupg_auth_sock
 
-GPG_TTY=$(tty)
-export GPG_TTY
+if [ -f ~/.gnupg/gnupg_auth_sock ]; then
+    export SSH_AUTH_SOCK=~/.gnupg/gnupg_auth_sock
+    GPG_TTY=$(tty)
+    export GPG_TTY
+fi    
 
 export LESS='-R'
 
-function git_prompt_info() {
-  ref=$(git symbolic-ref HEAD 2> /dev/null)
-  if [[ -n $ref ]];
-  then
-      local STATUS
-      local -a FLAGS
-      FLAGS=('--porcelain')
-      if [[ "$DISABLE_UNTRACKED_FILES_DIRTY" == "true" ]]; then
-	  FLAGS+='--untracked-files=no'
-      fi
-      STATUS=$(command git status ${FLAGS} 2> /dev/null | tail -n1)
-      local status
-      git_status="✓"
-      if [[ -n $STATUS ]]; then
-	  git_status="✗"
-      fi
+# function git_prompt_info() {
+#   ref=$(git symbolic-ref HEAD 2> /dev/null)
+#   if [[ -n $ref ]];
+#   then
+#       local STATUS
+#       local -a FLAGS
+#       FLAGS=('--porcelain')
+#       if [[ "$DISABLE_UNTRACKED_FILES_DIRTY" == "true" ]]; then
+# 	  FLAGS+='--untracked-files=no'
+#       fi
+#       STATUS=$(command git status ${FLAGS} 2> /dev/null | tail -n1)
+#       local status
+#       git_status="✓"
+#       if [[ -n $STATUS ]]; then
+# 	  git_status="✗"
+#       fi
 
-      echo "%F{yellow}‹${ref#refs/heads/} ${git_status}› %f"
-  fi
-}
+#       echo "%F{yellow}‹${ref#refs/heads/} ${git_status}› %f"
+#   fi
+# }
 
-local git_branch='$(git_prompt_info)'
-local git_dirty='$(parse_git_dirty)'
-export PROMPT="%F{green}%n@%m%f %F{blue}%3~%f ${git_branch}
-%F{yellow}%#%f "
-export RPROMPT='%B%(?..%F{red}%? ↵%f)%b'
+# local git_branch='$(git_prompt_info)'
+# local git_dirty='$(parse_git_dirty)'
+# export PROMPT="%F{green}%n@%m%f %F{blue}%3~%f ${git_branch}
+# %F{yellow}%#%f "
+# export RPROMPT='%B%(?..%F{red}%? ↵%f)%b'
 
-export PATH="/home/coelho/.pyenv/bin:$PATH"
-eval "$(pyenv init -)"
-eval "$(pyenv virtualenv-init -)"
+# if [ -d $HOME/.pyenv ]; then
+#     export PATH="$HOME/.pyenv/bin:$PATH"
+#     eval "$(pyenv init -)"
+#     eval "$(pyenv virtualenv-init -)"
+# fi
 
-PATH="/home/coelho/perl5/bin${PATH:+:${PATH}}"; export PATH;
-PERL5LIB="/home/coelho/perl5/lib/perl5${PERL5LIB:+:${PERL5LIB}}"; export PERL5LIB;
-PERL_LOCAL_LIB_ROOT="/home/coelho/perl5${PERL_LOCAL_LIB_ROOT:+:${PERL_LOCAL_LIB_ROOT}}"; export PERL_LOCAL_LIB_ROOT;
-#PERL_MB_OPT="--install_base \"/home/coelho/perl5\""; export PERL_MB_OPT;
-#PERL_MM_OPT="INSTALL_BASE=/home/coelho/perl5"; export PERL_MM_OPT;
+# if [ -d $HOME/perl5 ]; then
+#     PATH="$HOME/perl5/bin${PATH:+:${PATH}}"; export PATH;
+#     PERL5LIB="$HOME/perl5/lib/perl5${PERL5LIB:+:${PERL5LIB}}"; export PERL5LIB;
+#     PERL_LOCAL_LIB_ROOT="/home/coelho/perl5${PERL_LOCAL_LIB_ROOT:+:${PERL_LOCAL_LIB_ROOT}}"; export PERL_LOCAL_LIB_ROOT;
+#     #PERL_MB_OPT="--install_base \"/home/coelho/perl5\""; export PERL_MB_OPT;
+#     #PERL_MM_OPT="INSTALL_BASE=/home/coelho/perl5"; export PERL_MM_OPT;
+# fi
 
-export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+# if [ -d $HOME/.nvm ]; then
+#     export NVM_DIR="$HOME/.nvm"
+#     [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+#     [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+# fi
