@@ -23,7 +23,6 @@
  '(jedi:environment-virtualenv '("python" "-m" "venv"))
  '(json-reformat:indent-width 2)
  '(lsp-enable-on-type-formatting nil)
- '(lsp-ui-doc-position 'top)
  '(magit-diff-use-overlays nil)
  '(package-archives
    '(("elpa" . "https://elpa.gnu.org/packages/")
@@ -218,7 +217,11 @@
   :init (doom-modeline-mode 1)
   :custom
   ((find-file-visit-truename t)
-   (doom-modeline-height 10)))
+   (doom-modeline-height 10)
+   (doom-modeline-bar-width 2)
+   (doom-modeline-window-width-limit 60)))
+
+(use-package all-the-icons)
 
 ;; (defun setup-tide-mode ()
 ;;   (interactive)
