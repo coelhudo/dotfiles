@@ -27,8 +27,8 @@
   :bind (("C-c C-o" . elpy-occur-definitions)
          ("C-c ." . elpy-goto-definition))
   :config
-  (setq elpy-modules (delq 'elpy-module-flymake elpy-modules))
-  (setq elpy-company-post-completion-function 'ignore))
+  (elpy-modules (delq 'elpy-module-flymake elpy-modules))
+  (elpy-company-post-completion-function 'ignore))
 
 (use-package python-pytest
   :after python)
