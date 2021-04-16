@@ -22,13 +22,14 @@
 
 (use-package elpy
   :ensure t
+  :defer t
   :init
   (advice-add 'python-mode :before 'elpy-enable)
-  :bind (("C-c C-o" . elpy-occur-definitions)
-         ("C-c ." . elpy-goto-definition))
+  (add-hook 'elpy-mode-hook 'flycheck-mode)
   :config
-  (elpy-modules (delq 'elpy-module-flymake elpy-modules))
-  (elpy-company-post-completion-function 'ignore))
+  ;; (setq elpy-modules (delq 'elpy-module-flymake elpy-modules))
+  (setq elpy-company-post-completion-function 'ignore)
+  (setq elpy-rpc-virtualenv-path 'current))
 
 (use-package python-pytest
   :after python)

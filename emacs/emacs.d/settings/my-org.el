@@ -32,10 +32,7 @@
 
 ;;; GTD configuration from here:
 ;;; https://emacs.cafe/emacs/orgmode/gtd/2017/06/30/orgmode-gtd.html
-(setq org-agenda-files '("~/Dropbox/TODO/TODO.org"
-                         "~/Dropbox/TODO/inbox.org"
-                         "~/Dropbox/TODO/gtd.org"
-                         "~/Dropbox/TODO/tickler.org"))
+(setq org-agenda-files (directory-files-recursively "~/Dropbox/TODO" "\\.org$"))
 
 (setq org-tag-alist '((:startgrouptag)
                       ("@phd" . ?p)

@@ -24,6 +24,7 @@
  '(json-reformat:indent-width 2)
  '(lsp-enable-on-type-formatting nil)
  '(magit-diff-use-overlays nil)
+ '(gnutls-algorithm-priority "NORMAL:-VERS-TLS1.3")
  '(package-archives
    '(("elpa" . "https://elpa.gnu.org/packages/")
      ("org" . "https://orgmode.org/elpa/")
@@ -51,7 +52,8 @@
  '(org-level-4 ((t (:inherit default :foreground "#E6DB74" :height 1.1)))))
 
 (add-to-list 'default-frame-alist
-             '(font . "Cascadia Mono-11"))
+             '(font . "Cascadia Mono-12"))
+(set-face-attribute 'mode-line nil :font "Cascadia Mono-14")
 (when (member "Symbola" (font-family-list))
   (set-fontset-font t 'unicode "Symbola" nil 'prepend))
 
