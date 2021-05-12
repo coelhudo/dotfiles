@@ -1,7 +1,21 @@
 #!/bin/zsh
 
-[[ $TERM == "dumb" ]] && unsetopt zle && PS1='$ ' && return
-[[ $TERM == "tramp" ]] && unsetopt zle && PS1='$ ' && return
+if [[ $TERM == "dumb" ]]; then
+    unsetopt zle
+    unsetopt prompt_cr
+    unsetopt promt_subst
+
+    if whence -w precmd >/dev/null; then
+        unfunciton precmd;
+    fi
+
+    if whence -w preexec >/dev/null; then
+        unfunciton preexec;
+    fi
+
+    PS1='$ '
+    return
+fi
 
 export ZSH_CUSTOM=~/.local/zsh/
 
@@ -162,3 +176,7 @@ _tutor_completion() {
 }
 
 compdef _tutor_completion tutor;
+
+awslogin () {
+    PYTHONWARNINGS="ignore" aws-adfs login --adfs-host=adfs.wgu.edu --ssl-verification --session-duration 14400 --no-sspi "$@"
+}

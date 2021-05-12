@@ -16,6 +16,7 @@
  '(elpy-company-post-completion-function 'ignore)
  '(explicit-bash-args '("--noediting" "--login" "-i"))
  '(flycheck-emacs-lisp-load-path nil)
+ '(gnutls-algorithm-priority "NORMAL:-VERS-TLS1.3")
  '(indent-tabs-mode nil)
  '(inhibit-startup-screen t)
  '(ispell-dictionary "en_CA")
@@ -24,15 +25,15 @@
  '(json-reformat:indent-width 2)
  '(lsp-enable-on-type-formatting nil)
  '(magit-diff-use-overlays nil)
- '(gnutls-algorithm-priority "NORMAL:-VERS-TLS1.3")
  '(package-archives
    '(("elpa" . "https://elpa.gnu.org/packages/")
      ("org" . "https://orgmode.org/elpa/")
      ("melpa" . "http://melpa.org/packages/")))
  '(package-selected-packages
-   '(doom-modeline diminish command-log-mode editorconfig undo-tree restclient threes 2048-game rjsx-mode lsp-java yasnippet-snippets gdscript-mode bufler chess unicode-fonts projectile-direnv direnv smartparens expand-region lsp-ui flycheck-clang-analyzer cmake-mode company-jedi mw-thesaurus flycheck-mypy nov ansi package-build shut-up epl git commander f dash s helm-projectile helm-org-rifle which-key skewer-mode charmap web-mode tern-auto-complete company-tern js2-refactor xref-js2 moz dispwatch ein react-snippets js-react-redux-yasnippets tide tss typescript-mode python-pytest monokai-theme atom-dark-theme solarized-theme lsp-mode swiper helm-gitlab gitlab org-analyzer org-cal fill-column-indicator org-re-reveal-ref org-ref crontab-mode org-alert org-pomodoro git-timemachine elpy csv-mode multiple-cursors magit haskell-mode jedi pytest pyvenv yaml-mode yasnippet use-package flycheck json-mode markdown-mode+ zenburn-theme))
+   '(exec-path-from-shell doom-modeline diminish command-log-mode editorconfig undo-tree restclient threes 2048-game rjsx-mode lsp-java yasnippet-snippets gdscript-mode bufler chess unicode-fonts projectile-direnv direnv smartparens expand-region lsp-ui flycheck-clang-analyzer cmake-mode company-jedi mw-thesaurus flycheck-mypy nov ansi package-build shut-up epl git commander f dash s helm-projectile helm-org-rifle which-key skewer-mode charmap web-mode tern-auto-complete company-tern js2-refactor xref-js2 moz dispwatch ein react-snippets js-react-redux-yasnippets tide tss typescript-mode python-pytest monokai-theme atom-dark-theme solarized-theme lsp-mode swiper helm-gitlab gitlab org-analyzer org-cal fill-column-indicator org-re-reveal-ref org-ref crontab-mode org-alert org-pomodoro git-timemachine elpy csv-mode multiple-cursors magit haskell-mode jedi pytest pyvenv yaml-mode yasnippet use-package flycheck json-mode markdown-mode+ zenburn-theme))
  '(python-environment-virtualenv '("python" "-m" "venv" "--system-site-packages"))
  '(pyvenv-virtualenvwrapper-python "/usr/bin/python")
+ '(ring-bell-function 'ignore)
  '(shell-file-name "/bin/zsh")
  '(show-paren-mode t)
  '(tls-checktrust t)
@@ -224,6 +225,11 @@
    (doom-modeline-window-width-limit 60)))
 
 (use-package all-the-icons)
+
+(use-package restclient-mode
+  :mode ("\\.http\\'"))
+
+(exec-path-from-shell-initialize)
 
 ;; (defun setup-tide-mode ()
 ;;   (interactive)
