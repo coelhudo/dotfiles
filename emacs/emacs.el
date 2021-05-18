@@ -30,7 +30,7 @@
      ("org" . "https://orgmode.org/elpa/")
      ("melpa" . "http://melpa.org/packages/")))
  '(package-selected-packages
-   '(exec-path-from-shell doom-modeline diminish command-log-mode editorconfig undo-tree restclient threes 2048-game rjsx-mode lsp-java yasnippet-snippets gdscript-mode bufler chess unicode-fonts projectile-direnv direnv smartparens expand-region lsp-ui flycheck-clang-analyzer cmake-mode company-jedi mw-thesaurus flycheck-mypy nov ansi package-build shut-up epl git commander f dash s helm-projectile helm-org-rifle which-key skewer-mode charmap web-mode tern-auto-complete company-tern js2-refactor xref-js2 moz dispwatch ein react-snippets js-react-redux-yasnippets tide tss typescript-mode python-pytest monokai-theme atom-dark-theme solarized-theme lsp-mode swiper helm-gitlab gitlab org-analyzer org-cal fill-column-indicator org-re-reveal-ref org-ref crontab-mode org-alert org-pomodoro git-timemachine elpy csv-mode multiple-cursors magit haskell-mode jedi pytest pyvenv yaml-mode yasnippet use-package flycheck json-mode markdown-mode+ zenburn-theme))
+   '(lorem-ipsum exec-path-from-shell doom-modeline diminish command-log-mode editorconfig undo-tree restclient threes 2048-game rjsx-mode lsp-java yasnippet-snippets gdscript-mode bufler chess unicode-fonts projectile-direnv direnv smartparens expand-region lsp-ui flycheck-clang-analyzer cmake-mode company-jedi mw-thesaurus flycheck-mypy nov ansi package-build shut-up epl git commander f dash s helm-projectile helm-org-rifle which-key skewer-mode charmap web-mode tern-auto-complete company-tern js2-refactor xref-js2 moz dispwatch ein react-snippets js-react-redux-yasnippets tide tss typescript-mode python-pytest monokai-theme atom-dark-theme solarized-theme lsp-mode swiper helm-gitlab gitlab org-analyzer org-cal fill-column-indicator org-re-reveal-ref org-ref crontab-mode org-alert org-pomodoro git-timemachine elpy csv-mode multiple-cursors magit haskell-mode jedi pytest pyvenv yaml-mode yasnippet use-package flycheck json-mode markdown-mode+ zenburn-theme))
  '(python-environment-virtualenv '("python" "-m" "venv" "--system-site-packages"))
  '(pyvenv-virtualenvwrapper-python "/usr/bin/python")
  '(ring-bell-function 'ignore)
@@ -135,9 +135,9 @@
 (use-package command-log-mode)
 
 (use-package unicode-fonts
-   :ensure t
-   :config
-    (unicode-fonts-setup))
+  :ensure t
+  :config
+  (unicode-fonts-setup))
 
 (use-package projectile
   :ensure t
@@ -230,6 +230,12 @@
   :mode ("\\.http\\'"))
 
 (exec-path-from-shell-initialize)
+
+(use-package lorem-ipsum
+  :bind (("C-c C-l s" . lorem-ipsum-insert-sentences)
+         ("C-c C-l p" . lorem-ipsum-insert-paragraphs)
+         ("C-c C-l l" . lorem-ipsum-insert-list))
+  )
 
 ;; (defun setup-tide-mode ()
 ;;   (interactive)
