@@ -180,3 +180,6 @@ compdef _tutor_completion tutor;
 awslogin () {
     PYTHONWARNINGS="ignore" aws-adfs login --adfs-host=adfs.wgu.edu --ssl-verification --session-duration 14400 --no-sspi "$@"
 }
+
+# Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
+export PATH="$PATH:$HOME/.rvm/bin"
