@@ -238,6 +238,11 @@
          ("C-c C-l l" . lorem-ipsum-insert-list))
   )
 
+(require 'dired )
+(define-key dired-mode-map (kbd "RET") 'dired-find-alternate-file) ; was dired-advertised-find-file
+(define-key dired-mode-map (kbd "^") (lambda () (interactive) (find-alternate-file "..")))  ; was dired-up-directory
+
+
 ;; (defun setup-tide-mode ()
 ;;   (interactive)
 ;;   (tide-setup)
@@ -259,3 +264,4 @@
 ;; (add-hook 'typescript-mode-hook #'setup-tide-mode)
 
 ;;; .emacs.el ends here
+(put 'dired-find-alternate-file 'disabled nil)
