@@ -43,8 +43,19 @@
   (setq linum-mode nil)
   (setq ein:output-area-inlined-images t)
   (setq ein:worksheet-enable-undo t)
-  (setq company-mode nil)
-  (setq global-company-mode nil)
+  (progn
+    (company-mode nil)
+    (global-company-mode nil))
+  :bind (("C-x 5 k" . ein:worksheet-kill-cell-km)))
+
+(use-package ein:notebook
+  :init
+  (setq linum-mode nil)
+  (setq ein:output-area-inlined-images t)
+  (setq ein:worksheet-enable-undo t)
+  (progn
+    (company-mode nil)
+    (global-company-mode nil))
   :bind (("C-x 5 k" . ein:worksheet-kill-cell-km)))
 
 (provide 'my-python)

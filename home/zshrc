@@ -100,13 +100,13 @@ function git_prompt_info() {
       local -a FLAGS
       FLAGS=('--porcelain')
       if [[ "$DISABLE_UNTRACKED_FILES_DIRTY" == "true" ]]; then
-        FLAGS+='--untracked-files=no'
+          FLAGS+='--untracked-files=no'
       fi
       STATUS=$(command git status ${FLAGS} 2> /dev/null | tail -n1)
       local status
       git_status="✓"
       if [[ -n $STATUS ]]; then
-        git_status="✗"
+          git_status="✗"
       fi
 
       echo "%F{yellow}‹${ref#refs/heads/} ${git_status}› %f"

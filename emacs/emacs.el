@@ -11,6 +11,7 @@
  '(dired-dwim-target t)
  '(display-line-numbers-mode t t)
  '(ein:output-area-inlined-images t)
+ '(ein:worksheet-enable-undo t)
  '(electric-indent-mode nil)
  '(electric-pair-mode t)
  '(elpy-company-post-completion-function 'ignore)
@@ -208,9 +209,9 @@
 
 (defun my/check-monitor ()
  (change-font-size
-   (if (eq (cadr (cadr (frame-monitor-attributes))) 1920) 9 13)))
+   (if (eq (cadr (cadr (frame-monitor-attributes))) 1920) 11 13)))
 
-(run-with-idle-timer 5 1 'my/check-monitor)
+;; (run-with-idle-timer 5 1 'my/check-monitor)
 
 (setq ediff-window-setup-function 'ediff-setup-windows-plain)
 
