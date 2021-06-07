@@ -120,7 +120,6 @@ export PROMPT="%F{green}%n@%m%f %F{blue}%3~%f ${git_branch}
 export RPROMPT='%B%(?..%F{red}%? ↵%f)%b'
 
 if [ -d $HOME/.pyenv ]; then
-    export PATH="$HOME/.pyenv/bin:$PATH"
     eval "$(pyenv init -)"
     eval "$(pyenv virtualenv-init -)"
 fi
