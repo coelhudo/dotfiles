@@ -11,6 +11,7 @@
  '(dired-dwim-target t)
  '(display-line-numbers-mode t t)
  '(ein:output-area-inlined-images t)
+ '(ein:worksheet-enable-undo t)
  '(electric-indent-mode nil)
  '(electric-pair-mode t)
  '(explicit-bash-args '("--noediting" "--login" "-i"))
@@ -236,6 +237,11 @@
          ("C-c C-l l" . lorem-ipsum-insert-list))
   )
 
+(require 'dired )
+(define-key dired-mode-map (kbd "RET") 'dired-find-alternate-file) ; was dired-advertised-find-file
+(define-key dired-mode-map (kbd "^") (lambda () (interactive) (find-alternate-file "..")))  ; was dired-up-directory
+
+
 ;; (defun setup-tide-mode ()
 ;;   (interactive)
 ;;   (tide-setup)
@@ -257,3 +263,4 @@
 ;; (add-hook 'typescript-mode-hook #'setup-tide-mode)
 
 ;;; .emacs.el ends here
+(put 'dired-find-alternate-file 'disabled nil)
