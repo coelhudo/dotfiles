@@ -13,7 +13,6 @@
  '(ein:output-area-inlined-images t)
  '(electric-indent-mode nil)
  '(electric-pair-mode t)
- '(elpy-company-post-completion-function 'ignore)
  '(explicit-bash-args '("--noediting" "--login" "-i"))
  '(flycheck-emacs-lisp-load-path nil)
  '(gnutls-algorithm-priority "NORMAL:-VERS-TLS1.3")
@@ -207,10 +206,10 @@
   (set-face-attribute 'default nil :height (* 10 new-size)))
 
 (defun my/check-monitor ()
- (change-font-size
+  (change-font-size
    (if (eq (cadr (cadr (frame-monitor-attributes))) 1920) 9 13)))
 
-(run-with-idle-timer 5 1 'my/check-monitor)
+;;(run-with-idle-timer 5 1 'my/check-monitor)
 
 (setq ediff-window-setup-function 'ediff-setup-windows-plain)
 
