@@ -119,11 +119,6 @@ export PROMPT="%F{green}%n@%m%f %F{blue}%3~%f ${git_branch}
 %F{yellow}%#%f "
 export RPROMPT='%B%(?..%F{red}%? ↵%f)%b'
 
-if [ -d $HOME/.pyenv ]; then
-    eval "$(pyenv init -)"
-    eval "$(pyenv virtualenv-init -)"
-fi
-
 if [ -d $HOME/perl5 ]; then
     PATH="$HOME/perl5/bin${PATH:+:${PATH}}"; export PATH;
     PERL5LIB="$HOME/perl5/lib/perl5${PERL5LIB:+:${PERL5LIB}}"; export PERL5LIB;
@@ -142,6 +137,7 @@ if [ -d $HOME/.nvm ]; then
     #for macos
     [ -s "/usr/local/opt/nvm/nvm.sh" ] && . "/usr/local/opt/nvm/nvm.sh"  # This loads nvm
     #[ -s "/usr/local/opt/nvm/etc/bash_completion.d/nvm" ] && . "/usr/local/opt/nvm/etc/bash_completion.d/nvm"  # This loads nvm bash_completion
+    [ -s "$HOME/homebrew/opt/nvm/nvm.sh" ] && \. "$HOME/homebrew/opt/nvm/nvm.sh"  # This loads nvm
 fi
 #compdef tutor
 
@@ -184,5 +180,16 @@ awslogin () {
 export PATH="$PATH:$HOME/.rvm/bin"
 
 if [ -d $HOME/homebrew ]; then
-    export PATH=$PATH:$HOME/homebrew/bin
+    export PATH=$HOME/homebrew/bin:$HOME/homebrew/sbin:$PATH
+fi
+
+export GIT_SSH_COMMAND="ssh -i ~/.ssh/id_rsa_wgu"
+
+if [ -d $HOME/.pyenv ]; then
+    eval "$(pyenv init --path)"
+    eval "$(pyenv init -)"
+fi
+
+if whence -w minikube >/dev/null; then
+    eval $(minikube docker-env)
 fi
