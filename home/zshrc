@@ -115,7 +115,7 @@ function git_prompt_info() {
 
 local git_branch='$(git_prompt_info)'
 local git_dirty='$(parse_git_dirty)'
-export PROMPT="%F{green}%n@%m%f %F{blue}%3~%f ${git_branch}
+export PROMPT="%F{green}%n@%m%f %F{red}[%D{%L:%M:%S}] %F{blue}%3~%f ${git_branch}
 %F{yellow}%#%f "
 export RPROMPT='%B%(?..%F{red}%? ↵%f)%b'
 
