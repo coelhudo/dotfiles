@@ -3,7 +3,7 @@
 if [[ $TERM == "dumb" ]]; then
     unsetopt zle
     unsetopt prompt_cr
-    unsetopt promt_subst
+    unsetopt prompt_subst
 
     if whence -w precmd >/dev/null; then
         unfunciton precmd;
@@ -68,7 +68,7 @@ bashcompinit
 #export FOAM_INST_DIR=~/.local/opt/openfoam/OpenFOAM-v1906
 #alias ofoam="source ${FOAM_INST_DIR}/OpenFOAM-5.0/etc/bashrc"
 
-export PATH=$PATH:~/.opam/default/bin:~/.local/bin:~/.cabal/bin
+export PATH=$PATH:~/.opam/default/bin:~/.local/bin:~/.stack/programs/x86_64-linux/ghc-tinfo6-8.10.7/bin/
 export MANPATH=$HOME/.local/man:$HOME/.local/share/man:$MANPATH
 export EDITOR=emacs
 
@@ -161,3 +161,4 @@ fi
 if whence -w minikube >/dev/null; then
     eval $(minikube docker-env)
 fi
+alias lemacs="emacs -nw -q"

@@ -51,10 +51,10 @@ URxvt.urgentOnBell: true
 URxvt.depth: 24
 URxvt.iso14755: false
 
-URxvt.font: xft:Cascadia Mono:style=Regular:size=14
-URxvt.boldFont: xft:Cascadia Mono:style=Bold:size=14
-URxvt.italicFont: xft:Cascadia Mono:style=Italic:size=14
-URxvt.boldItalicFont: xft:Cascadia Mono:style=Bold Italic:size=14
+URxvt.font: xft:Cascadia Mono:style=Regular:size=11
+URxvt.boldFont: xft:Cascadia Mono:style=Bold:size=11
+URxvt.italicFont: xft:Cascadia Mono:style=Italic:size=11
+URxvt.boldItalicFont: xft:Cascadia Mono:style=Bold Italic:size=11
 
 URxvt.perl-ext-common: default,clipboard,url-select,keyboard-select, font-size
 

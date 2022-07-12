@@ -30,6 +30,17 @@
          ("C-c c" . org-capture)
          ("C-c b" . org-switchb)))
 
+(use-package org-roam
+  :ensure t
+  :custom
+  (org-roam-directory "~/dev/org_roam_notes")
+  (org-roam-complete-everywhere t)
+  :bind (("C-c n l" . org-roam-buffer-toggle)
+         ("C-c n f" . org-roam-node-find)
+         ("C-c n i" . org-roam-node-insert))
+  :config
+  (org-roam-db-autosync-enable))
+
 ;;; GTD configuration from here:
 ;;; https://emacs.cafe/emacs/orgmode/gtd/2017/06/30/orgmode-gtd.html
 (setq org-agenda-files (directory-files-recursively "~/Dropbox/TODO" "\\.org$"))

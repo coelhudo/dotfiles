@@ -4,15 +4,19 @@ import XMonad.Hooks.ManageDocks
 import XMonad.Hooks.ManageHelpers
 import XMonad.Hooks.EwmhDesktops
 import XMonad.Hooks.SetWMName
+import XMonad.Hooks.StatusBar
+
+
 import XMonad.Util.Run(spawnPipe)
 import XMonad.Util.Cursor
 import XMonad.Util.EZConfig(additionalKeys)
+
 import XMonad.Actions.GridSelect
 import XMonad.Layout.NoBorders
 import qualified XMonad.StackSet as W
+
 import System.IO
 import Graphics.X11.ExtraTypes.XF86
-
 
 myManageHook = composeAll
     [ className =? "Gimp"      --> doFloat
@@ -43,7 +47,7 @@ myKeys = [
         , ((0, xF86XK_AudioMute), spawn "/usr/bin/pamixer --sink $(/usr/bin/pamixer --list-sinks | grep analog | awk '{print $1}') -t & /usr/bin/notify-send \"Mute $(/usr/bin/pamixer --sink $(/usr/bin/pamixer --list-sinks | grep analog | awk '{print $1}') --get-mute)\" -t 400")
         , ((mod4Mask .|. shiftMask, xK_w), spawn "Telegram")
         , ((mod4Mask, xK_z), spawn "xlock")
-        , ((mod4Mask, xK_g), goToSelected defaultGSConfig)
+        , ((mod4Mask, xK_g), goToSelected def)
         , ((mod4Mask, xK_t     ), withFocused $ windows . W.sink)
         -- , ((mod4Mask .|. controlMask, xK_x), shellPrompt def)
         , ((mod4Mask, xK_comma ), sendMessage (IncMasterN 1))
@@ -53,9 +57,14 @@ myKeys = [
 
 main :: IO()
 main = do
-    xmproc <- spawnPipe "~/.cabal/bin/xmobar $HOME/.xmobarrc"
-    xmonad $ ewmh $ docks defaultConfig
-        { startupHook = setDefaultCursor xC_left_ptr
+  xmproc <- spawnPipe "~/.local/bin/xmobar $HOME/.xmobarrc"
+  xmonad
+    . ewmh
+    . docks
+    . ewmhFullscreen
+    . ewmh
+    $ def
+        { startupHook = setDefaultCursor xC_left_ptr >> setWMName "LG3D"
         , workspaces = ["1:<fn=3>\xe007</fn>",
                         "2:<fn=3>\xf2c6</fn>",
                         "3:<fn=2>\xf1c9</fn>",
@@ -66,9 +75,8 @@ main = do
                         "8",
                         "9"]
         , manageHook = manageDocks <+> myManageHook -- make sure to include myManageHook definition from above
-                        <+> manageHook defaultConfig
-        , handleEventHook = handleEventHook defaultConfig <+> fullscreenEventHook
-        , layoutHook = smartBorders . avoidStruts  $  layoutHook defaultConfig
+                        <+> manageHook def
+        , layoutHook = smartBorders . avoidStruts  $  layoutHook def
         , borderWidth = 1
         , logHook = dynamicLogWithPP $ xmobarPP
                         { ppOutput = hPutStrLn xmproc
@@ -78,3 +86,30 @@ main = do
         , terminal = "urxvt"
         } `additionalKeys`
         myKeys
+
+-- myXmobarPP :: PP
+-- myXmobarPP = def
+--              { ppSep             = magenta " • "
+--              , ppTitleSanitize   = xmobarStrip
+--              , ppCurrent         = wrap " " "" . xmobarBorder "Top" "#8be9fd" 2
+--              , ppHidden          = white . wrap " " ""
+--              , ppHiddenNoWindows = lowWhite . wrap " " ""
+--              , ppUrgent          = red . wrap (yellow "!") (yellow "!")
+--              , ppOrder           = \[ws, l, _, wins] -> [ws, l, wins]
+--              }
+--   where
+--     formatFocused   = wrap (white    "[") (white    "]") . magenta . ppWindow
+--     formatUnfocused = wrap (lowWhite "[") (lowWhite "]") . blue    . ppWindow
+
+--     -- | Windows should have *some* title, which should not not exceed a
+--     -- sane length.
+--     ppWindow :: String -> String
+--     ppWindow = xmobarRaw . (\w -> if null w then "untitled" else w) . shorten 30
+
+--     blue, lowWhite, magenta, red, white, yellow :: String -> String
+--     magenta  = xmobarColor "#ff79c6" ""
+--     blue     = xmobarColor "#bd93f9" ""
+--     white    = xmobarColor "#f8f8f2" ""
+--     yellow   = xmobarColor "#f1fa8c" ""
+--     red      = xmobarColor "#ff5555" ""
+--     lowWhite = xmobarColor "#bbbbbb" ""
