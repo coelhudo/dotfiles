@@ -151,10 +151,9 @@ if [ -d $HOME/homebrew ]; then
     export PATH=$HOME/homebrew/bin:$HOME/homebrew/sbin:$PATH
 fi
 
-export GIT_SSH_COMMAND="ssh -i ~/.ssh/id_rsa_wgu"
-
 if [ -d $HOME/.pyenv ]; then
-    eval "$(pyenv init --path)"
+    export PYENV_ROOT="$HOME/.pyenv"
+    command -v pyenv >/dev/null || export PATH="$PYENV_ROOT/bin:$PATH"
     eval "$(pyenv init -)"
 fi
 
