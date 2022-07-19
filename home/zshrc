@@ -160,4 +160,8 @@ fi
 if whence -w minikube >/dev/null; then
     eval $(minikube docker-env)
 fi
+
+if whence -w bat >/dev/null; then
+    alias cat="bat"
+fi
 alias lemacs="emacs -nw -q"
