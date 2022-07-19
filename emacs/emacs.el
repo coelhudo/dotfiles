@@ -33,7 +33,7 @@
      ("org-contrib" . "https://elpa.nongnu.org/nongnu/")
      ("melpa" . "http://melpa.org/packages/")))
  '(package-selected-packages
-   '(org-roam imenu-list superword-mode lsp-ui magit yaml-mode org-ref python-test swiper doom-modeline keychain-environment docker-tramp lorem-ipsum exec-path-from-shell diminish command-log-mode editorconfig undo-tree threes 2048-game rjsx-mode lsp-java yasnippet-snippets gdscript-mode bufler chess unicode-fonts projectile-direnv direnv smartparens expand-region flycheck-clang-analyzer cmake-mode company-jedi mw-thesaurus flycheck-mypy ansi package-build shut-up epl git commander helm-projectile helm-org-rifle which-key skewer-mode charmap web-mode tern-auto-complete company-tern js2-refactor xref-js2 moz dispwatch js-react-redux-yasnippets tide tss typescript-mode atom-dark-theme solarized-theme helm-gitlab gitlab org-analyzer org-cal fill-column-indicator crontab-mode org-pomodoro git-timemachine elpy csv-mode jedi pytest yasnippet use-package markdown-mode+ monokai-theme python-pytest))
+   '(go-mode docker-compose-mode org-roam jest dockerfile-mode imenu-list superword-mode lsp-ui magit yaml-mode org-ref python-test swiper doom-modeline keychain-environment docker-tramp lorem-ipsum exec-path-from-shell diminish command-log-mode editorconfig undo-tree threes 2048-game rjsx-mode lsp-java yasnippet-snippets gdscript-mode bufler chess unicode-fonts projectile-direnv direnv smartparens expand-region flycheck-clang-analyzer cmake-mode company-jedi mw-thesaurus flycheck-mypy ansi package-build shut-up epl git commander helm-projectile helm-org-rifle which-key skewer-mode charmap web-mode tern-auto-complete company-tern js2-refactor xref-js2 moz dispwatch js-react-redux-yasnippets tide tss typescript-mode atom-dark-theme solarized-theme helm-gitlab gitlab org-analyzer org-cal fill-column-indicator crontab-mode org-pomodoro git-timemachine elpy csv-mode jedi pytest yasnippet use-package markdown-mode+ monokai-theme python-pytest))
  '(python-environment-virtualenv '("python" "-m" "venv" "--system-site-packages"))
  '(pyvenv-virtualenvwrapper-python "/usr/bin/python")
  '(ring-bell-function 'ignore)
@@ -56,8 +56,8 @@
  '(org-level-4 ((t (:inherit default :foreground "#E6DB74" :height 1.1)))))
 
 (add-to-list 'default-frame-alist
-             '(font . "Cascadia Mono-10"))
-(set-face-attribute 'mode-line nil :font "Cascadia Mono-10")
+             '(font . "Cascadia Mono-16"))
+(set-face-attribute 'mode-line nil :font "Cascadia Mono-14")
 (when (member "Symbola" (font-family-list))
   (set-fontset-font t 'unicode "Symbola" nil 'prepend))
 
