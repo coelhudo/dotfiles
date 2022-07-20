@@ -162,6 +162,6 @@ if whence -w minikube >/dev/null; then
 fi
 
 if whence -w bat >/dev/null; then
-    alias cat="bat"
+    alias cat="bat --theme ansi"
 fi
 alias lemacs="emacs -nw -q"
