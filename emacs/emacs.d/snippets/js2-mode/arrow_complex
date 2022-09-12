@@ -1,0 +1,6 @@
+# -*- mode: snippet -*-
+# name: arrow function with body
+# key: arwc
+# --
+
+($1) => {$2}
