@@ -12,14 +12,6 @@
 (when (executable-find "ipython")
   (setq python-shell-interpreter "ipython"))
 
-(use-package flycheck
-  :ensure t
-  :init
-  (progn
-    (global-flycheck-mode t)
-    (set-face-attribute 'flycheck-warning nil :foreground nil)
-    (set-face-attribute 'flycheck-error nil :background nil)))
-
 (use-package elpy
   :ensure t
   :defer t

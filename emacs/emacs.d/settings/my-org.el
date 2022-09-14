@@ -26,7 +26,7 @@
   (add-hook 'org-mode-hook 'flyspell-mode)
   (add-hook 'org-mode-hook '(lambda ()(setq fill-column 90)))
   :config
-  (org-image-actual-width nil)
+  (setq org-image-actual-width nil)
   :bind (("C-c l" . org-store-link)
          ("C-c a" . org-agenda)
          ("C-c c" . org-capture)
@@ -53,6 +53,8 @@
   :config
   (require 'org-roam-dailies)
   (org-roam-db-autosync-enable))
+
+(use-package org-roam-mode)
 
 ;;; GTD configuration from here:
 ;;; https://emacs.cafe/emacs/orgmode/gtd/2017/06/30/orgmode-gtd.html
