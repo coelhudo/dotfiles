@@ -17,13 +17,13 @@
 
 (use-package skewer-html-mode
   :hook (mhtml-mode
-	 html-mode))
+         html-mode))
 
 (use-package lsp-mode
   :hook ((html-mode
-	 css-mode
-	 web-mode)
-	 . lsp-deferred))
+         css-mode
+         web-mode)
+         . lsp-deferred))
 
 (provide 'my-web)
 ;;; my-web.el ends here

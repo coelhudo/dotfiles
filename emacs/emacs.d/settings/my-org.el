@@ -107,4 +107,5 @@
 
 
 (provide 'my-org)
-;;; my-org ends here
+
+;;; my-org.el ends here

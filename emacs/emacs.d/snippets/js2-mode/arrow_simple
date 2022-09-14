@@ -1,0 +1,6 @@
+# -*- mode: snippet -*-
+# name: arrow function without body
+# key: arws
+# --
+
+($1) => $2

@@ -19,7 +19,9 @@
  '(explicit-bash-args '("--noediting" "--login" "-i"))
  '(fill-column 88)
  '(flycheck-emacs-lisp-load-path nil)
+ '(flycheck-javascript-eslint-executable nil)
  '(gnutls-algorithm-priority "NORMAL:-VERS-TLS1.3")
+ '(ido-use-filename-at-point 'guess)
  '(indent-tabs-mode nil)
  '(inhibit-startup-screen t)
  '(ispell-dictionary "en_CA")
@@ -34,7 +36,7 @@
      ("org-contrib" . "https://elpa.nongnu.org/nongnu/")
      ("melpa" . "http://melpa.org/packages/")))
  '(package-selected-packages
-   '(all-the-icons go-mode docker-compose-mode org-roam jest dockerfile-mode imenu-list superword-mode lsp-ui magit yaml-mode org-ref python-test swiper doom-modeline keychain-environment docker-tramp lorem-ipsum exec-path-from-shell diminish command-log-mode editorconfig undo-tree threes 2048-game rjsx-mode lsp-java yasnippet-snippets gdscript-mode bufler chess unicode-fonts projectile-direnv direnv smartparens expand-region flycheck-clang-analyzer cmake-mode company-jedi mw-thesaurus flycheck-mypy ansi package-build shut-up epl git commander helm-projectile helm-org-rifle which-key skewer-mode charmap web-mode tern-auto-complete company-tern js2-refactor xref-js2 moz dispwatch js-react-redux-yasnippets tide tss typescript-mode atom-dark-theme solarized-theme helm-gitlab gitlab org-analyzer org-cal fill-column-indicator crontab-mode org-pomodoro git-timemachine elpy csv-mode jedi pytest yasnippet use-package markdown-mode+ monokai-theme python-pytest))
+   '(all-the-icons add-node-modules-path vertico company-lsp go-mode docker-compose-mode org-roam jest dockerfile-mode imenu-list superword-mode lsp-ui magit yaml-mode org-ref python-test swiper doom-modeline keychain-environment docker-tramp lorem-ipsum exec-path-from-shell diminish command-log-mode editorconfig undo-tree threes 2048-game rjsx-mode lsp-java yasnippet-snippets gdscript-mode bufler chess unicode-fonts projectile-direnv direnv smartparens expand-region flycheck-clang-analyzer cmake-mode company-jedi mw-thesaurus flycheck-mypy ansi package-build shut-up epl git commander helm-projectile helm-org-rifle which-key skewer-mode charmap web-mode tern-auto-complete company-tern js2-refactor xref-js2 moz dispwatch js-react-redux-yasnippets tide tss typescript-mode atom-dark-theme solarized-theme helm-gitlab gitlab org-analyzer org-cal fill-column-indicator crontab-mode org-pomodoro git-timemachine elpy csv-mode jedi pytest yasnippet use-package markdown-mode+ monokai-theme python-pytest))
  '(python-environment-virtualenv '("python" "-m" "venv" "--system-site-packages"))
  '(pyvenv-virtualenvwrapper-python "/usr/bin/python")
  '(ring-bell-function 'ignore)
@@ -72,11 +74,17 @@
 
 (use-package company
   :ensure t
+  :after lsp-mode
   :custom
-  ((company-idle-delay 0)
-   (company-minimum-prefix-length 3))
+  (company-idle-delay 0)
+  (company-minimum-prefix-length 3)
   :config
-  (global-company-mode nil))
+  (global-company-mode nil)
+  (add-to-list 'company-backends '(company-capf :with company-yasnippet))
+  :bind ((:map company-active-map
+               ("<tab>" . company-complete-selection))
+         (:map lsp-mode-map
+               ("<tab>" . company-indent-or-complete-common))))
 
 (use-package yasnippet
   :ensure t
@@ -171,7 +179,8 @@
   :ensure t
   :config
   (define-key projectile-mode-map (kbd "C-x p") 'projectile-command-map)
-  (projectile-mode +1))
+  (projectile-mode 1)
+  (setq projectile-enable-caching t))
 
 (use-package helm-projectile
   :ensure t
@@ -194,7 +203,9 @@
   :ensure t
   :commands lsp
   :custom
-  (lsp-prefer-flymake nil)
+  ((lsp-prefer-flymake nil)
+   (gc-cons-threshold 100000000)
+   (read-process-output-max (* 1024 1024)))
   :hook ((c++-mode c-mode java-mode) . lsp))
 
 (use-package lsp-ui
@@ -234,10 +245,10 @@
   :ensure t
   :init (doom-modeline-mode 1)
   :custom
-  ((find-file-visit-truename t)
-   (doom-modeline-height 10)
-   (doom-modeline-bar-width 2)
-   (doom-modeline-window-width-limit 60)))
+  (find-file-visit-truename t)
+  (doom-modeline-height 10)
+  (doom-modeline-bar-width 2)
+  (doom-modeline-window-width-limit 60))
 
 (use-package all-the-icons)
 
