@@ -25,10 +25,17 @@
   (add-hook 'org-mode-hook 'turn-on-auto-fill)
   (add-hook 'org-mode-hook 'flyspell-mode)
   (add-hook 'org-mode-hook '(lambda ()(setq fill-column 90)))
+  :config
+  (org-image-actual-width nil)
   :bind (("C-c l" . org-store-link)
          ("C-c a" . org-agenda)
          ("C-c c" . org-capture)
-         ("C-c b" . org-switchb)))
+         ("C-c b" . org-switchb))
+  :custom-face
+  (org-level-1 ((t (:inherit default :foreground "#FD971F" :height 1.1))))
+  (org-level-2 ((t (:inherit default :foreground "#A6E22E" :height 1.1))))
+  (org-level-3 ((t (:inherit default :foreground "#66D9EF" :height 1.1))))
+  (org-level-4 ((t (:inherit default :foreground "#E6DB74" :height 1.1)))))
 
 (use-package org-roam
   :ensure t

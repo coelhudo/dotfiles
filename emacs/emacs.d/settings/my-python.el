@@ -27,7 +27,6 @@
   (advice-add 'python-mode :before 'elpy-enable)
   (add-hook 'elpy-mode-hook 'flycheck-mode)
   :config
-  ;; (setq elpy-modules (delq 'elpy-module-flymake elpy-modules))
   (setq elpy-company-post-completion-function 'ignore)
   (setq elpy-rpc-virtualenv-path 'current))
 
@@ -39,6 +38,7 @@
   (setq pytest-cmd-flags "-o \"addopts=-x -s\""))
 
 (use-package ein
+  :after company
   :init
   (setq linum-mode nil)
   (setq ein:output-area-inlined-images t)
@@ -49,6 +49,7 @@
   :bind (("C-x 5 k" . ein:worksheet-kill-cell-km)))
 
 (use-package ein:notebook
+  :after company
   :init
   (setq linum-mode nil)
   (setq ein:output-area-inlined-images t)
