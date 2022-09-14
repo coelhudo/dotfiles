@@ -5,6 +5,7 @@
 ;;; Code:
 ;; (use-package web-mode
 ;;   :mode ("\\.html\\'" "\\.css\\'"))
+(use-package pug-mode)
 
 (use-package web-mode
   :mode ("\\.html\\'"))
