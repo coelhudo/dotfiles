@@ -12,14 +12,6 @@
 (when (executable-find "ipython")
   (setq python-shell-interpreter "ipython"))
 
-(use-package flycheck
-  :ensure t
-  :init
-  (progn
-    (global-flycheck-mode t)
-    (set-face-attribute 'flycheck-warning nil :foreground nil)
-    (set-face-attribute 'flycheck-error nil :background nil)))
-
 (use-package elpy
   :ensure t
   :defer t
@@ -27,7 +19,6 @@
   (advice-add 'python-mode :before 'elpy-enable)
   (add-hook 'elpy-mode-hook 'flycheck-mode)
   :config
-  ;; (setq elpy-modules (delq 'elpy-module-flymake elpy-modules))
   (setq elpy-company-post-completion-function 'ignore)
   (setq elpy-rpc-virtualenv-path 'current))
 
@@ -39,6 +30,7 @@
   (setq pytest-cmd-flags "-o \"addopts=-x -s\""))
 
 (use-package ein
+  :after company
   :init
   (setq linum-mode nil)
   (setq ein:output-area-inlined-images t)
@@ -49,6 +41,7 @@
   :bind (("C-x 5 k" . ein:worksheet-kill-cell-km)))
 
 (use-package ein:notebook
+  :after company
   :init
   (setq linum-mode nil)
   (setq ein:output-area-inlined-images t)
