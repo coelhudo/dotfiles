@@ -42,7 +42,7 @@
 
 
 (add-to-list 'default-frame-alist
-             '(font . "Cascadia Mono-12"))
+             '(font . "Cascadia Mono-14"))
 (set-face-attribute 'mode-line nil :font "Cascadia Mono-10")
 (when (member "Symbola" (font-family-list))
   (set-fontset-font t 'unicode "Symbola" nil 'prepend))
@@ -208,6 +208,15 @@
    (gc-cons-threshold 100000000)
    (read-process-output-max (* 1024 1024)))
   :hook ((c++-mode c-mode java-mode) . lsp))
+
+(use-package lsp-modeline
+  :after lsp-mode)
+
+(use-package lsp-headerline
+  :after lsp-mode)
+
+(use-package lsp-diagnostics
+  :after lsp-mode)
 
 (use-package lsp-ui
   :after lsp-mode
