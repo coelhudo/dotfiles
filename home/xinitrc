@@ -1,0 +1,44 @@
+#!/bin/sh
+
+userresources=$HOME/.Xresources
+usermodmap=$HOME/.Xmodmap
+sysresources=/etc/X11/xinit/.Xresources
+sysmodmap=/etc/X11/xinit/.Xmodmap
+
+# merge in defaults and keymaps
+
+if [ -f $sysresources ]; then
+    xrdb -merge $sysresources
+fi
+
+if [ -f $sysmodmap ]; then
+    xmodmap $sysmodmap
+fi
+
+if [ -f $userresources ]; then
+    xrdb -merge $userresources
+fi
+
+if [ -f $usermodmap ]; then
+    xmodmap $usermodmap
+fi
+
+# Start DBUS session bus:
+if [ -z "$DBUS_SESSION_BUS_ADDRESS" ]; then
+   eval $(dbus-launch --sh-syntax --exit-with-session)
+fi
+
+/usr/bin/daemon -rB --pidfiles=~/.run --name=pipewire /usr/bin/pipewire
+/usr/bin/daemon -rB --pidfiles=~/.run --name=pipewire-pulse /usr/bin/pipewire-pulse
+/usr/bin/daemon -rB --pidfiles=~/.run --name=pipewire-media-session /usr/bin/pipewire-media-session
+
+trayer --edge top --align right --SetDockType true --SetPartialStrut true \
+       --expand true --width 10 --transparent true --tint 0x5f5f5f --height 18 \
+       --monitor primary &
+
+# Start the window manager:
+exec ~/.local/bin/xmonad
+
+/usr/bin/daemon --pidfiles=~/.run --name=pipewire --stop
+/usr/bin/daemon --pidfiles=~/.run --name=pipewire-media-session --stop
+/usr/bin/daemon --pidfiles=~/.run --name=pipewire-pulse --stop
