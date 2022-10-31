@@ -27,6 +27,7 @@
   (add-hook 'org-mode-hook '(lambda ()(setq fill-column 90)))
   :config
   (setq org-image-actual-width nil)
+  (setq org-hide-emphasis-markers t)
   :bind (("C-c l" . org-store-link)
          ("C-c a" . org-agenda)
          ("C-c c" . org-capture)
@@ -41,7 +42,7 @@
   :ensure t
   :custom
   (org-roam-directory "~/dev/org_roam_notes")
-  (org-roam-complete-everywhere t)
+  (org-roam-completion-everywhere t)
   :bind (("C-c n l" . org-roam-buffer-toggle)
          ("C-c n f" . org-roam-node-find)
          ("C-c n i" . org-roam-node-insert)
