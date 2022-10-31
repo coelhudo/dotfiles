@@ -65,6 +65,8 @@ promptinit
 autoload bashcompinit
 bashcompinit
 
+fpath=($HOME/.local/zsh/completions $fpath)
+
 #export FOAM_INST_DIR=~/.local/opt/openfoam/OpenFOAM-v1906
 #alias ofoam="source ${FOAM_INST_DIR}/OpenFOAM-5.0/etc/bashrc"
 
