@@ -23,13 +23,14 @@
  '(jedi:environment-virtualenv '("python" "-m" "venv"))
  '(json-reformat:indent-width 2)
  '(lsp-enable-on-type-formatting nil)
+ '(lsp-log-io t)
  '(magit-diff-use-overlays nil)
  '(package-archives
    '(("elpa" . "https://elpa.gnu.org/packages/")
      ("org-contrib" . "https://elpa.nongnu.org/nongnu/")
      ("melpa" . "http://melpa.org/packages/")))
  '(package-selected-packages
-   '(restclient-mode arduino-mode restclient-jq ob-restclient eslint-fix pug-mode haskell-mode all-the-icons add-node-modules-path vertico company-lsp go-mode docker-compose-mode org-roam jest dockerfile-mode imenu-list superword-mode lsp-ui magit yaml-mode org-ref python-test swiper doom-modeline keychain-environment docker-tramp lorem-ipsum exec-path-from-shell diminish command-log-mode editorconfig undo-tree threes 2048-game rjsx-mode lsp-java yasnippet-snippets gdscript-mode bufler chess unicode-fonts projectile-direnv direnv smartparens expand-region flycheck-clang-analyzer cmake-mode company-jedi mw-thesaurus flycheck-mypy ansi package-build shut-up epl git commander helm-projectile helm-org-rifle which-key skewer-mode charmap web-mode tern-auto-complete company-tern js2-refactor xref-js2 moz dispwatch js-react-redux-yasnippets tide tss typescript-mode atom-dark-theme solarized-theme helm-gitlab gitlab org-analyzer org-cal fill-column-indicator crontab-mode org-pomodoro git-timemachine elpy csv-mode jedi pytest yasnippet use-package markdown-mode+ monokai-theme python-pytest))
+   '(csharp-mode restclient-mode arduino-mode restclient-jq ob-restclient eslint-fix pug-mode haskell-mode all-the-icons add-node-modules-path vertico company-lsp go-mode docker-compose-mode org-roam jest dockerfile-mode imenu-list superword-mode lsp-ui magit yaml-mode org-ref python-test swiper doom-modeline keychain-environment docker-tramp lorem-ipsum exec-path-from-shell diminish command-log-mode editorconfig undo-tree threes 2048-game rjsx-mode lsp-java yasnippet-snippets gdscript-mode bufler chess unicode-fonts projectile-direnv direnv smartparens expand-region flycheck-clang-analyzer cmake-mode company-jedi mw-thesaurus flycheck-mypy ansi package-build shut-up epl git commander helm-projectile helm-org-rifle which-key skewer-mode charmap web-mode tern-auto-complete company-tern js2-refactor xref-js2 moz dispwatch js-react-redux-yasnippets tide tss typescript-mode atom-dark-theme solarized-theme helm-gitlab gitlab org-analyzer org-cal fill-column-indicator crontab-mode org-pomodoro git-timemachine elpy csv-mode jedi pytest yasnippet use-package markdown-mode+ monokai-theme python-pytest))
  '(python-environment-virtualenv '("python" "-m" "venv" "--system-site-packages"))
  '(pyvenv-virtualenvwrapper-python "/usr/bin/python")
  '(ring-bell-function 'ignore)
@@ -42,7 +43,7 @@
 
 
 (add-to-list 'default-frame-alist
-             '(font . "Cascadia Mono-11"))
+             '(font . "Cascadia Mono-12"))
 (set-face-attribute 'mode-line nil :font "Cascadia Mono-10")
 (when (member "Symbola" (font-family-list))
   (set-fontset-font t 'unicode "Symbola" nil 'prepend))
@@ -58,15 +59,46 @@
 (use-package expand-region
   :ensure t)
 
-(require 'magit)
-(require 'magit-status)
-(require 'magit-extras)
+(use-package magit
+  :ensure t)
+(use-package magit-status)
+(use-package magit-extras)
 
 (use-package haskell-mode
   :mode "\\.hs\\'")
 
 (use-package arduino-mode
   :mode "\\.ino\\'")
+
+(use-package csharp-mode
+  :ensure t
+  :mode "\\.cs\\'"
+  :init
+  (defun my/csharp-mode-hook ()
+    (setq-local lsp-auto-guess-root t)
+    (lsp))
+  (add-hook 'csharp-mode-hook #'my/csharp-mode-hook))
+
+(require 'csharp-mode)
+
+(defvar bootstrap-version)
+(let ((bootstrap-file
+       (expand-file-name "straight/repos/straight.el/bootstrap.el" user-emacs-directory))
+      (bootstrap-version 6))
+  (unless (file-exists-p bootstrap-file)
+    (with-current-buffer
+        (url-retrieve-synchronously
+         "https://raw.githubusercontent.com/radian-software/straight.el/develop/install.el"
+         'silent 'inhibit-cookies)
+      (goto-char (point-max))
+      (eval-print-last-sexp)))
+  (load bootstrap-file nil 'nomessage))
+
+(straight-use-package
+ '(unity :type git :host github :repo "elizagamedev/unity.el"))
+(add-hook 'after-init-hook #'unity-mode)
+
+(setenv "FrameworkPathOverride" "/Library/Frameworks/Mono.framework/Versions/Current/Commands/")
 
 (require 'haskell-doc)
 
@@ -98,6 +130,10 @@
   :ensure t
   :init (add-hook 'prog-mode-hook #'yas-minor-mode)
   :config (yas-reload-all))
+
+(use-package company-yasnippet)
+(use-package company-dabbrev)
+(use-package company-dabbrev-code)
 
 (defvar settings-dir
   (expand-file-name "settings" user-emacs-directory))
@@ -230,6 +266,9 @@
    (lsp-ui-doc-include-signature t)
    (lsp-ui-doc-position 'top)))
 
+(use-package dap-mouse
+  :after lsp-ui)
+
 (use-package tex-mode
   :init
   (add-hook 'tex-mode-hook 'auto-fill-mode))
@@ -296,3 +335,5 @@
  '(org-level-2 ((t (:inherit default :foreground "#A6E22E" :height 1.1))))
  '(org-level-3 ((t (:inherit default :foreground "#66D9EF" :height 1.1))))
  '(org-level-4 ((t (:inherit default :foreground "#E6DB74" :height 1.1)))))
+
+(server-start)
