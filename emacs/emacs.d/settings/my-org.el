@@ -24,7 +24,7 @@
   :init
   (add-hook 'org-mode-hook 'turn-on-auto-fill)
   (add-hook 'org-mode-hook 'flyspell-mode)
-  (add-hook 'org-mode-hook '(lambda ()(setq fill-column 90)))
+  (add-hook 'org-mode-hook #'(lambda ()(setq fill-column 90)))
   :config
   (setq org-image-actual-width nil)
   (setq org-hide-emphasis-markers t)

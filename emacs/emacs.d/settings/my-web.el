@@ -8,10 +8,10 @@
 (use-package pug-mode)
 
 (use-package web-mode
-  :mode ("\\.html\\'"))
+  :mode "\\.html\\'")
 
 (use-package css-mode
-  :mode ("\\.css\\'"))
+  :mode "\\.css\\'")
 
 (use-package skewer-css-mode
   :hook (css-mode))

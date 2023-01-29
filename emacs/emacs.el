@@ -56,6 +56,14 @@
 (package-initialize)
 (package-install-selected-packages)
 
+(unless (package-installed-p 'use-package)
+  (package-refresh-contents)
+  (package-install 'use-package))
+(eval-when-compile
+  (require 'use-package))
+(require 'bind-key)
+(setq use-package-always-ensure nil)
+
 (use-package expand-region
   :ensure t)
 
@@ -63,6 +71,7 @@
   :ensure t)
 (use-package magit-status)
 (use-package magit-extras)
+(use-package git-rebase)
 
 (use-package haskell-mode
   :mode "\\.hs\\'")
