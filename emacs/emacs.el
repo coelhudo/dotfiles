@@ -73,44 +73,6 @@
 (use-package magit-extras)
 (use-package git-rebase)
 
-(use-package haskell-mode
-  :mode "\\.hs\\'")
-
-(use-package arduino-mode
-  :mode "\\.ino\\'")
-
-(use-package csharp-mode
-  :ensure t
-  :mode "\\.cs\\'"
-  :init
-  (defun my/csharp-mode-hook ()
-    (setq-local lsp-auto-guess-root t)
-    (lsp))
-  (add-hook 'csharp-mode-hook #'my/csharp-mode-hook))
-
-(require 'csharp-mode)
-
-(defvar bootstrap-version)
-(let ((bootstrap-file
-       (expand-file-name "straight/repos/straight.el/bootstrap.el" user-emacs-directory))
-      (bootstrap-version 6))
-  (unless (file-exists-p bootstrap-file)
-    (with-current-buffer
-        (url-retrieve-synchronously
-         "https://raw.githubusercontent.com/radian-software/straight.el/develop/install.el"
-         'silent 'inhibit-cookies)
-      (goto-char (point-max))
-      (eval-print-last-sexp)))
-  (load bootstrap-file nil 'nomessage))
-
-(straight-use-package
- '(unity :type git :host github :repo "elizagamedev/unity.el"))
-(add-hook 'after-init-hook #'unity-mode)
-
-(setenv "FrameworkPathOverride" "/Library/Frameworks/Mono.framework/Versions/Current/Commands/")
-
-(require 'haskell-doc)
-
 (use-package flycheck
   :init
   (setq flycheck-emacs-lisp-load-path 'inherit)
@@ -143,12 +105,21 @@
 (use-package company-yasnippet)
 (use-package company-dabbrev)
 (use-package company-dabbrev-code)
+(use-package company-bbdb)
+(use-package company-semantic)
+(use-package company-files)
+(use-package company-gtags)
+(use-package company-etags)
+(use-package company-keywords)
+(use-package company-oddmuse)
 
 (defvar settings-dir
   (expand-file-name "settings" user-emacs-directory))
 (add-to-list 'load-path settings-dir)
 
 (require 'diminish)
+(require 'my-custom-functions)
+(require 'my-lsp)
 (require 'my-org)
 (require 'my-python)
 (require 'my-markdown)
@@ -156,14 +127,16 @@
 (require 'my-web)
 (require 'my-c_cpp)
 (require 'my-web)
+(require 'my-prog-modes)
 
 (load-theme 'monokai t)
+(add-hook 'before-save-hook 'whitespace-cleanup)
+
 (require 'multiple-cursors)
 (global-set-key (kbd "C-x c") 'mc/edit-lines)
 (global-set-key (kbd "C-x C-b") 'ibuffer)
 (global-set-key (kbd "C-=") 'er/expand-region)
 (global-unset-key (kbd "s-t")) ;; macOS specific
-(add-hook 'before-save-hook 'whitespace-cleanup)
 
 (setq undo-tree-visualizer-diff t)
 
@@ -172,17 +145,12 @@
   (interactive)
   (with-editor-async-shell-command "crontab -e"))
 
-(setq ido-enable-flex-matching t)
-(setq ido-everywhere t)
-(ido-mode 1)
-
-;; (use-package ivy
-;;   :diminish
-;;   :custom
-;;   ((ivy-use-virtual-buffers t)
-;;    ( enable-recursive-minibuffers t))
-;;   :config
-;;   (ivy-mode 1))
+(use-package ido
+  :custom
+  ((ido-enable-flex-matching t)
+   (ido-everywhere t))
+  :config
+  (ido-mode 1))
 
 (use-package autorevert
   :diminish
@@ -190,40 +158,6 @@
   :config (auto-revert-mode 1))
 
 (eval-after-load 'tramp '(setenv "SHELL" "/bin/bash"))
-
-(defun move-text-internal (arg)
-  (cond
-   ((and mark-active transient-mark-mode)
-    (if (> (point) (mark))
-        (exchange-point-and-mark))
-    (let ((column (current-column))
-          (text (delete-and-extract-region (point) (mark))))
-      (forward-line arg)
-      (move-to-column column t)
-      (set-mark (point))
-      (insert text)
-      (exchange-point-and-mark)
-      (setq deactivate-mark nil)))
-   (t
-    (beginning-of-line)
-    (when (or (> arg 0) (not (bobp)))
-      (forward-line)
-      (when (or (< arg 0) (not (eobp)))
-        (transpose-lines arg))
-      (forward-line -1)))))
-
-(defun move-text-down (arg)
-  "Move region (transient-mark-mode active) or current line arg lines down."
-  (interactive "*p")
-  (move-text-internal arg))
-
-(defun move-text-up (arg)
-  "Move region (transient-mark-mode active) or current line arg lines up."
-  (interactive "*p")
-  (move-text-internal (- arg)))
-
-(global-set-key [\M-\S-up] 'move-text-up)
-(global-set-key [\M-\S-down] 'move-text-down)
 
 (use-package command-log-mode)
 
@@ -248,56 +182,9 @@
   :ensure t
   :config (which-key-mode 1))
 
-(use-package lsp-mode
-  :ensure t
-  :commands lsp
-  :custom
-  ((lsp-prefer-flymake nil)
-   (gc-cons-threshold 100000000)
-   (read-process-output-max (* 1024 1024)))
-  :hook ((c++-mode c-mode java-mode) . lsp))
-
-(use-package lsp-modeline
-  :after lsp-mode)
-
-(use-package lsp-headerline
-  :after lsp-mode)
-
-(use-package lsp-diagnostics
-  :after lsp-mode)
-
-(use-package lsp-ui
-  :after lsp-mode
-  :diminish
-  :commands lsp-ui-mode
-  :custom
-  ((lsp-ui-doc-delay 1)
-   (lsp-ui-doc-include-signature t)
-   (lsp-ui-doc-position 'top)))
-
-(use-package dap-mouse
-  :after lsp-ui)
-
-(use-package tex-mode
-  :init
-  (add-hook 'tex-mode-hook 'auto-fill-mode))
-
 (setq search-default-mode #'char-fold-to-regexp)
-;; (global-set-key (kbd "C-s") 'swiper)
-;; (global-set-key (kbd "C-r") 'swiper-backward)
 
 (setq confirm-kill-emacs 'yes-or-no-p)
-
-(defun change-font-size (new-size)
-  "Change the font size to the given value"
-  (interactive "nNew font size: ")
-  (set-face-attribute 'default nil :height (* 10 new-size)))
-
-(defun my/check-monitor ()
-  (change-font-size
-   (if (eq (cadr (cadr (frame-monitor-attributes))) 1920) 9 13)))
-
-;;(run-with-idle-timer 5 1 'my/check-monitor)
 
 (setq ediff-window-setup-function 'ediff-setup-windows-plain)
 
@@ -307,16 +194,11 @@
   :config (doom-modeline-mode 1)
   :custom
   (find-file-visit-truename t)
-  (doom-modeline-height 10)
-  (doom-modeline-bar-width 2)
+  (doom-modeline-height 12)
+  (doom-modeline-bar-width 4)
   (doom-modeline-window-width-limit 60))
 
 (use-package all-the-icons)
-(use-package yaml-mode)
-
-(use-package restclient
-  :ensure t
-  :mode ("\\.http\\'"))
 
 (require 'exec-path-from-shell)
 (exec-path-from-shell-initialize)
