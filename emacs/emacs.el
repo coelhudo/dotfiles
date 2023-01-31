@@ -83,41 +83,17 @@
   :config
   (global-flycheck-mode t))
 
-(use-package company
-  :ensure t
-  :after lsp-mode
-  :custom
-  (company-idle-delay 0)
-  (company-minimum-prefix-length 3)
-  :config
-  (global-company-mode nil)
-  (add-to-list 'company-backends '(company-capf :with company-yasnippet))
-  :bind ((:map company-active-map
-               ("<tab>" . company-complete-selection))
-         (:map lsp-mode-map
-               ("<tab>" . company-indent-or-complete-common))))
-
 (use-package yasnippet
   :ensure t
   :init (add-hook 'prog-mode-hook #'yas-minor-mode)
   :config (yas-reload-all))
-
-(use-package company-yasnippet)
-(use-package company-dabbrev)
-(use-package company-dabbrev-code)
-(use-package company-bbdb)
-(use-package company-semantic)
-(use-package company-files)
-(use-package company-gtags)
-(use-package company-etags)
-(use-package company-keywords)
-(use-package company-oddmuse)
 
 (defvar settings-dir
   (expand-file-name "settings" user-emacs-directory))
 (add-to-list 'load-path settings-dir)
 
 (require 'diminish)
+(require 'my-company)
 (require 'my-custom-functions)
 (require 'my-lsp)
 (require 'my-org)

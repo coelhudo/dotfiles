@@ -33,16 +33,25 @@
 (add-hook 'after-init-hook #'unity-mode)
 
 
-(if (eq system-type 'darwin)
-    (setenv "FrameworkPathOverride" "/Library/Frameworks/Mono.framework/Versions/Current/Commands/"))
+;; if the project isn't under a VCS, then this is necessary to find the project root
+(cl-defmethod project-root ((project (head csharp)))
+  (cdr project))
 
+(defun my/project-try-csharp (dir)
+  (if-let ((root
+            (locate-dominating-file
+             dir (lambda (dir)
+                   (directory-files dir nil "\\.sln$" t 1)))))
+      (cons 'csharp root)))
+
+(add-hook 'project-find-functions #'my/project-try-csharp)
 
 (require 'haskell-doc)
 (use-package yaml-mode)
 
 (use-package restclient
   :ensure t
-  :mode ("\\.http\\'"))
+  :mode "\\.http\\'")
 
 (use-package tex-mode
   :init
