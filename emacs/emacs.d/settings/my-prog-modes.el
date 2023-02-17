@@ -2,7 +2,7 @@
   :mode ("\\.hs\\'" . haskell-mode))
 
 (use-package arduino-mode
-  :mode "\\.ino\\'" . arduino-mode)
+  :mode ("\\.ino\\'" . arduino-mode))
 
 (use-package csharp-mode
   :ensure t
