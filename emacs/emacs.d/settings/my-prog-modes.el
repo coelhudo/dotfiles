@@ -1,8 +1,8 @@
 (use-package haskell-mode
-  :mode "\\.hs\\'")
+  :mode ("\\.hs\\'" . haskell-mode))
 
 (use-package arduino-mode
-  :mode "\\.ino\\'")
+  :mode "\\.ino\\'" . arduino-mode)
 
 (use-package csharp-mode
   :ensure t
@@ -51,7 +51,7 @@
 
 (use-package restclient
   :ensure t
-  :mode "\\.http\\'")
+  :mode ("\\.http\\'" . restclient-mode))
 
 (use-package tex-mode
   :init

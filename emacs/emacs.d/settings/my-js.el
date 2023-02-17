@@ -6,6 +6,8 @@
 (require 'js2-refactor)
 (require 'xref-js2)
 (require 'add-node-modules-path)
+(require 'web-mode)
+(require 'rjsx-mode)
 
 
 ;;; Code:

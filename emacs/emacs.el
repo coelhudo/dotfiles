@@ -85,8 +85,9 @@
 
 (use-package yasnippet
   :ensure t
-  :init (add-hook 'prog-mode-hook #'yas-minor-mode)
-  :config (yas-reload-all))
+  :config
+  (yas-reload-all)
+  (add-hook 'prog-mode-hook #'yas-minor-mode))
 
 (defvar settings-dir
   (expand-file-name "settings" user-emacs-directory))
