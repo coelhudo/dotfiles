@@ -29,6 +29,7 @@
   (setq pytest-cmd-flags "-o \"addopts=-x -s\""))
 
 (use-package ein
+  :ensure t
   :after company
   :init
   (setq linum-mode nil)

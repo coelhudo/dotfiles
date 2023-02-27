@@ -8,7 +8,7 @@
 (use-package pug-mode)
 
 (use-package web-mode
-  :mode "\\.html\\'")
+  :mode ("\\.html\\'" "\\.cshtml\\'"))
 
 (use-package css-mode
   :mode "\\.css\\'")

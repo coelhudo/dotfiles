@@ -13,6 +13,7 @@
     (lsp))
   (add-hook 'csharp-mode-hook #'my/csharp-mode-hook))
 
+(require 'omnisharp)
 (require 'csharp-mode)
 
 (defvar bootstrap-version)
