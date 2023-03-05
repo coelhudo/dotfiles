@@ -1,0 +1,32 @@
+# -*- mode: snippet -*-
+# name: MVC Controller
+# key: controller
+# --
+
+using Microsoft.AspNetCore.Mvc;
+
+namespace ${1:Namespace}
+{
+    [Route("[controller]")] // api/[controller]
+    [ApiController]
+
+    public class ${2:ClassName} : ControllerBase
+    {
+        public $2()
+        {
+        }
+
+        [HttpGet]
+        public string Get() {
+            return "";
+        }
+
+        // [Route("Path)] [FromBody]
+        [Route("SubRoute")] // [controller]/subroute
+        [HttpGet]
+        public ActionResult Get([FromQuery] string id) {
+            return Ok();
+        }
+    }
+
+}

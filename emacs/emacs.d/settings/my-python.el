@@ -14,7 +14,6 @@
 
 (use-package elpy
   :ensure t
-  :defer t
   :init
   (advice-add 'python-mode :before 'elpy-enable)
   (add-hook 'elpy-mode-hook 'flycheck-mode)
@@ -30,6 +29,7 @@
   (setq pytest-cmd-flags "-o \"addopts=-x -s\""))
 
 (use-package ein
+  :ensure t
   :after company
   :init
   (setq linum-mode nil)

@@ -23,13 +23,14 @@
  '(jedi:environment-virtualenv '("python" "-m" "venv"))
  '(json-reformat:indent-width 2)
  '(lsp-enable-on-type-formatting nil)
+ '(lsp-log-io t)
  '(magit-diff-use-overlays nil)
  '(package-archives
    '(("elpa" . "https://elpa.gnu.org/packages/")
      ("org-contrib" . "https://elpa.nongnu.org/nongnu/")
      ("melpa" . "http://melpa.org/packages/")))
  '(package-selected-packages
-   '(arduino-mode restclient restclient-mode pug-mode haskell-mode all-the-icons add-node-modules-path vertico company-lsp go-mode docker-compose-mode org-roam jest dockerfile-mode imenu-list superword-mode lsp-ui magit yaml-mode org-ref python-test swiper doom-modeline keychain-environment docker-tramp lorem-ipsum exec-path-from-shell diminish command-log-mode editorconfig undo-tree threes 2048-game rjsx-mode lsp-java yasnippet-snippets gdscript-mode bufler chess unicode-fonts projectile-direnv direnv smartparens expand-region flycheck-clang-analyzer cmake-mode company-jedi mw-thesaurus flycheck-mypy ansi package-build shut-up epl git commander helm-projectile helm-org-rifle which-key skewer-mode charmap web-mode tern-auto-complete company-tern js2-refactor xref-js2 moz dispwatch js-react-redux-yasnippets tide tss typescript-mode atom-dark-theme solarized-theme helm-gitlab gitlab org-analyzer org-cal fill-column-indicator crontab-mode org-pomodoro git-timemachine elpy csv-mode jedi pytest yasnippet use-package markdown-mode+ monokai-theme python-pytest))
+   '(csharp-mode restclient-mode arduino-mode restclient-jq ob-restclient eslint-fix pug-mode haskell-mode all-the-icons add-node-modules-path vertico company-lsp go-mode docker-compose-mode org-roam jest dockerfile-mode imenu-list superword-mode lsp-ui magit yaml-mode org-ref python-test swiper doom-modeline keychain-environment docker-tramp lorem-ipsum exec-path-from-shell diminish command-log-mode editorconfig undo-tree threes 2048-game rjsx-mode lsp-java yasnippet-snippets gdscript-mode bufler chess unicode-fonts projectile-direnv direnv smartparens expand-region flycheck-clang-analyzer cmake-mode company-jedi mw-thesaurus flycheck-mypy ansi package-build shut-up epl git commander helm-projectile helm-org-rifle which-key skewer-mode charmap web-mode tern-auto-complete company-tern js2-refactor xref-js2 moz dispwatch js-react-redux-yasnippets tide tss typescript-mode atom-dark-theme solarized-theme helm-gitlab gitlab org-analyzer org-cal fill-column-indicator crontab-mode org-pomodoro git-timemachine elpy csv-mode jedi pytest yasnippet use-package markdown-mode+ monokai-theme python-pytest))
  '(python-environment-virtualenv '("python" "-m" "venv" "--system-site-packages"))
  '(pyvenv-virtualenvwrapper-python "/usr/bin/python")
  '(ring-bell-function 'ignore)
@@ -42,7 +43,7 @@
 
 
 (add-to-list 'default-frame-alist
-             '(font . "Cascadia Mono-11"))
+             '(font . "Cascadia Mono-12"))
 (set-face-attribute 'mode-line nil :font "Cascadia Mono-10")
 (when (member "Symbola" (font-family-list))
   (set-fontset-font t 'unicode "Symbola" nil 'prepend))
@@ -55,20 +56,22 @@
 (package-initialize)
 (package-install-selected-packages)
 
+(unless (package-installed-p 'use-package)
+  (package-refresh-contents)
+  (package-install 'use-package))
+(eval-when-compile
+  (require 'use-package))
+(require 'bind-key)
+(setq use-package-always-ensure nil)
+
 (use-package expand-region
   :ensure t)
 
-(require 'magit)
-(require 'magit-status)
-(require 'magit-extras)
-
-(use-package haskell-mode
-  :mode "\\.hs\\'")
-
-(use-package arduino-mode
-  :mode "\\.ino\\'")
-
-(require 'haskell-doc)
+(use-package magit
+  :ensure t)
+(use-package magit-status)
+(use-package magit-extras)
+(use-package git-rebase)
 
 (use-package flycheck
   :init
@@ -80,30 +83,20 @@
   :config
   (global-flycheck-mode t))
 
-(use-package company
-  :ensure t
-  :after lsp-mode
-  :custom
-  (company-idle-delay 0)
-  (company-minimum-prefix-length 3)
-  :config
-  (global-company-mode nil)
-  (add-to-list 'company-backends '(company-capf :with company-yasnippet))
-  :bind ((:map company-active-map
-               ("<tab>" . company-complete-selection))
-         (:map lsp-mode-map
-               ("<tab>" . company-indent-or-complete-common))))
-
 (use-package yasnippet
   :ensure t
-  :init (add-hook 'prog-mode-hook #'yas-minor-mode)
-  :config (yas-reload-all))
+  :config
+  (yas-reload-all)
+  (add-hook 'prog-mode-hook #'yas-minor-mode))
 
 (defvar settings-dir
   (expand-file-name "settings" user-emacs-directory))
 (add-to-list 'load-path settings-dir)
 
 (require 'diminish)
+(require 'my-company)
+(require 'my-custom-functions)
+(require 'my-lsp)
 (require 'my-org)
 (require 'my-python)
 (require 'my-markdown)
@@ -111,14 +104,16 @@
 (require 'my-web)
 (require 'my-c_cpp)
 (require 'my-web)
+(require 'my-prog-modes)
 
 (load-theme 'monokai t)
+(add-hook 'before-save-hook 'whitespace-cleanup)
+
 (require 'multiple-cursors)
 (global-set-key (kbd "C-x c") 'mc/edit-lines)
 (global-set-key (kbd "C-x C-b") 'ibuffer)
 (global-set-key (kbd "C-=") 'er/expand-region)
 (global-unset-key (kbd "s-t")) ;; macOS specific
-(add-hook 'before-save-hook 'whitespace-cleanup)
 
 (setq undo-tree-visualizer-diff t)
 
@@ -127,17 +122,12 @@
   (interactive)
   (with-editor-async-shell-command "crontab -e"))
 
-(setq ido-enable-flex-matching t)
-(setq ido-everywhere t)
-(ido-mode 1)
-
-;; (use-package ivy
-;;   :diminish
-;;   :custom
-;;   ((ivy-use-virtual-buffers t)
-;;    ( enable-recursive-minibuffers t))
-;;   :config
-;;   (ivy-mode 1))
+(use-package ido
+  :custom
+  ((ido-enable-flex-matching t)
+   (ido-everywhere t))
+  :config
+  (ido-mode 1))
 
 (use-package autorevert
   :diminish
@@ -145,40 +135,6 @@
   :config (auto-revert-mode 1))
 
 (eval-after-load 'tramp '(setenv "SHELL" "/bin/bash"))
-
-(defun move-text-internal (arg)
-  (cond
-   ((and mark-active transient-mark-mode)
-    (if (> (point) (mark))
-        (exchange-point-and-mark))
-    (let ((column (current-column))
-          (text (delete-and-extract-region (point) (mark))))
-      (forward-line arg)
-      (move-to-column column t)
-      (set-mark (point))
-      (insert text)
-      (exchange-point-and-mark)
-      (setq deactivate-mark nil)))
-   (t
-    (beginning-of-line)
-    (when (or (> arg 0) (not (bobp)))
-      (forward-line)
-      (when (or (< arg 0) (not (eobp)))
-        (transpose-lines arg))
-      (forward-line -1)))))
-
-(defun move-text-down (arg)
-  "Move region (transient-mark-mode active) or current line arg lines down."
-  (interactive "*p")
-  (move-text-internal arg))
-
-(defun move-text-up (arg)
-  "Move region (transient-mark-mode active) or current line arg lines up."
-  (interactive "*p")
-  (move-text-internal (- arg)))
-
-(global-set-key [\M-\S-up] 'move-text-up)
-(global-set-key [\M-\S-down] 'move-text-down)
 
 (use-package command-log-mode)
 
@@ -203,53 +159,9 @@
   :ensure t
   :config (which-key-mode 1))
 
-(use-package lsp-mode
-  :ensure t
-  :commands lsp
-  :custom
-  ((lsp-prefer-flymake nil)
-   (gc-cons-threshold 100000000)
-   (read-process-output-max (* 1024 1024)))
-  :hook ((c++-mode c-mode java-mode) . lsp))
-
-(use-package lsp-modeline
-  :after lsp-mode)
-
-(use-package lsp-headerline
-  :after lsp-mode)
-
-(use-package lsp-diagnostics
-  :after lsp-mode)
-
-(use-package lsp-ui
-  :after lsp-mode
-  :diminish
-  :commands lsp-ui-mode
-  :custom
-  ((lsp-ui-doc-delay 1)
-   (lsp-ui-doc-include-signature t)
-   (lsp-ui-doc-position 'top)))
-
-(use-package tex-mode
-  :init
-  (add-hook 'tex-mode-hook 'auto-fill-mode))
-
 (setq search-default-mode #'char-fold-to-regexp)
-;; (global-set-key (kbd "C-s") 'swiper)
-;; (global-set-key (kbd "C-r") 'swiper-backward)
 
 (setq confirm-kill-emacs 'yes-or-no-p)
-
-(defun change-font-size (new-size)
-  "Change the font size to the given value"
-  (interactive "nNew font size: ")
-  (set-face-attribute 'default nil :height (* 10 new-size)))
-
-(defun my/check-monitor ()
-  (change-font-size
-   (if (eq (cadr (cadr (frame-monitor-attributes))) 1920) 9 13)))
-
-;;(run-with-idle-timer 5 1 'my/check-monitor)
 
 (setq ediff-window-setup-function 'ediff-setup-windows-plain)
 
@@ -259,15 +171,11 @@
   :config (doom-modeline-mode 1)
   :custom
   (find-file-visit-truename t)
-  (doom-modeline-height 10)
-  (doom-modeline-bar-width 2)
+  (doom-modeline-height 12)
+  (doom-modeline-bar-width 4)
   (doom-modeline-window-width-limit 60))
 
 (use-package all-the-icons)
-
-(use-package restclient
-  :ensure t
-  :mode ("\\.http\\'"))
 
 (require 'exec-path-from-shell)
 (exec-path-from-shell-initialize)
@@ -295,3 +203,5 @@
  '(org-level-2 ((t (:inherit default :foreground "#A6E22E" :height 1.1))))
  '(org-level-3 ((t (:inherit default :foreground "#66D9EF" :height 1.1))))
  '(org-level-4 ((t (:inherit default :foreground "#E6DB74" :height 1.1)))))
+
+(server-start)

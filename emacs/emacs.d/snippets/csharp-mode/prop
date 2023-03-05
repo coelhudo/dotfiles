@@ -1,0 +1,6 @@
+# -*- mode: snippet -*-
+# name: public property ...
+# key: prop
+# --
+
+public ${1:type} ${2:Identifier} { get; set; }

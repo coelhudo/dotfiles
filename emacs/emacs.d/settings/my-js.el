@@ -6,6 +6,8 @@
 (require 'js2-refactor)
 (require 'xref-js2)
 (require 'add-node-modules-path)
+(require 'web-mode)
+(require 'rjsx-mode)
 
 
 ;;; Code:
@@ -23,6 +25,9 @@
   (add-hook 'js2-mode-hook (lambda () (add-hook 'after-save-hook 'my/prettier t t)))
   :bind ((:map js-mode-map ("M-." . nil))
          (:map js-mode-map ("C-j" . newline))))
+
+(use-package js2-imenu-extras
+  :after js2-mode)
 
 (js2r-add-keybindings-with-prefix "C-c C-r")
 (eval-after-load 'js2-mode '(add-hook 'js2-mode-hook #'add-node-modules-path))
