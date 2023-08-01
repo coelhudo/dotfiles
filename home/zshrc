@@ -191,6 +191,10 @@ alias lemacs="emacs -nw -q"
 export LSP_USE_PLISTS=true
 # emacs end
 
+# pnpm
+export PNPM_HOME="~/Library/pnpm"
+export PATH="$PNPM_HOME:$PATH"
+# pnpm end
 
 if [ -d $HOME/.config/broot ]; then
     source $HOME/.config/broot/launcher/bash/br
