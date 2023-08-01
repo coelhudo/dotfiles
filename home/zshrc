@@ -1,5 +1,6 @@
 #!/bin/zsh
 
+# More info about zsh: https://wiki.archlinux.org/title/Zsh
 if [[ $TERM == "dumb" ]]; then
     unsetopt zle
     unsetopt prompt_cr
