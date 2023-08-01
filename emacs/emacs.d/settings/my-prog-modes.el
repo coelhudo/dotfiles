@@ -5,7 +5,6 @@
   :mode ("\\.ino\\'" . arduino-mode))
 
 (use-package csharp-mode
-  :ensure t
   :mode "\\.cs\\'"
   :init
   (defun my/csharp-mode-hook ()
@@ -13,7 +12,10 @@
     (lsp))
   (add-hook 'csharp-mode-hook #'my/csharp-mode-hook))
 
-(require 'omnisharp)
+(use-package xml-mode
+  :mode ("\\.csproj\\'" "\\.xml\\'"))
+
+(require 'dap-netcore)
 (require 'csharp-mode)
 
 (defvar bootstrap-version)
@@ -57,6 +59,9 @@
 (use-package tex-mode
   :init
   (add-hook 'tex-mode-hook 'auto-fill-mode))
+
+(use-package sql
+  :mode ("\\.sql\\'" . sql-mode))
 
 
 (provide 'my-prog-modes)

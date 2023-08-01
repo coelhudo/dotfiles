@@ -4,6 +4,7 @@
   :custom
   (company-idle-delay 0)
   (company-minimum-prefix-length 3)
+  (company-dabbrev-downcase nil)
   :config
   (global-company-mode nil)
   (add-to-list 'company-backends '(company-capf :with company-yasnippet))

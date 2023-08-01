@@ -30,7 +30,7 @@
      ("org-contrib" . "https://elpa.nongnu.org/nongnu/")
      ("melpa" . "http://melpa.org/packages/")))
  '(package-selected-packages
-   '(csharp-mode restclient-mode arduino-mode restclient-jq ob-restclient eslint-fix pug-mode haskell-mode all-the-icons add-node-modules-path vertico company-lsp go-mode docker-compose-mode org-roam jest dockerfile-mode imenu-list superword-mode lsp-ui magit yaml-mode org-ref python-test swiper doom-modeline keychain-environment docker-tramp lorem-ipsum exec-path-from-shell diminish command-log-mode editorconfig undo-tree threes 2048-game rjsx-mode lsp-java yasnippet-snippets gdscript-mode bufler chess unicode-fonts projectile-direnv direnv smartparens expand-region flycheck-clang-analyzer cmake-mode company-jedi mw-thesaurus flycheck-mypy ansi package-build shut-up epl git commander helm-projectile helm-org-rifle which-key skewer-mode charmap web-mode tern-auto-complete company-tern js2-refactor xref-js2 moz dispwatch js-react-redux-yasnippets tide tss typescript-mode atom-dark-theme solarized-theme helm-gitlab gitlab org-analyzer org-cal fill-column-indicator crontab-mode org-pomodoro git-timemachine elpy csv-mode jedi pytest yasnippet use-package markdown-mode+ monokai-theme python-pytest))
+   '(csharp-mode restclient-mode arduino-mode restclient-jq ob-restclient eslint-fix pug-mode haskell-mode all-the-icons add-node-modules-path vertico company-lsp go-mode docker-compose-mode org-roam jest dockerfile-mode imenu-list superword-mode lsp-ui magit yaml-mode org-ref python-test swiper doom-modeline keychain-environment tramp-container lorem-ipsum exec-path-from-shell diminish command-log-mode editorconfig undo-tree threes 2048-game rjsx-mode lsp-java yasnippet-snippets gdscript-mode bufler chess unicode-fonts projectile-direnv direnv smartparens expand-region flycheck-clang-analyzer cmake-mode company-jedi mw-thesaurus flycheck-mypy ansi package-build shut-up epl git commander helm-projectile helm-org-rifle which-key skewer-mode charmap web-mode tern-auto-complete company-tern js2-refactor xref-js2 moz dispwatch js-react-redux-yasnippets tide tss typescript-mode atom-dark-theme solarized-theme helm-gitlab gitlab org-analyzer org-cal fill-column-indicator crontab-mode org-pomodoro git-timemachine elpy csv-mode jedi pytest yasnippet use-package markdown-mode+ monokai-theme python-pytest))
  '(python-environment-virtualenv '("python" "-m" "venv" "--system-site-packages"))
  '(pyvenv-virtualenvwrapper-python "/usr/bin/python")
  '(ring-bell-function 'ignore)
@@ -48,10 +48,10 @@
 (when (member "Symbola" (font-family-list))
   (set-fontset-font t 'unicode "Symbola" nil 'prepend))
 
-(eval-when-compile
-  ;; Following line is not needed if use-package.el is in ~/.emacs.d
-  (add-to-list 'load-path "~/.emacs.d/elpa")
-  (require 'use-package))
+;; (eval-when-compile
+;;   ;; Following line is not needed if use-package.el is in ~/.emacs.d
+;;   (add-to-list 'load-path "~/.emacs.d/elpa")
+;;   (require 'use-package))
 
 (package-initialize)
 (package-install-selected-packages)
@@ -67,10 +67,14 @@
 (use-package expand-region
   :ensure t)
 
+(use-package restclient
+  :ensure t)
+
 (use-package magit
   :ensure t)
 (use-package magit-status)
 (use-package magit-extras)
+(use-package magit-ediff)
 (use-package git-rebase)
 
 (use-package flycheck
@@ -86,6 +90,8 @@
 (use-package yasnippet
   :ensure t
   :config
+  (use-package yasnippet-snippets
+    :ensure t)
   (yas-reload-all)
   (add-hook 'prog-mode-hook #'yas-minor-mode))
 
@@ -103,7 +109,6 @@
 (require 'my-js)
 (require 'my-web)
 (require 'my-c_cpp)
-(require 'my-web)
 (require 'my-prog-modes)
 
 (load-theme 'monokai t)
@@ -116,6 +121,9 @@
 (global-unset-key (kbd "s-t")) ;; macOS specific
 
 (setq undo-tree-visualizer-diff t)
+
+(require 'treemacs)
+(require 'treemacs-mouse-interface)
 
 (defun crontab-e ()
   "Run `crontab -e' in a Emacs buffer."
@@ -175,6 +183,8 @@
   (doom-modeline-bar-width 4)
   (doom-modeline-window-width-limit 60))
 
+(use-package docker-compose-mode)
+(use-package json-mode)
 (use-package all-the-icons)
 
 (require 'exec-path-from-shell)
@@ -197,11 +207,8 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(flycheck-error ((t (:underline "#F92672" :weight bold))))
- '(flycheck-warning ((t (:underline "#FD971F" :weight bold))))
- '(org-level-1 ((t (:inherit default :foreground "#FD971F" :height 1.1))))
- '(org-level-2 ((t (:inherit default :foreground "#A6E22E" :height 1.1))))
- '(org-level-3 ((t (:inherit default :foreground "#66D9EF" :height 1.1))))
- '(org-level-4 ((t (:inherit default :foreground "#E6DB74" :height 1.1)))))
+ )
 
 (server-start)
+
+(load-file "~/.emacs.d/lisp/org-babel/dockerfile.el")

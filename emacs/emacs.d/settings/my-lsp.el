@@ -29,4 +29,13 @@
 (use-package dap-mouse
   :after lsp-ui)
 
+;; https://emacs-lsp.github.io/lsp-mode/tutorials/how-to-turn-off/
+(setq lsp-ui-doc-enable nil)
+(setq lsp-ui-doc-show-with-cursor nil)
+(setq lsp-ui-doc-show-with-mouse nil)
+(setq lsp-enable-symbol-highlighting nil)
+(setq lsp-lens-enable nil)
+(setq lsp-eldoc-enable-hover nil)
+
+
 (provide 'my-lsp)
