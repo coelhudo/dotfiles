@@ -175,12 +175,12 @@ if whence -w minikube >/dev/null; then
     eval $(minikube docker-env)
 fi
 
-if whence -w podman >/dev/null; then
-    alias docker="podman"
+if whence -w podman >/dev/null && ! whence -w docker >/dev/null; then
+    ln -s $(which podman) ~/.local/bin/docker
 fi
 
-if whence -w podman-compose >/dev/null; then
-    alias docker-compose="podman-compose"
+if whence -w podman-compose >/dev/null && ! whence -w podman-compose >/dev/null; then
+    ln -s $(which podman-compose) ~/.local/bin/docker-compose
 fi
 
 if whence -w bat >/dev/null; then
