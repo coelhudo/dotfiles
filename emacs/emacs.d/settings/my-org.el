@@ -59,7 +59,8 @@
 
 ;;; GTD configuration from here:
 ;;; https://emacs.cafe/emacs/orgmode/gtd/2017/06/30/orgmode-gtd.html
-(setq org-agenda-files (directory-files-recursively "~/Dropbox/TODO" "\\.org$"))
+;; (setq org-agenda-files (directory-files-recursively "~/Dropbox/TODO" "\\.org$"))
+(setq org-agenda-files (directory-files-recursively "~/dev/org_roam_notes" "\\.org$"))
 
 (setq org-tag-alist '((:startgrouptag)
                       ("@phd" . ?p)
@@ -86,9 +87,9 @@
          ((org-agenda-overriding-header "Life")))
         ))
 
-(setq org-refile-targets '(("~/Dropbox/TODO/gtd.org" :maxlevel . 3)
-                           ("~/Dropbox/TODO/someday.org" :level . 1)
-                           ("~/Dropbox/TODO/tickler.org" :maxlevel . 2)))
+;; (setq org-refile-targets '(("~/Dropbox/TODO/gtd.org" :maxlevel . 3)
+;;                            ("~/Dropbox/TODO/someday.org" :level . 1)
+;;                            ("~/Dropbox/TODO/tickler.org" :maxlevel . 2)))
 
 (setq org-capture-templates
       '(("t" "Todo" entry (file+headline "~/Dropbox/TODO/inbox.org" "Inbox")

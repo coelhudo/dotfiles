@@ -8,7 +8,7 @@
 (use-package pug-mode)
 
 (use-package web-mode
-  :mode ("\\.html\\'" "\\.cshtml\\'" "\\.razor\\'"))
+  :mode ("\\.html\\'" "\\.cshtml\\'" "\\.razor\\'" "\\.vue\\'"))
 
 (use-package css-mode
   :mode "\\.css\\'")
@@ -19,6 +19,25 @@
 (use-package skewer-html-mode
   :hook (mhtml-mode
          html-mode))
+
+(defvar bootstrap-version)
+(let ((bootstrap-file
+       (expand-file-name "straight/repos/straight.el/bootstrap.el" user-emacs-directory))
+      (bootstrap-version 5))
+  (unless (file-exists-p bootstrap-file)
+    (with-current-buffer
+        (url-retrieve-synchronously
+         "https://raw.githubusercontent.com/raxod502/straight.el/develop/install.el"
+         'silent 'inhibit-cookies)
+      (goto-char (point-max))
+      (eval-print-last-sexp)))
+  (load bootstrap-file nil 'nomessage))
+
+(straight-use-package
+ '(lsp-volar :type git :host github :repo "jadestrong/lsp-volar"))
+
+(use-package lsp-volar
+  :straight t)
 
 (use-package lsp-mode
   :hook ((html-mode

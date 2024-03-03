@@ -4,6 +4,9 @@
 (use-package arduino-mode
   :mode ("\\.ino\\'" . arduino-mode))
 
+(use-package restclient-mode
+  :mode ("\\.rest\\'" . restclient-mode))
+
 (use-package csharp-mode
   :mode "\\.cs\\'"
   :init
@@ -11,6 +14,12 @@
     (setq-local lsp-auto-guess-root t)
     (lsp))
   (add-hook 'csharp-mode-hook #'my/csharp-mode-hook))
+
+(use-package php-mode
+  :mode "\\.php\\'")
+
+(use-package lsp-mode
+  :hook php-mode)
 
 (use-package xml-mode
   :mode ("\\.csproj\\'" "\\.xml\\'"))
@@ -63,5 +72,29 @@
 (use-package sql
   :mode ("\\.sql\\'" . sql-mode))
 
+(use-package lsp-sourcekit
+  :after lsp-mode
+  :config
+  (setq lsp-sourcekit-executable "/Library/Developer/CommandLineTools/usr/bin/sourcekit-lsp"))
+
+
+(use-package swift-mode
+  :hook (swift-mode . (lambda () (lsp))))
+
+(electric-indent-mode t)
+
+(require 'lsp-mode)
+(add-hook 'go-mode-hook #'lsp-deferred)
+
+;; go lang - BEGIN
+
+;; Set up before-save hooks to format buffer and add/delete imports.
+;; Make sure you don't have other gofmt/goimports hooks enabled.
+(defun lsp-go-install-save-hooks ()
+  (add-hook 'before-save-hook #'lsp-format-buffer t t)
+  (add-hook 'before-save-hook #'lsp-organize-imports t t))
+(add-hook 'go-mode-hook #'lsp-go-install-save-hooks)
+
+;; go lang - END
 
 (provide 'my-prog-modes)

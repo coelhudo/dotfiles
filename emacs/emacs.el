@@ -183,6 +183,8 @@
   (doom-modeline-bar-width 4)
   (doom-modeline-window-width-limit 60))
 
+(setq all-the-icons-font-family "Material Icons")
+
 (use-package docker-compose-mode)
 (use-package json-mode)
 (use-package all-the-icons)

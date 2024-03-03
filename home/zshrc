@@ -200,3 +200,9 @@ export PATH="$PNPM_HOME:$PATH"
 if [ -d $HOME/.config/broot ]; then
     source $HOME/.config/broot/launcher/bash/br
 fi
+
+if whence -w go >/dev/null; then
+    GOPATH=$(go env GOPATH)
+    export PATH="$PATH:$GOPATH/bin"
+fi
+
