@@ -18,7 +18,7 @@
   (advice-add 'python-mode :before 'elpy-enable)
   (add-hook 'elpy-mode-hook 'flycheck-mode)
   :config
-  (setq elpy-company-post-completion-function 'ignore)
+  ;; (setq elpy-company-post-completion-function 'ignore)
   (setq elpy-rpc-virtualenv-path 'current))
 
 (use-package python-pytest
@@ -30,25 +30,25 @@
 
 (use-package ein
   :ensure t
-  :after company
+  ;; :after company
   :init
   (setq linum-mode nil)
   (setq ein:output-area-inlined-images t)
   (setq ein:worksheet-enable-undo t)
-  (progn
-    (company-mode nil)
-    (global-company-mode nil))
+  ;; (progn
+    ;; (company-mode nil)
+    ;; (global-company-mode nil))
   :bind (("C-x 5 k" . ein:worksheet-kill-cell-km)))
 
 (use-package ein:notebook
-  :after company
+  ;; :after company
   :init
   (setq linum-mode nil)
   (setq ein:output-area-inlined-images t)
   (setq ein:worksheet-enable-undo t)
-  (progn
-    (company-mode nil)
-    (global-company-mode nil))
+  ;; (progn
+    ;; (company-mode nil)
+    ;; (global-company-mode nil))
   :bind (("C-x 5 k" . ein:worksheet-kill-cell-km)))
 
 (provide 'my-python)

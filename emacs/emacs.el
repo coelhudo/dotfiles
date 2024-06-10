@@ -15,12 +15,10 @@
  '(explicit-bash-args '("--noediting" "--login" "-i"))
  '(fill-column 88)
  '(gnutls-algorithm-priority "NORMAL:-VERS-TLS1.3")
- '(ido-use-filename-at-point 'guess)
+ ;; '(ido-use-filename-at-point 'guess)
  '(indent-tabs-mode nil)
  '(inhibit-startup-screen t)
  '(ispell-dictionary "en_CA")
- '(jedi:environment-root "jedi")
- '(jedi:environment-virtualenv '("python" "-m" "venv"))
  '(json-reformat:indent-width 2)
  '(lsp-enable-on-type-formatting nil)
  '(lsp-log-io t)
@@ -30,7 +28,7 @@
      ("org-contrib" . "https://elpa.nongnu.org/nongnu/")
      ("melpa" . "http://melpa.org/packages/")))
  '(package-selected-packages
-   '(csharp-mode restclient-mode arduino-mode restclient-jq ob-restclient eslint-fix pug-mode haskell-mode all-the-icons add-node-modules-path vertico company-lsp go-mode docker-compose-mode org-roam jest dockerfile-mode imenu-list superword-mode lsp-ui magit yaml-mode org-ref python-test swiper doom-modeline keychain-environment tramp-container lorem-ipsum exec-path-from-shell diminish command-log-mode editorconfig undo-tree threes 2048-game rjsx-mode lsp-java yasnippet-snippets gdscript-mode bufler chess unicode-fonts projectile-direnv direnv smartparens expand-region flycheck-clang-analyzer cmake-mode company-jedi mw-thesaurus flycheck-mypy ansi package-build shut-up epl git commander helm-projectile helm-org-rifle which-key skewer-mode charmap web-mode tern-auto-complete company-tern js2-refactor xref-js2 moz dispwatch js-react-redux-yasnippets tide tss typescript-mode atom-dark-theme solarized-theme helm-gitlab gitlab org-analyzer org-cal fill-column-indicator crontab-mode org-pomodoro git-timemachine elpy csv-mode jedi pytest yasnippet use-package markdown-mode+ monokai-theme python-pytest))
+   '(csharp-mode restclient-mode arduino-mode restclient-jq ob-restclient eslint-fix pug-mode haskell-mode all-the-icons add-node-modules-path vertico go-mode docker-compose-mode org-roam jest dockerfile-mode imenu-list superword-mode lsp-ui magit yaml-mode org-ref python-test swiper doom-modeline keychain-environment tramp-container lorem-ipsum exec-path-from-shell diminish command-log-mode editorconfig undo-tree threes 2048-game rjsx-mode lsp-java yasnippet-snippets gdscript-mode bufler chess unicode-fonts projectile-direnv direnv smartparens expand-region flycheck-clang-analyzer cmake-mode mw-thesaurus flycheck-mypy ansi package-build shut-up epl git commander helm-projectile helm-org-rifle which-key skewer-mode charmap web-mode tern-auto-complete js2-refactor xref-js2 moz dispwatch js-react-redux-yasnippets tide tss typescript-mode atom-dark-theme solarized-theme helm-gitlab gitlab org-analyzer org-cal fill-column-indicator crontab-mode org-pomodoro git-timemachine csv-mode pytest yasnippet use-package markdown-mode+ monokai-theme python-pytest))
  '(python-environment-virtualenv '("python" "-m" "venv" "--system-site-packages"))
  '(pyvenv-virtualenvwrapper-python "/usr/bin/python")
  '(ring-bell-function 'ignore)
@@ -100,11 +98,12 @@
 (add-to-list 'load-path settings-dir)
 
 (require 'diminish)
-(require 'my-company)
+;; (require 'my-company)
+(require 'my-ui-enhancement)
 (require 'my-custom-functions)
 (require 'my-lsp)
 (require 'my-org)
-(require 'my-python)
+;; (require 'my-python)
 (require 'my-markdown)
 (require 'my-js)
 (require 'my-web)
@@ -130,12 +129,12 @@
   (interactive)
   (with-editor-async-shell-command "crontab -e"))
 
-(use-package ido
-  :custom
-  ((ido-enable-flex-matching t)
-   (ido-everywhere t))
-  :config
-  (ido-mode 1))
+;; (use-package ido
+;;   :custom
+;;   ((ido-enable-flex-matching t)
+;;    (ido-everywhere t))
+;;   :config
+;;   (ido-mode 1))
 
 (use-package autorevert
   :diminish
@@ -158,9 +157,9 @@
   (projectile-mode 1)
   (setq projectile-enable-caching t))
 
-(use-package helm-projectile
-  :ensure t
-  :config (helm-projectile-on))
+;; (use-package helm-projectile
+;;   :ensure t
+;;   :config (helm-projectile-on))
 
 (use-package which-key
   :diminish
@@ -197,6 +196,9 @@
          ("C-c C-l p" . lorem-ipsum-insert-paragraphs)
          ("C-c C-l l" . lorem-ipsum-insert-list))
   )
+
+(with-eval-after-load 'org
+  (define-key org-mode-map (kbd "C-c C-r") verb-command-map))
 
 (require 'dired )
 (define-key dired-mode-map (kbd "RET") 'dired-find-alternate-file) ; was dired-advertised-find-file

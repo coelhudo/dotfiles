@@ -4,7 +4,7 @@
 (require 'org)
 (require 'alert)
 (require 'org-ref)
-(require 'helm-org-rifle)
+;; (require 'helm-org-rifle)
 
 ;;; Code:
 (org-babel-do-load-languages 'org-babel-load-languages '((latex . t)
@@ -28,6 +28,7 @@
   :config
   (setq org-image-actual-width nil)
   (setq org-hide-emphasis-markers t)
+  (define-key org-mode-map (kbd "C-c C-r") verb-command-map)
   :bind (("C-c l" . org-store-link)
          ("C-c a" . org-agenda)
          ("C-c c" . org-capture)

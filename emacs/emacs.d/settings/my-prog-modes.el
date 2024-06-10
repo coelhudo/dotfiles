@@ -83,10 +83,13 @@
 
 (electric-indent-mode t)
 
+;; go lang - BEGIN
+
 (require 'lsp-mode)
 (add-hook 'go-mode-hook #'lsp-deferred)
 
-;; go lang - BEGIN
+;; somehow this keeps exiting with error code 2
+(setq lsp-disabled-clients '(semgrep-ls))
 
 ;; Set up before-save hooks to format buffer and add/delete imports.
 ;; Make sure you don't have other gofmt/goimports hooks enabled.
