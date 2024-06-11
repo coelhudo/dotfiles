@@ -15,7 +15,6 @@
  '(explicit-bash-args '("--noediting" "--login" "-i"))
  '(fill-column 88)
  '(gnutls-algorithm-priority "NORMAL:-VERS-TLS1.3")
- ;; '(ido-use-filename-at-point 'guess)
  '(indent-tabs-mode nil)
  '(inhibit-startup-screen t)
  '(ispell-dictionary "en_CA")
@@ -28,7 +27,8 @@
      ("org-contrib" . "https://elpa.nongnu.org/nongnu/")
      ("melpa" . "http://melpa.org/packages/")))
  '(package-selected-packages
-   '(csharp-mode restclient-mode arduino-mode restclient-jq ob-restclient eslint-fix pug-mode haskell-mode all-the-icons add-node-modules-path vertico go-mode docker-compose-mode org-roam jest dockerfile-mode imenu-list superword-mode lsp-ui magit yaml-mode org-ref python-test swiper doom-modeline keychain-environment tramp-container lorem-ipsum exec-path-from-shell diminish command-log-mode editorconfig undo-tree threes 2048-game rjsx-mode lsp-java yasnippet-snippets gdscript-mode bufler chess unicode-fonts projectile-direnv direnv smartparens expand-region flycheck-clang-analyzer cmake-mode mw-thesaurus flycheck-mypy ansi package-build shut-up epl git commander helm-projectile helm-org-rifle which-key skewer-mode charmap web-mode tern-auto-complete js2-refactor xref-js2 moz dispwatch js-react-redux-yasnippets tide tss typescript-mode atom-dark-theme solarized-theme helm-gitlab gitlab org-analyzer org-cal fill-column-indicator crontab-mode org-pomodoro git-timemachine csv-mode pytest yasnippet use-package markdown-mode+ monokai-theme python-pytest))
+   '(csharp-mode restclient-mode arduino-mode restclient-jq ob-restclient eslint-fix pug-mode haskell-mode add-node-modules-path vertico go-mode docker-compose-mode org-roam jest dockerfile-mode imenu-list superword-mode lsp-ui magit yaml-mode org-ref python-test swiper doom-modeline keychain-environment tramp-container lorem-ipsum exec-path-from-shell diminish command-log-mode editorconfig undo-tree threes 2048-game rjsx-mode lsp-java yasnippet-snippets gdscript-mode bufler chess unicode-fonts projectile-direnv direnv smartparens expand-region flycheck-clang-analyzer cmake-mode mw-thesaurus flycheck-mypy ansi package-build shut-up epl git commander helm-projectile helm-org-rifle which-key skewer-mode charmap web-mode tern-auto-complete js2-refactor xref-js2 moz dispwatch js-react-redux-yasnippets tide tss typescript-mode atom-dark-theme solarized-theme helm-gitlab gitlab org-analyzer org-cal fill-column-indicator crontab-mode org-pomodoro git-timemachine csv-mode pytest yasnippet use-package markdown-mode+ monokai-theme python-pytest))
+ '(projectile-completion-system 'ivy)
  '(python-environment-virtualenv '("python" "-m" "venv" "--system-site-packages"))
  '(pyvenv-virtualenvwrapper-python "/usr/bin/python")
  '(ring-bell-function 'ignore)
@@ -172,7 +172,7 @@
 
 (setq ediff-window-setup-function 'ediff-setup-windows-plain)
 
-;; need to execute all-the-icons-install-fonts
+;; need to execute nerd-icons
 (use-package doom-modeline
   :ensure t
   :config (doom-modeline-mode 1)
@@ -182,11 +182,8 @@
   (doom-modeline-bar-width 4)
   (doom-modeline-window-width-limit 60))
 
-(setq all-the-icons-font-family "Material Icons")
-
 (use-package docker-compose-mode)
 (use-package json-mode)
-(use-package all-the-icons)
 
 (require 'exec-path-from-shell)
 (exec-path-from-shell-initialize)

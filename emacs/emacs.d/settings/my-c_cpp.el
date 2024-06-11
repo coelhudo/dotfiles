@@ -38,4 +38,8 @@
 
 (global-set-key (kbd "C-x C-o") 'ff-find-other-file)
 
+(require 'lsp-mode)
+(add-hook 'c-mode-hook #'lsp-deferred)
+(add-hook 'c++-mode-hook #'lsp-deferred)
+
 (provide 'my-c_cpp)
