@@ -18,10 +18,10 @@ if [[ $TERM == "dumb" ]]; then
     return
 fi
 
-export ZSH_CUSTOM=~/.local/zsh/
+export ZSH_CUSTOM=$HOME/.local/zsh/
 
 # Lines configured by zsh-newuser-install
-HISTFILE=~/.histfile
+HISTFILE=$HOME/.histfile
 HISTSIZE=1000
 SAVEHIST=1000
 setopt autocd notify correct promptsubst
@@ -71,24 +71,24 @@ bashcompinit
 #export FOAM_INST_DIR=~/.local/opt/openfoam/OpenFOAM-v1906
 #alias ofoam="source ${FOAM_INST_DIR}/OpenFOAM-5.0/etc/bashrc"
 
-export PATH=$PATH:~/.opam/default/bin:~/.local/bin:~/.stack/programs/x86_64-linux/ghc-tinfo6-8.10.7/bin/
+export PATH=$PATH:$HOME/.opam/default/bin:$HOME/.local/bin:$HOME/.stack/programs/x86_64-linux/ghc-tinfo6-8.10.7/bin/
 export MANPATH=$HOME/.local/man:$HOME/.local/share/man:$MANPATH
 export EDITOR=emacs
 
-if [ ! -S ~/.ssh/ssh_auth_sock ]; then
+if [ ! -S $HOME/.ssh/ssh_auth_sock ]; then
   eval `ssh-agent`
-  ln -sf "$SSH_AUTH_SOCK" ~/.ssh/ssh_auth_sock
+  ln -sf "$SSH_AUTH_SOCK" $HOME/.ssh/ssh_auth_sock
 fi
-export SSH_AUTH_SOCK=~/.ssh/ssh_auth_sock
+export SSH_AUTH_SOCK=$HOME/.ssh/ssh_auth_sock
 ssh-add -l > /dev/null || ssh-add
 
-if [ ! -S ~/.gnupg/gnupg_auth_sock ]; then
-  eval $( gpg-agent --daemon --options ~/.gnupg/gpg-agent.conf )
-  ln -sf "$SSH_AUTH_SOCK" ~/.gnupg/gnupg_auth_sock
+if [ ! -S $HOME/.gnupg/gnupg_auth_sock ] && [ -e $HOME/.gnupg/gpg-agent.conf ]; then
+  eval $( gpg-agent --daemon --options $HOME/.gnupg/gpg-agent.conf )
+  ln -sf "$SSH_AUTH_SOCK" $HOME/.gnupg/gnupg_auth_sock
 fi
 
-if [ -f ~/.gnupg/gnupg_auth_sock ]; then
-    export SSH_AUTH_SOCK=~/.gnupg/gnupg_auth_sock
+if [ -f $HOME/.gnupg/gnupg_auth_sock ]; then
+    export SSH_AUTH_SOCK=$HOME/.gnupg/gnupg_auth_sock
     GPG_TTY=$(tty)
     export GPG_TTY
 fi
@@ -161,6 +161,10 @@ if [ -d $HOME/homebrew ]; then
     export PATH=$HOME/homebrew/bin:$HOME/homebrew/sbin:$PATH
 fi
 
+if [ -d /opt/homebrew ]; then
+    export PATH=/opt/homebrew/bin:/opt/homebrew/sbin:$PATH
+fi
+
 if [ -d $HOME/.dotnet/tools ]; then
     export PATH=$PATH:$HOME/.dotnet/tools
 fi
@@ -176,11 +180,13 @@ if whence -w minikube >/dev/null; then
 fi
 
 if whence -w podman >/dev/null && ! whence -w docker >/dev/null; then
-    ln -s $(which podman) ~/.local/bin/docker
+    mkdir -p $HOME/.local/bin
+    ln -s $(which podman) $HOME/.local/bin/docker
 fi
 
 if whence -w podman-compose >/dev/null && ! whence -w podman-compose >/dev/null; then
-    ln -s $(which podman-compose) ~/.local/bin/docker-compose
+    mkdir -p $HOME/.local/bin
+    ln -s $(which podman-compose) $HOME/.local/bin/docker-compose
 fi
 
 if whence -w bat >/dev/null; then
@@ -206,3 +212,6 @@ if whence -w go >/dev/null; then
     export PATH="$PATH:$GOPATH/bin"
 fi
 
+export PYENV_ROOT="$HOME/.pyenv"
+[[ -d $PYENV_ROOT/bin ]] && export PATH="$PYENV_ROOT/bin:$PATH"
+eval "$(pyenv init -)"

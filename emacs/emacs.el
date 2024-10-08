@@ -211,5 +211,3 @@
  )
 
 (server-start)
-
-(load-file "~/.emacs.d/lisp/org-babel/dockerfile.el")
