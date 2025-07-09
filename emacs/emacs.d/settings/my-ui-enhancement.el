@@ -242,4 +242,8 @@
    ("C-c n l" . consult-org-roam-forward-links)
    ("C-c n r" . consult-org-roam-search))
 
+(use-package orderless
+  :ensure t)
+(setq completion-styles '(orderless))
+
 (provide 'my-ui-enhancement)
