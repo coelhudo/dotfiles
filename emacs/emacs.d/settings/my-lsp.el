@@ -4,8 +4,8 @@
   :custom
   ((lsp-prefer-flymake nil)
    (gc-cons-threshold 100000000)
-   (read-process-output-max (* 1024 1024)))
-  :hook ((c++-mode c-mode java-mode) . lsp))
+   (read-process-output-max (* 1024 1024))))
+
 
 (use-package lsp-modeline
   :after lsp-mode)
@@ -30,7 +30,7 @@
   :after lsp-ui)
 
 ;; https://emacs-lsp.github.io/lsp-mode/tutorials/how-to-turn-off/
-(setq lsp-ui-doc-enable nil)
+(setq lsp-ui-doc-enable t)
 (setq lsp-ui-doc-show-with-cursor nil)
 (setq lsp-ui-doc-show-with-mouse nil)
 (setq lsp-enable-symbol-highlighting nil)

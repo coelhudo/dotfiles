@@ -98,6 +98,14 @@
   (add-hook 'before-save-hook #'lsp-organize-imports t t))
 (add-hook 'go-mode-hook #'lsp-go-install-save-hooks)
 
-;; go lang - END
+(add-hook 'python-mode-hook #'lsp)
+(add-hook 'c++-mode-hook #'lsp)
+(add-hook 'c-mode-hook #'lsp)
+(add-hook 'java-mode-hook #'lsp)
+
+(setq-default flycheck-disabled-checkers '(python-pylint python-flake8))
+(use-package flymake-ruff
+  :ensure t
+  :hook (python-mode . flymake-ruff-load))  ;; ruff should be installed
 
 (provide 'my-prog-modes)

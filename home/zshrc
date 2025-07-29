@@ -46,7 +46,7 @@ zle -N edit-command-line
 bindkey "^X^E" edit-command-line
 
 if whence dircolors > /dev/null; then
-    eval $(dircolors $ZSH_CUSTOM/dircolors/dircolors)
+    eval $(dircolors ${ZSH_CUSTOM}dircolors/dircolors)
     alias ls="ls --color"
 elif whence gdircolors > /dev/null; then
     export CLICOLOR=YES

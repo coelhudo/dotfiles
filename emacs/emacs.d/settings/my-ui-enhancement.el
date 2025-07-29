@@ -23,6 +23,7 @@
   :init
   (global-corfu-mode))
 
+(add-to-list 'corfu-margin-formatters #'nerd-icons-corfu-formatter)
 
 ;; Consulting completing-read
 (use-package consult
