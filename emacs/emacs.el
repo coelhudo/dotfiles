@@ -67,7 +67,7 @@
                  solarized-theme helm-gitlab gitlab org-analyzer org-cal
                  fill-column-indicator crontab-mode org-pomodoro git-timemachine
                  csv-mode pytest yasnippet use-package markdown-mode+ monokai-theme
-                 python-pytest))
+                 python-pytest corfu))
  '(python-environment-virtualenv '("python" "-m" "venv" "--system-site-packages"))
  '(pyvenv-virtualenvwrapper-python "/usr/bin/python")
  '(ring-bell-function 'ignore)
@@ -242,5 +242,15 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  )
+
+(use-package format-all
+  :commands format-all-mode
+  :hook (prog-mode . format-all-mode)
+  :config
+  (setq-default format-all-formatters
+                '(("C"     (astyle "--mode=clang-format"))
+                  )))
+
+(add-hook 'prog-mode 'format-all-mode)
 
 (server-start)
