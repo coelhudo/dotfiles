@@ -37,5 +37,4 @@
 (setq lsp-lens-enable nil)
 (setq lsp-eldoc-enable-hover nil)
 
-
 (provide 'my-lsp)

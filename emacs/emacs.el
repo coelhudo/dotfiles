@@ -46,6 +46,7 @@
  '(lsp-pylsp-plugins-ruff-enabled t)
  '(lsp-pylsp-plugins-ruff-ignore ["D100"])
  '(magit-diff-use-overlays nil)
+ ;; '(org-hugo-base-dir "\"../org-wiki\"")
  '(package-archives
    '(("elpa" . "https://elpa.gnu.org/packages/")
      ("org-contrib" . "https://elpa.nongnu.org/nongnu/")
@@ -242,5 +243,12 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  )
+
+(add-hook 'prog-mode-hook 'format-all-mode)
+(setq gdb-many-windows nil)
+(setq gdb-use-separate-io-buffer nil)
+
+(with-eval-after-load 'ox
+    (require 'ox-hugo))
 
 (server-start)

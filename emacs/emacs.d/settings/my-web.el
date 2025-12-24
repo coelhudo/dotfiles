@@ -13,6 +13,9 @@
 (use-package css-mode
   :mode "\\.css\\'")
 
+(use-package js-jsx-mode
+  :mode "\\.jsx\\'")
+
 (use-package skewer-css-mode
   :hook (css-mode))
 
@@ -42,7 +45,8 @@
 (use-package lsp-mode
   :hook ((html-mode
          css-mode
-         web-mode)
+         web-mode
+         js-jsx-mode)
          . lsp-deferred))
 
 (provide 'my-web)
