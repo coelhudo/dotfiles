@@ -204,6 +204,10 @@ export PNPM_HOME="~/Library/pnpm"
 export PATH="$PNPM_HOME:$PATH"
 # pnpm end
 
+# wine
+alias ade="wine ~/.wine/drive_c/Program\ Files\ \(x86\)/Adobe/Adobe\ Digital\ Editions\ 4.5/DigitalEditions.exe"
+# wine end
+
 if [ -d $HOME/.config/broot ]; then
     source $HOME/.config/broot/launcher/bash/br
 fi

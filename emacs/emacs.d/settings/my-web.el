@@ -14,7 +14,10 @@
   :mode "\\.css\\'")
 
 (use-package js-jsx-mode
-  :mode "\\.jsx\\'")
+  :mode "\\.jsx\\'" "\\.js\\'")
+
+(use-package typescript-mode
+  :mode "\\.tsx\\'" "\\.ts\\'")
 
 (use-package skewer-css-mode
   :hook (css-mode))
@@ -46,7 +49,8 @@
   :hook ((html-mode
          css-mode
          web-mode
-         js-jsx-mode)
+         js-jsx-mode
+         typescript-mode)
          . lsp-deferred))
 
 (provide 'my-web)
