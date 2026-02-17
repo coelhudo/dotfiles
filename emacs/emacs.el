@@ -37,6 +37,8 @@
  '(indent-tabs-mode nil)
  '(inhibit-startup-screen t)
  '(ispell-dictionary "en_CA")
+ '(js-indent-level 2)
+ '(js-jsx-indent-level 2)
  '(json-reformat:indent-width 2)
  '(lsp-disabled-clients '(semgrep-ls ruff))
  '(lsp-enable-on-type-formatting nil)
@@ -46,7 +48,6 @@
  '(lsp-pylsp-plugins-ruff-enabled t)
  '(lsp-pylsp-plugins-ruff-ignore ["D100"])
  '(magit-diff-use-overlays nil)
- ;; '(org-hugo-base-dir "\"../org-wiki\"")
  '(package-archives
    '(("elpa" . "https://elpa.gnu.org/packages/")
      ("org-contrib" . "https://elpa.nongnu.org/nongnu/")
@@ -77,6 +78,7 @@
  '(tls-checktrust t)
  '(tool-bar-mode nil)
  '(tramp-default-method "ssh")
+ '(typescript-indent-level 2)
  '(web-mode-enable-auto-expanding t))
 
 
