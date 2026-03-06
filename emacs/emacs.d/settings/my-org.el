@@ -8,7 +8,8 @@
 
 ;;; Code:
 (org-babel-do-load-languages 'org-babel-load-languages '((latex . t)
-                                                         (python . t)))
+                                                         (python . t)
+                                                         (dot . t)))
 (setq org-latex-pdf-process (list "latexmk -pdf -f %f -output-directory=%o"))
 
 (use-package ob-python
@@ -116,7 +117,6 @@
   :bind (("M-p" . org-pomodoro))
   :config
   (setq org-pomodoro-play-sounds nil))
-
 
 (provide 'my-org)
 
