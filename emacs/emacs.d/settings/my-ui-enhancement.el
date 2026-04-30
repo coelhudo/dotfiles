@@ -1,5 +1,6 @@
 ;; COmpletion in Region FUnction
 (use-package corfu
+  :ensure t
   ;; Optional customizations
   :custom
   (corfu-cycle t)                ;; Enable cycling for `corfu-next/previous'
@@ -25,8 +26,37 @@
 
 (add-to-list 'corfu-margin-formatters #'nerd-icons-corfu-formatter)
 
+;; Add extensions
+(use-package cape
+  :ensure t
+  ;; Bind prefix keymap providing all Cape commands under a mnemonic key.
+  ;; Press C-c p ? to for help.
+  :bind ("C-c p" . cape-prefix-map) ;; Alternative key: M-<tab>, M-p, M-+
+  ;; Alternatively bind Cape commands individually.
+  ;; :bind (("C-c p d" . cape-dabbrev)
+  ;;        ("C-c p h" . cape-history)
+  ;;        ("C-c p f" . cape-file)
+  ;;        ...)
+  :init
+  ;; Add to the global default value of `completion-at-point-functions' which is
+  ;; used by `completion-at-point'.  The order of the functions matters, the
+  ;; first function returning a result wins.  Note that the list of buffer-local
+  ;; completion functions takes precedence over the global list.
+  (add-hook 'completion-at-point-functions #'cape-dabbrev)
+  (add-hook 'completion-at-point-functions #'cape-file)
+  (add-hook 'completion-at-point-functions #'cape-elisp-block)
+  ;; (add-hook 'completion-at-point-functions #'cape-history)
+  ;; ...
+)
+
+;; Use Company backends as Capfs.
+(setq-local completion-at-point-functions
+  (mapcar #'cape-company-to-capf
+    (list #'company-files #'company-keywords #'company-dabbrev)))
+
 ;; Consulting completing-read
 (use-package consult
+  :ensure
   ;; Replace bindings. Lazily loaded due by `use-package'.
   :bind (;; C-c bindings in `mode-specific-map'
          ("C-c M-x" . consult-mode-command)
@@ -244,7 +274,20 @@
    ("C-c n r" . consult-org-roam-search))
 
 (use-package orderless
-  :ensure t)
-(setq completion-styles '(orderless))
+  :ensure t
+  :init
+  (setq completion-styles '(orderless partial-completion basic)
+      completion-category-defaults nil
+      completion-category-overrides nil))
+
+;; (use-package lsp-mode
+;;   :custom
+;;   (lsp-completion-provider :none) ;; we use Corfu!
+;;   :init
+;;   (defun my/lsp-mode-setup-completion ()
+;;     (setf (alist-get 'styles (alist-get 'lsp-capf completion-category-defaults))
+;;           '(orderless))) ;; Configure orderless
+;;   :hook
+;;   (lsp-completion-mode . my/lsp-mode-setup-completion))
 
 (provide 'my-ui-enhancement)

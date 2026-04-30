@@ -24,6 +24,11 @@
 (use-package xml-mode
   :mode ("\\.csproj\\'" "\\.xml\\'"))
 
+(use-package verb-mode
+  :requires t
+  :mode "\\.http\\'")
+
+
 (require 'dap-netcore)
 (require 'csharp-mode)
 
@@ -61,10 +66,6 @@
 (require 'haskell-doc)
 (use-package yaml-mode)
 
-(use-package restclient
-  :ensure t
-  :mode ("\\.http\\'" . restclient-mode))
-
 (use-package tex-mode
   :init
   (add-hook 'tex-mode-hook 'auto-fill-mode))
@@ -93,14 +94,18 @@
 
 ;; Set up before-save hooks to format buffer and add/delete imports.
 ;; Make sure you don't have other gofmt/goimports hooks enabled.
-(defun lsp-go-install-save-hooks ()
+(defun lsp-install-save-hooks ()
   (add-hook 'before-save-hook #'lsp-format-buffer t t)
-  (add-hook 'before-save-hook #'lsp-organize-imports t t))
-(add-hook 'go-mode-hook #'lsp-go-install-save-hooks)
+  (add-hook 'before-save-hook #'lsp-organize-imports t t)
+  (add-hook 'before-save-hook 'whitespace-cleanup))
+
+(add-hook 'go-mode-hook #'lsp-install-save-hooks)
 
 (add-hook 'python-mode-hook #'lsp)
 (add-hook 'c++-mode-hook #'lsp)
+(add-hook 'c++-mode-hook #'lsp-install-save-hooks)
 (add-hook 'c-mode-hook #'lsp)
+(add-hook 'c-mode-hook #'lsp-install-save-hooks)
 (add-hook 'java-mode-hook #'lsp)
 
 (setq-default flycheck-disabled-checkers '(python-pylint python-flake8))

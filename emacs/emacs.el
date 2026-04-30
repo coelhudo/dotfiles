@@ -150,7 +150,6 @@
 (require 'my-prog-modes)
 
 (load-theme 'monokai t)
-(add-hook 'before-save-hook 'whitespace-cleanup)
 
 (require 'multiple-cursors)
 (global-set-key (kbd "C-x c") 'mc/edit-lines)
@@ -260,5 +259,7 @@
 
 (with-eval-after-load 'ox
     (require 'ox-hugo))
+
+(envrc-global-mode t)
 
 (server-start)

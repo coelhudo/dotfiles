@@ -183,6 +183,7 @@ fi
 if whence -w podman >/dev/null && ! whence -w docker >/dev/null; then
     mkdir -p $HOME/.local/bin
     ln -s $(which podman) $HOME/.local/bin/docker
+    export DOCKER_HOST='unix:///${HOME}/.local/share/containers/podman/machine/qemu/podman.sock'
 fi
 
 if whence -w podman-compose >/dev/null && ! whence -w docker-compose >/dev/null; then
@@ -227,3 +228,8 @@ fi
 if [ -d $HOME/.ghcup/ ]; then
     export PATH="$HOME/.ghcup/bin:$PATH"
 fi
+
+if whence -w direnv >/dev/null; then
+    eval "$(direnv hook zsh)"
+fi
+
