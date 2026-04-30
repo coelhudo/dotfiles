@@ -106,6 +106,8 @@
 (add-hook 'c++-mode-hook #'lsp-install-save-hooks)
 (add-hook 'c-mode-hook #'lsp)
 (add-hook 'c-mode-hook #'lsp-install-save-hooks)
+(add-hook 'csharp-mode-hook #'lsp)
+(add-hook 'csharp-mode-hook #'lsp-install-save-hooks)
 (add-hook 'java-mode-hook #'lsp)
 
 (setq-default flycheck-disabled-checkers '(python-pylint python-flake8))
