@@ -1,5 +1,4 @@
 (package-initialize)
-(package-install-selected-packages)
 (setq package-install-upgrade-built-in t)
 
 (defvar settings-dir
