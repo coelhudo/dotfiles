@@ -246,6 +246,7 @@
  )
 
 (use-package format-all
+  :ensure t
   :commands format-all-mode
   :hook (prog-mode . format-all-mode)
   :config
@@ -256,6 +257,12 @@
 (add-hook 'prog-mode-hook 'format-all-mode)
 (setq gdb-many-windows nil)
 (setq gdb-use-separate-io-buffer nil)
+
+(use-package ox-hugo
+  :ensure t)
+
+(use-package envrc
+  :ensure t)
 
 (with-eval-after-load 'ox
     (require 'ox-hugo))
