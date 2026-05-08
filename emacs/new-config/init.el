@@ -22,7 +22,8 @@
    '(("elpa" . "https://elpa.gnu.org/packages/")
      ("org-contrib" . "https://elpa.nongnu.org/nongnu/")
      ("melpa" . "http://melpa.org/packages/")))
- '(package-selected-packages '(vertico cape magit transient org-roam)))
+ '(package-selected-packages
+   '(expand-region marginalia monokai-theme solarized-theme vertico cape magit transient org-roam)))
 
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
@@ -30,6 +31,9 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  )
+
+;; theme
+(load-theme 'monokai t)
 
 ;; package management
 (package-install-selected-packages)
