@@ -24,7 +24,7 @@
      ("org-contrib" . "https://elpa.nongnu.org/nongnu/")
      ("melpa" . "http://melpa.org/packages/")))
  '(package-selected-packages
-   '(which-key nerd-icons-corfu nerd-icons tempel eglot orderless expand-region marginalia monokai-theme solarized-theme vertico cape magit transient org-roam)))
+   '(pet which-key nerd-icons-corfu nerd-icons tempel eglot orderless expand-region marginalia monokai-theme solarized-theme vertico cape magit transient org-roam)))
 
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
@@ -58,6 +58,7 @@
   :ensure t
   :config (which-key-mode 1))
 
+;; load modules
 (require 'org-mode-settings)
 (require 'code-agnostic-configuration)
 (require 'code-configuration)
