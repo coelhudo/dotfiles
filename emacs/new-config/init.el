@@ -23,8 +23,7 @@
    '(("elpa" . "https://elpa.gnu.org/packages/")
      ("org-contrib" . "https://elpa.nongnu.org/nongnu/")
      ("melpa" . "http://melpa.org/packages/")))
- '(package-selected-packages
-   '(pet which-key nerd-icons-corfu nerd-icons tempel eglot orderless expand-region marginalia monokai-theme solarized-theme vertico cape magit transient org-roam)))
+ '(package-selected-packages nil))
 
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
@@ -57,6 +56,18 @@
   :diminish
   :ensure t
   :config (which-key-mode 1))
+
+;; enable multiple cursors
+(use-package multiple-cursors
+  :ensure t)
+
+;; disable bi-directional scanning (for languages that are from right to left)
+(setq-default bidi-display-reordering 'left-to-right
+              bidi-paragraph-direction 'left-to-right)
+(setq bidi-inhibit-bpa t)
+
+;; save clipboard before kill
+(setq save-interprogram-paste-before-kill t)
 
 ;; load modules
 (require 'org-mode-settings)
